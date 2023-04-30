@@ -103,5 +103,8 @@
     <Resource Include="Images\6side.png" />
     <Resource Include="Images\RavenGamesLogo2Use.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Classes\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
