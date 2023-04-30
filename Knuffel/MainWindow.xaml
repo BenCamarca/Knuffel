@@ -256,9 +256,46 @@
         
         <!--This Grid is posistioned to the right side of the ScoreBoard
         This is where the interactions with the "Game" take place -->
-        <Grid Grid.Column="6"  Grid.Row="2" Grid.RowSpan="22"  Margin="5 0 0 0" Background="Blue" Opacity="0.3">
-            
-        </Grid>
+        
+        <!--This is where the "Dice" are-->
+        <UniformGrid Grid.Column="6"  Grid.Row="6" Grid.RowSpan="3"  Margin="5 0 0 0" Background="Blue" Opacity="0.3"
+                     Rows="1">
+            <Button x:Name="die1Button" Margin="5" >
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image x:Name="firstDieImage" Source="{Binding Die1Image}" />
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="die2Button" Margin="5">
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image x:Name="secondDieImage" Source="{Binding Die2Image}" />
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="die3Button" Margin="5">
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image x:Name="secondDieImage" Source="{Binding Die3Image}" />
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="die4Button" Margin="5">
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image x:Name="secondDieImage" Source="{Binding Die4Image}" />
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="die5Button" Margin="5">
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image x:Name="secondDieImage" Source="{Binding Die5Image}" />
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </UniformGrid> 
 
     </Grid>
         
