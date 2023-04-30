@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Knuffel.Classes;
 
 namespace Knuffel
 {
@@ -51,6 +52,31 @@ namespace Knuffel
             DataContext = this;
             Die5Image = fiveEyedDie;
             DataContext = this;
+
+            // creating a new player
+            Player player1 = new Player();
+
+            // creating a new list of dice
+            List<Die> dice = new List<Die>();
+
+            // creating 5 new dice
+            Die die1 = new Die();
+            Die die2 = new Die();
+            Die die3 = new Die();
+            Die die4 = new Die();
+            Die die5 = new Die();
+
+            // adding the dice to the list
+            dice.Add(die1);
+            dice.Add(die2);
+            dice.Add(die3);
+            dice.Add(die4);
+            dice.Add(die5);
+
+            // adding the list of dice to the player
+            player1.Dice = dice;
+
+
 
         }
     }
