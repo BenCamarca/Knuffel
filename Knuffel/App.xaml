@@ -1,0 +1,17 @@
+﻿<Application x:Class="Knuffel.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Knuffel"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+                <BitmapImage x:Key="1side" UriSource="Images\1side.png"></BitmapImage>
+                <BitmapImage x:Key="2side" UriSource="Images\2side.png"></BitmapImage>
+                <BitmapImage x:Key="3side" UriSource="Images\3side.png"></BitmapImage>
+                <BitmapImage x:Key="4side" UriSource="Images\4side.png"></BitmapImage>
+                <BitmapImage x:Key="5side" UriSource="Images\5side.png"></BitmapImage>
+                <BitmapImage x:Key="6side" UriSource="Images\6side.png"></BitmapImage>
+                <BitmapImage x:Key="RavenLogo" UriSource="Images\RavenGamesLogo2Use.png"></BitmapImage>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

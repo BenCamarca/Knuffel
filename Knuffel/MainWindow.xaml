@@ -1,0 +1,265 @@
+﻿<Window x:Class="Knuffel.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Knuffel"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="900" Width="1250">
+    <Grid Margin="5">
+        <!--Adding 7 Columns-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <!--Adding 21 Rows-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"  />
+            <RowDefinition Height="15"/>
+            <RowDefinition />
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="15"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="15"/>
+        </Grid.RowDefinitions>
+        <!--Adding the Title-->
+        <Label  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Content="Knuffel" Foreground="RoyalBlue" 
+               FontWeight="Bold"  FontSize="50" HorizontalAlignment="Left" VerticalAlignment="Center"> 
+
+        </Label>
+        <!--Adding the Sudio Name-->
+        <Label Grid.Column="6" Grid.Row="0"  Content="Raven Games" Foreground="Black" FontFamily="Snap ITC" 
+               FontWeight="Bold"  FontSize="28" Margin="10 10 100 10" HorizontalAlignment="Right" VerticalAlignment="Center">
+        </Label>
+        <!--Adding the Studio Logo-->
+        <Viewbox Name="GameDeveloperLogo" HorizontalAlignment="Right" Height="Auto" Width="Auto"
+                 Grid.Column="6" Grid.Row="0" Margin="10">
+            <Image Source="{StaticResource RavenLogo}"/>
+
+        </Viewbox>
+        <!--Defining the Columns where up to 4 Players can enter their scores-->
+        <Label Grid.Column="2" Grid.Row="2" Content="Player 1" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" HorizontalContentAlignment="Center"/>
+        <Label Grid.Column="3" Grid.Row="2" Content="Player 2" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" HorizontalContentAlignment="Center"/>
+        <Label Grid.Column="4" Grid.Row="2" Content="Player 3" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" HorizontalContentAlignment="Center"/>
+        <Label Grid.Column="5" Grid.Row="2" Content="Player 4" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" HorizontalContentAlignment="Center"/>
+        
+        <!--Adding Labels (Pictures) of required dice for the first 6 rows to score-->
+        <Viewbox HorizontalAlignment="Left" Height="Auto" Width="Auto" 
+                 Grid.Column="0" Grid.Row="3" Margin="5">
+            <Image Source="{StaticResource 1side}"/>
+
+        </Viewbox>
+        <Viewbox HorizontalAlignment="Center" Height="Auto" Width="Auto" 
+                 Grid.Column="0" Grid.Row="3" Margin="5">
+            <Image Source="{StaticResource 1side}"/>
+
+        </Viewbox>
+        <Viewbox HorizontalAlignment="Right" Height="Auto" Width="Auto" 
+                 Grid.Column="0" Grid.Row="3" Margin="5">
+            <Image Source="{StaticResource 1side}"/>
+
+        </Viewbox>
+        <Viewbox HorizontalAlignment="Left" Height="Auto" Width="Auto" 
+                 Grid.Column="0" Grid.Row="4" Margin="5">
+            <Image Source="{StaticResource 2side}"/>
+        </Viewbox>
+        <Viewbox HorizontalAlignment="Center" Height="Auto" Width="Auto" 
+                 Grid.Column="0" Grid.Row="4" Margin="5">
+            <Image Source="{StaticResource 2side}"/>
+        </Viewbox>
+        <Viewbox HorizontalAlignment="Right" Height="Auto" Width="Auto" 
+                 Grid.Column="0" Grid.Row="4" Margin="5">
+            <Image Source="{StaticResource 2side}"/>
+        </Viewbox>
+        <Viewbox HorizontalAlignment="Left" Height="Auto" Width="Auto" 
+                 Grid.Column="0" Grid.Row="5" Margin="5">
+            <Image Source="{StaticResource 3side}"/>
+        </Viewbox>
+        <Viewbox HorizontalAlignment="Center" Height="Auto" Width="Auto" 
+                 Grid.Column="0" Grid.Row="5" Margin="5">
+            <Image Source="{StaticResource 3side}"/>
+        </Viewbox>
+        <Viewbox HorizontalAlignment="Right" Height="Auto" Width="Auto" 
+                 Grid.Column="0" Grid.Row="5" Margin="5">
+            <Image Source="{StaticResource 3side}"/>
+        </Viewbox>
+        <Viewbox HorizontalAlignment="Left" Height="Auto" Width="Auto" 
+                 Grid.Column="0" Grid.Row="6" Margin="5">
+            <Image Source="{StaticResource 4side}"/>
+        </Viewbox>
+        <Viewbox HorizontalAlignment="Center" Height="Auto" Width="Auto" 
+                 Grid.Column="0" Grid.Row="6" Margin="5">
+            <Image Source="{StaticResource 4side}"/>
+        </Viewbox>
+        <Viewbox HorizontalAlignment="Right" Height="Auto" Width="Auto" 
+                 Grid.Column="0" Grid.Row="6" Margin="5">
+            <Image Source="{StaticResource 4side}"/>
+        </Viewbox>
+        <Viewbox HorizontalAlignment="Left" Height="Auto" Width="Auto" 
+                 Grid.Column="0" Grid.Row="7" Margin="5">
+            <Image Source="{StaticResource 5side}"/>
+        </Viewbox>
+        <Viewbox HorizontalAlignment="Center" Height="Auto" Width="Auto" 
+                 Grid.Column="0" Grid.Row="7" Margin="5">
+            <Image Source="{StaticResource 5side}"/>
+        </Viewbox>
+        <Viewbox HorizontalAlignment="Right" Height="Auto" Width="Auto" 
+                 Grid.Column="0" Grid.Row="7" Margin="5">
+            <Image Source="{StaticResource 5side}"/>
+        </Viewbox>
+        <Viewbox HorizontalAlignment="Left" Height="Auto" Width="Auto" 
+                 Grid.Column="0" Grid.Row="8" Margin="5">
+            <Image Source="{StaticResource 6side}"/>
+        </Viewbox>
+        <Viewbox HorizontalAlignment="Center" Height="Auto" Width="Auto" 
+                 Grid.Column="0" Grid.Row="8" Margin="5">
+            <Image Source="{StaticResource 6side}"/>
+        </Viewbox>
+        <Viewbox HorizontalAlignment="Right" Height="Auto" Width="Auto" 
+                 Grid.Column="0" Grid.Row="8" Margin="5">
+            <Image Source="{StaticResource 6side}"/>
+        </Viewbox>
+
+        <!--Adding the Lables describing the requirements for that specific row-->
+        <Label Grid.Column="0" Grid.Row="9" Content="Sum Upper" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="10" Content="If Sum >= 63" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="11" Content="Total" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center"/>
+
+        <Label Grid.Column="0" Grid.Row="13" Content="3 of a kind" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="14" Content="4 of a kind" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="15" Content="Full House" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="16" Content="Small Straight" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="17" Content="Large Straight" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="18" Content="Knuffel" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="19" Content="Chance" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="20" Content="Sum Lower" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="21" Content="Total Upper" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="22" Content="Extra Knuffels" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="23" Content="Final Score" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center"/>
+
+
+        <!--Adding Labels with different scoring infos-->
+        <Label Grid.Column="1" Grid.Row="3" Content="Ones" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
+        <Label Grid.Column="1" Grid.Row="4" Content="Twos" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
+        <Label Grid.Column="1" Grid.Row="5" Content="Threes" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
+        <Label Grid.Column="1" Grid.Row="6" Content="Fours" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
+        <Label Grid.Column="1" Grid.Row="7" Content="Fives" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
+        <Label Grid.Column="1" Grid.Row="8" Content="Sixes" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
+        <Label Grid.Column="1" Grid.Row="9" Content=">>>" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0 "/>
+        <Label Grid.Column="1" Grid.Row="10" Content="plus 35 Points" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
+        <Label Grid.Column="1" Grid.Row="11" Content=">>>" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
+        <Label Grid.Column="1" Grid.Row="13" Content="All Eyes Count" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
+        <Label Grid.Column="1" Grid.Row="14" Content="All Eyes Count" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
+        <Label Grid.Column="1" Grid.Row="15" Content="25 Points" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
+        <Label Grid.Column="1" Grid.Row="16" Content="30 Points" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
+        <Label Grid.Column="1" Grid.Row="17" Content="40 Points" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
+        <Label Grid.Column="1" Grid.Row="18" Content="50 Points" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
+        <Label Grid.Column="1" Grid.Row="19" Content="All Eyes Count" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
+        <Label Grid.Column="1" Grid.Row="20" Content=">>>" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
+        <Label Grid.Column="1" Grid.Row="21" Content=">>>" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
+        <Label Grid.Column="1" Grid.Row="22" Content=">>>" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
+        <Label Grid.Column="1" Grid.Row="23" Content=">>>" Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
+        
+        <!-- Set a blue BorderBrush with a BorderThickness of 2 from Row 2 to Row 23 and from Column 0 to Column 5-->
+        <Border Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="4" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
+        <Border Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
+        <Border Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
+        <Border Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
+        <Border Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
+        <Border Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
+        <Border Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
+        <Border Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
+        <Border Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
+        <Border Grid.Column="0" Grid.Row="11" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 2"/>
+
+        <Border Grid.Column="0" Grid.Row="12" Grid.ColumnSpan="6" Background="Blue" Opacity="0.3" />
+
+        <Border Grid.Column="0" Grid.Row="13" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
+        <Border Grid.Column="0" Grid.Row="14" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
+        <Border Grid.Column="0" Grid.Row="15" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
+        <Border Grid.Column="0" Grid.Row="16" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
+        <Border Grid.Column="0" Grid.Row="17" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
+        <Border Grid.Column="0" Grid.Row="18" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
+        <Border Grid.Column="0" Grid.Row="19" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
+        <Border Grid.Column="0" Grid.Row="20" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
+        <Border Grid.Column="0" Grid.Row="21" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
+        <Border Grid.Column="0" Grid.Row="22" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
+        <Border Grid.Column="0" Grid.Row="23" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 2"/>
+
+        <Border Grid.Column="0" Grid.Row="3" Grid.RowSpan="21" BorderBrush="Blue" BorderThickness="2 2 0 2"/>
+        <Border Grid.Column="1" Grid.Row="3" Grid.RowSpan="21" BorderBrush="Blue" BorderThickness="2 2 0 2"/>
+        <Border Grid.Column="2" Grid.Row="2" Grid.RowSpan="22" BorderBrush="Blue" BorderThickness="2 2 0 2"/>
+        <Border Grid.Column="3" Grid.Row="2" Grid.RowSpan="22" BorderBrush="Blue" BorderThickness="2 2 0 2"/>
+        <Border Grid.Column="4" Grid.Row="2" Grid.RowSpan="22" BorderBrush="Blue" BorderThickness="2 2 0 2"/>
+        <Border Grid.Column="5" Grid.Row="2" Grid.RowSpan="22" BorderBrush="Blue" BorderThickness="2 2 2 2"/>
+        
+        <!--This Grid is posistioned to the right side of the ScoreBoard
+        This is where the interactions with the "Game" take place -->
+        <Grid Grid.Column="6"  Grid.Row="2" Grid.RowSpan="22"  Margin="5 0 0 0" Background="Blue" Opacity="0.3">
+            
+        </Grid>
+
+    </Grid>
+        
+</Window>
