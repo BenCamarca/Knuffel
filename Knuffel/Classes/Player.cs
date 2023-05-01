@@ -14,45 +14,15 @@ namespace Knuffel.Classes
         public int Score { get; set; }
         public bool Turn { get; set; }
         public bool Winner { get; set; }
-        public List<Die> Dice { get; set; }
         public Player() { }
-        public Player(string name, int score, bool turn, bool winner, List<Die> dice)
+        public Player(string name, int score, bool turn, bool winner)
         {
             Name = name;
             Score = score;
             Turn = turn;
             Winner = winner;
-            Dice = dice;
         }
-        // Here we create the method for the player
-        public void Roll(Random rnd)
-        {
-            foreach (Die die in Dice)
-            {
-                if(!die.Locked)
-                {
-                    die.Roll(rnd);
-                }
-            }
-        }
-        public void DiceReset()
-        {
-            foreach (Die die in Dice)
-            {
-                die.Locked = false;
-            }
-        }
-        public void ChangeLockStatus(int index)
-        {
-            if (Dice[index].Locked)
-            {
-                Dice[index].Locked = false;
-            }
-            else
-            {
-                Dice[index].Locked = true;
-            }
-        }
+       
       
                
     }
