@@ -16,6 +16,7 @@ namespace Knuffel.Classes
         private string _die3Image;
         private string _die4Image;
         private string _die5Image;
+        private string _rollsLeft;
 
 
         // declaring the public properties
@@ -76,6 +77,18 @@ namespace Knuffel.Classes
                 {
                     _die5Image = value;
                     OnPropertyChanged(nameof(Die5Image));
+                }
+            }
+        }
+        public string RollsLeft
+        {
+            get { return _rollsLeft; }
+            set
+            {
+                if (_rollsLeft != value)
+                {
+                    _rollsLeft = value;
+                    OnPropertyChanged(nameof(RollsLeft));
                 }
             }
         }

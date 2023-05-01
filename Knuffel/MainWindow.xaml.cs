@@ -21,11 +21,15 @@ namespace Knuffel
     /// </summary>
     public partial class MainWindow : Window
     {
-        public string Die1Image { get; set; }
+        // this are the properties that are bound to the image in the xaml
+        public string Die1Image { get; set; } 
         public string Die2Image { get; set; }
         public string Die3Image { get; set; }
         public string Die4Image { get; set; }
         public string Die5Image { get; set; }
+
+        // this is the property that is bound to the textblock in the xaml
+        public string RollsLeft { get; set; }
 
 
 
@@ -33,25 +37,43 @@ namespace Knuffel
         {
             InitializeComponent();
 
-            // declaring the images for the die
+            // declaring the images for the dice
             string oneEyedDie = "pack://application:,,,/Images/1side.png";
             string twoEyedDie = "pack://application:,,,/Images/2side.png";
             string threeEyedDie = "pack://application:,,,/Images/3side.png";
             string fourEyedDie = "pack://application:,,,/Images/4side.png";
             string fiveEyedDie = "pack://application:,,,/Images/5side.png";
             string sixEyedDie = "pack://application:,,,/Images/6side.png";
+            string oneEyedDieGreen = "pack://application:,,,/Images/1sideGreen.png";
+            string twoEyedDieGreen = "pack://application:,,,/Images/2sideGreen.png";
+            string threeEyedDieGreen = "pack://application:,,,/Images/3sideGreen.png";
+            string fourEyedDieGreen = "pack://application:,,,/Images/4sideGreen.png";
+            string fiveEyedDieGreen = "pack://application:,,,/Images/5sideGreen.png";
+            string sixEyedDieGreen = "pack://application:,,,/Images/6sideGreen.png";
+            string ravenDie = "pack://application:,,,/Images/RavenGamesLogo2Use.png";
+
+            // declaring the amount of rolls left
+            string rollsLeft3 = "´s left: 3";
+            string rollsLeft2 = "´s left: 2";
+            string rollsLeft1 = "´s left: 1";
+            string rollsLeft0 = "´s left: 0";
 
             // setting the default images for the dice
             Die1Image = oneEyedDie; 
             DataContext = this;
-            Die2Image = twoEyedDie;
+            Die2Image = ravenDie;
             DataContext = this;
-            Die3Image = threeEyedDie;
+            Die3Image = threeEyedDieGreen;
             DataContext = this;
-            Die4Image = fourEyedDie;
+            Die4Image = ravenDie;
             DataContext = this;
             Die5Image = fiveEyedDie;
             DataContext = this;
+
+            // setting the default amount of rolls left
+            RollsLeft = rollsLeft3;
+            DataContext = this;
+
 
             // creating a new player
             Player player1 = new Player();
@@ -76,6 +98,7 @@ namespace Knuffel
             // adding the list of dice to the player
             player1.Dice = dice;
 
+           
 
 
         }
