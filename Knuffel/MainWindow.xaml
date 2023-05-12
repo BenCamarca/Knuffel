@@ -3,9 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Knuffel"
+        xmlns:local="clr-namespace:Knuffel.Classes"
         mc:Ignorable="d"
         Title="MainWindow" Height="900" Width="1250">
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+    
+
     <Grid Margin="5">
         <!--Adding 7 Columns-->
         <Grid.ColumnDefinitions>
@@ -47,7 +55,7 @@
         </Grid.RowDefinitions>
         <!--Adding the Title-->
         <Label  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Content="Knuffel" Foreground="RoyalBlue" 
-               FontWeight="Bold"  FontSize="50" HorizontalAlignment="Left" VerticalAlignment="Center"> 
+               FontWeight="Bold"  FontSize="50" HorizontalAlignment="Left" VerticalAlignment="Center">
 
         </Label>
         <!--Adding the Sudio Name-->
@@ -61,16 +69,16 @@
 
         </Viewbox>
         <!--Defining the Columns where up to 4 Players can enter their scores-->
-        <Label x:Name="player1Label" Grid.Column="2" Grid.Row="2" Content="{Binding Path=Player1Name}" Foreground="RoyalBlue"
-               FontWeight="Bold" FontSize="17" HorizontalContentAlignment="Center"/>
-        <Label x:Name="player2Label" Grid.Column="3" Grid.Row="2" Content="{Binding Path=Player2Name}" Foreground="RoyalBlue"
-               FontWeight="Bold" FontSize="17" HorizontalContentAlignment="Center"/>
-        <Label x:Name="player3Label" Grid.Column="4" Grid.Row="2" Content="{Binding Path=Player3Name}" Foreground="RoyalBlue"
-               FontWeight="Bold" FontSize="17" HorizontalContentAlignment="Center"/>
-        <Label x:Name="player4Label" Grid.Column="5" Grid.Row="2" Content="{Binding Path=Player4Name}" Foreground="RoyalBlue"
-               FontWeight="Bold" FontSize="17" HorizontalContentAlignment="Center"/>
-        
-        <!--Adding Labels (Pictures) of required dice for the first 6 rows to score-->
+        <Label x:Name="player1Label" Grid.Column="2" Grid.Row="2"  Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" HorizontalContentAlignment="Center" Content="{Binding Player1Name}" />
+        <Label x:Name="player2Label" Grid.Column="3" Grid.Row="2"  Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" HorizontalContentAlignment="Center"  Content="{Binding Player2Name}"/>
+        <Label x:Name="player3Label" Grid.Column="4" Grid.Row="2"  Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" HorizontalContentAlignment="Center" Content="{Binding Player3Name}"/>
+        <Label x:Name="player4Label" Grid.Column="5" Grid.Row="2"  Foreground="RoyalBlue"
+               FontWeight="Bold" FontSize="17" HorizontalContentAlignment="Center"  Content="{Binding Player4Name}"/>
+
+        <!--Adding Labels (Pictures) of required dice for the first 6 rows into the "Scoreboard"-->
         <Viewbox HorizontalAlignment="Left" Height="Auto" Width="Auto" 
                  Grid.Column="0" Grid.Row="3" Margin="5">
             <Image Source="{StaticResource 1side}"/>
@@ -220,7 +228,7 @@
                FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
         <Label Grid.Column="1" Grid.Row="23" Content=">>>" Foreground="RoyalBlue"
                FontWeight="Bold" FontSize="17" VerticalContentAlignment="Center" Margin="5 0 0 0"/>
-        
+
         <!-- Set a blue BorderBrush with a BorderThickness of 2 from Row 2 to Row 23 and from Column 0 to Column 5-->
         <Border Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="4" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
         <Border Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
@@ -247,18 +255,19 @@
         <Border Grid.Column="0" Grid.Row="22" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 0"/>
         <Border Grid.Column="0" Grid.Row="23" Grid.ColumnSpan="6" BorderBrush="Blue" BorderThickness="2 2 2 2"/>
 
-        <Border Grid.Column="0" Grid.Row="3" Grid.RowSpan="21" BorderBrush="Blue" BorderThickness="2 2 0 2"/>
-        <Border Grid.Column="1" Grid.Row="3" Grid.RowSpan="21" BorderBrush="Blue" BorderThickness="2 2 0 2"/>
-        <Border Grid.Column="2" Grid.Row="2" Grid.RowSpan="22" BorderBrush="Blue" BorderThickness="2 2 0 2"/>
-        <Border Grid.Column="3" Grid.Row="2" Grid.RowSpan="22" BorderBrush="Blue" BorderThickness="2 2 0 2"/>
-        <Border Grid.Column="4" Grid.Row="2" Grid.RowSpan="22" BorderBrush="Blue" BorderThickness="2 2 0 2"/>
-        <Border Grid.Column="5" Grid.Row="2" Grid.RowSpan="22" BorderBrush="Blue" BorderThickness="2 2 2 2"/>
-        
+        <Border Grid.Column="0" Grid.Row="3" Grid.RowSpan="21" BorderBrush="Blue" BorderThickness="2 2 2 2"/>
+        <Border Grid.Column="1" Grid.Row="3" Grid.RowSpan="21" BorderBrush="Blue" BorderThickness="0 2 2 2"/>
+        <Border Grid.Column="1" Grid.Row="2" BorderBrush="Blue" BorderThickness="0 0 2 0"/>
+        <Border Grid.Column="2" Grid.Row="2" Grid.RowSpan="22" BorderBrush="Blue" BorderThickness="2 2 2 2"/>
+        <Border Grid.Column="3" Grid.Row="2" Grid.RowSpan="22" BorderBrush="Blue" BorderThickness="0 2 2 2"/>
+        <Border Grid.Column="4" Grid.Row="2" Grid.RowSpan="22" BorderBrush="Blue" BorderThickness="0 2 2 2"/>
+        <Border Grid.Column="5" Grid.Row="2" Grid.RowSpan="22" BorderBrush="Blue" BorderThickness="0 2 2 2"/>
+
         <!--This Grid is posistioned to the right side of the ScoreBoard
         This is where the interactions with the "Game" take place -->
-        
+
         <!--This is where the "Dice" are-->
-        <UniformGrid Grid.Column="6"  Grid.Row="6" Grid.RowSpan="3"  Margin="5 0 0 0"  Background="RoyalBlue" Opacity="0.8"
+        <UniformGrid x:Name="DiceUG" Grid.Column="6"  Grid.Row="6" Grid.RowSpan="3"  Margin="5 0 0 0"  Background="RoyalBlue" Opacity="0.8"
                      Rows="1">
             <Button x:Name="die1Button" Margin="10">
                 <Button.Template>
@@ -295,49 +304,108 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-        </UniformGrid> 
-        
+        </UniformGrid>
+
         <!--This is where the "Roll" button is-->
         <UniformGrid Grid.Column="6" Grid.Row="9" Grid.RowSpan="2" Rows="1">
-        <Button x:Name="RollButton" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
-                Content="Roll" FontWeight="Bold" FontSize="25"/>
+            <Button x:Name="RollButton" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
+                Content="Roll" FontWeight="Bold" FontSize="25" Visibility="Collapsed"/>
             <!--This is where the Label is which informs about how many rolls are left-->
             <Label x:Name="RollsLeftLabel" Margin="5 10 0 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
                    Content="{Binding Path=RollsLeft}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                   FontWeight="Bold" FontSize="25"/>
+                   FontWeight="Bold" FontSize="25" Visibility="Collapsed"/>
 
         </UniformGrid>
-        
+
         <!--This is where the Start Game Button is-->
         <Grid Grid.Column="6" Grid.Row="14" Grid.RowSpan="2">
             <Button x:Name="StartGameButton" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
                 Content="Start Game" FontWeight="Bold" FontSize="25"
-                    Click="StartButton_Clicked"/>
+                     Visibility="{Binding IsStartGameButtonVisible, Converter={StaticResource BooleanToVisibilityConverter} }" 
+                    Command="{Binding StartGameCommand}"/>
         </Grid>
-        
+
         <!--This is where the "How many Players (1-4)" Label is-->
         <Grid Grid.Column="6" Grid.Row="17" Grid.RowSpan="2">
             <Label x:Name="HowManyPlayersLabel" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
                    Content="How many Players? (1-4)" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                   FontWeight="Bold" FontSize="25" Visibility="Collapsed"/>
+                   FontWeight="Bold" FontSize="25" 
+                   Visibility="{Binding IsHowManyPlayersLabelVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </Grid>
-        
+
+
+
         <!--This is where the UniformGrid with 4 Buttons labeled with 1, 2, 3, and 4 is-->
         <UniformGrid Grid.Column="6" Grid.Row="19" Grid.RowSpan="2" Rows="1">
             <Button x:Name="OnePlayerButton" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
                 Content="1" FontWeight="Bold" FontSize="25"
-                    Click="OnePlayerButton_Clicked" Visibility="Collapsed"/>
+                    Visibility="{Binding IsOnePlayerButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                    Command="{Binding PlayersButtonsCommand}" CommandParameter="1"/>
             <Button x:Name="TwoPlayerButton" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
                 Content="2" FontWeight="Bold" FontSize="25"
-                    Click="TwoPlayerButton_Clicked" Visibility="Collapsed"/>
+                    Visibility="{Binding IsTwoPlayersButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Command="{Binding PlayersButtonsCommand}" CommandParameter="2"/>
             <Button x:Name="ThreePlayerButton" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
                 Content="3" FontWeight="Bold" FontSize="25"
-                    Click="ThreePlayerButton_Clicked" Visibility="Collapsed"/>
+                     Visibility="{Binding IsThreePlayersButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Command="{Binding PlayersButtonsCommand}" CommandParameter="3"/>
             <Button x:Name="FourPlayerButton" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
                 Content="4" FontWeight="Bold" FontSize="25"
-                    Click="FourPlayerButton_Clicked" Visibility="Collapsed"/>
+                     Visibility="{Binding IsFourPlayersButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Command="{Binding PlayersButtonsCommand}" CommandParameter="4"/>
         </UniformGrid>
 
+        <!--This Grid covers the Players 2-4 Section from the Scoreboard when there is only 1 Player -->
+        <Grid x:Name="CoverGridPlayer2To4" Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="3" Grid.RowSpan="22" Background="White"
+              IsHitTestVisible="False" Visibility="Collapsed">
+            <Border BorderBrush="White" BorderThickness="3"/>
+        </Grid>
+        <!--This Grid covers the Players 3-4 Section from the Scoreboard when there are only 2 Players-->
+        <Grid x:Name="CoverGridPlayer3To4" Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="22" Background="White"
+              IsHitTestVisible="False" Visibility="Collapsed">
+            <Border BorderBrush="White" BorderThickness="3"/>
+        </Grid>
+        <!--This Grid covers the Players 4 Section from the Scoreboard when there are only 3 Players-->
+        <Grid x:Name="CoverGridPlayer4" Grid.Column="5" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="22" Background="White"
+              IsHitTestVisible="False" Visibility="Collapsed">
+            <Border BorderBrush="White" BorderThickness="3"/>
+        </Grid>
+
+        <!--This is where the EnterPlayerLabels and there corresponding TextBoxes are-->
+        <StackPanel Grid.Column="6" Grid.Row="13" Grid.ColumnSpan="1" Grid.RowSpan="11">
+            <Label x:Name="EnterPlayer1NameLabel" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
+                   Content="Enter the Name of Player 1:" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                   FontWeight="Bold" FontSize="18" Visibility="Collapsed"/>
+            <TextBox x:Name="Player1NameTextBox"  
+                     Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
+                     Text=""  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                     FontWeight="Bold" FontSize="18" Visibility="Collapsed"/>
+            <Label x:Name="EnterPlayer2NameLabel" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
+                   Content="Enter the Name of Player 2:" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                   FontWeight="Bold" FontSize="18" Visibility="Collapsed"/>
+            <TextBox x:Name="Player2NameTextBox"  
+                     Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
+                     Text="" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                     FontWeight="Bold" FontSize="18" Visibility="Collapsed"/>
+            <Label x:Name="EnterPlayer3NameLabel" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
+                   Content="Enter the Name of Player 3:" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                   FontWeight="Bold" FontSize="18" Visibility="Collapsed"/>
+            <TextBox x:Name="Player3NameTextBox" 
+                     Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
+                     Text="" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                     FontWeight="Bold" FontSize="18" Visibility="Collapsed"/>
+            <Label x:Name="EnterPlayer4NameLabel" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
+                   Content="Enter the Name of Player 4:" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                   FontWeight="Bold" FontSize="18" Visibility="Collapsed"/>
+            <TextBox x:Name="Player4NameTextBox" 
+                     Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
+                     Text="" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                     FontWeight="Bold" FontSize="18" Visibility="Collapsed"/>
+            <Button x:Name="EnterPlayerNamesButton" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
+                Content="Press Here To Enter Player Names" FontWeight="Bold" FontSize="25"
+                    Visibility="Collapsed"/>
+
+        </StackPanel>
+
     </Grid>
-        
 </Window>
