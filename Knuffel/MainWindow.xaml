@@ -12,7 +12,7 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
-    
+
 
     <Grid Margin="5">
         <!--Adding 7 Columns-->
@@ -309,11 +309,13 @@
         <!--This is where the "Roll" button is-->
         <UniformGrid Grid.Column="6" Grid.Row="9" Grid.RowSpan="2" Rows="1">
             <Button x:Name="RollButton" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
-                Content="Roll" FontWeight="Bold" FontSize="25" Visibility="Collapsed"/>
+                    Content="Roll" FontWeight="Bold" FontSize="25" 
+                    Visibility="{Binding IsRollButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <!--This is where the Label is which informs about how many rolls are left-->
             <Label x:Name="RollsLeftLabel" Margin="5 10 0 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
-                   Content="{Binding Path=RollsLeft}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                   FontWeight="Bold" FontSize="25" Visibility="Collapsed"/>
+                   Content="{Binding RollsLeft}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                   FontWeight="Bold" FontSize="25" 
+                   Visibility="{Binding IsRollsLeftLabelVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
         </UniformGrid>
 
@@ -357,17 +359,17 @@
 
         <!--This Grid covers the Players 2-4 Section from the Scoreboard when there is only 1 Player -->
         <Grid x:Name="CoverGridPlayer2To4" Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="3" Grid.RowSpan="22" Background="White"
-              IsHitTestVisible="False" Visibility="Collapsed">
+              IsHitTestVisible="False" Visibility="{Binding CoverGridPlayer2To4, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Border BorderBrush="White" BorderThickness="3"/>
         </Grid>
         <!--This Grid covers the Players 3-4 Section from the Scoreboard when there are only 2 Players-->
         <Grid x:Name="CoverGridPlayer3To4" Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="22" Background="White"
-              IsHitTestVisible="False" Visibility="Collapsed">
+              IsHitTestVisible="False" Visibility="{Binding CoverGridPlayer3To4, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Border BorderBrush="White" BorderThickness="3"/>
         </Grid>
         <!--This Grid covers the Players 4 Section from the Scoreboard when there are only 3 Players-->
         <Grid x:Name="CoverGridPlayer4" Grid.Column="5" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="22" Background="White"
-              IsHitTestVisible="False" Visibility="Collapsed">
+              IsHitTestVisible="False" Visibility="{Binding CoverGridPlayer4, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Border BorderBrush="White" BorderThickness="3"/>
         </Grid>
 
@@ -375,35 +377,44 @@
         <StackPanel Grid.Column="6" Grid.Row="13" Grid.ColumnSpan="1" Grid.RowSpan="11">
             <Label x:Name="EnterPlayer1NameLabel" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
                    Content="Enter the Name of Player 1:" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                   FontWeight="Bold" FontSize="18" Visibility="Collapsed"/>
+                   FontWeight="Bold" FontSize="18" 
+                   Visibility="{Binding IsEnterPlayer1NameLabelVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <TextBox x:Name="Player1NameTextBox"  
-                     Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
-                     Text=""  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                     FontWeight="Bold" FontSize="18" Visibility="Collapsed"/>
+                     Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.6"
+                     Text="{Binding Player1Name}" MaxLength="10"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                     FontWeight="Bold" FontSize="18" 
+                     Visibility="{Binding IsPlayer1NameTextBoxVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <Label x:Name="EnterPlayer2NameLabel" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
                    Content="Enter the Name of Player 2:" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                   FontWeight="Bold" FontSize="18" Visibility="Collapsed"/>
+                   FontWeight="Bold" FontSize="18" 
+                   Visibility="{Binding IsEnterPlayer2NameLabelVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <TextBox x:Name="Player2NameTextBox"  
-                     Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
-                     Text="" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                     FontWeight="Bold" FontSize="18" Visibility="Collapsed"/>
+                     Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.6"
+                     Text="{Binding Player2Name}" MaxLength="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                     FontWeight="Bold" FontSize="18" 
+                     Visibility="{Binding IsPlayer2NameTextBoxVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <Label x:Name="EnterPlayer3NameLabel" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
                    Content="Enter the Name of Player 3:" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                   FontWeight="Bold" FontSize="18" Visibility="Collapsed"/>
+                   FontWeight="Bold" FontSize="18" 
+                   Visibility="{Binding IsEnterPlayer3NameLabelVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <TextBox x:Name="Player3NameTextBox" 
-                     Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
-                     Text="" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                     FontWeight="Bold" FontSize="18" Visibility="Collapsed"/>
+                     Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.6"
+                     Text="{Binding Player3Name}" MaxLength="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                     FontWeight="Bold" FontSize="18" 
+                     Visibility="{Binding IsPlayer3NameTextBoxVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <Label x:Name="EnterPlayer4NameLabel" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
                    Content="Enter the Name of Player 4:" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                   FontWeight="Bold" FontSize="18" Visibility="Collapsed"/>
+                   FontWeight="Bold" FontSize="18" 
+                   Visibility="{Binding IsEnterPlayer4NameLabelVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <TextBox x:Name="Player4NameTextBox" 
-                     Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
-                     Text="" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                     FontWeight="Bold" FontSize="18" Visibility="Collapsed"/>
-            <Button x:Name="EnterPlayerNamesButton" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
+                     Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.6"
+                     Text="{Binding Player4Name}" MaxLength="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                     FontWeight="Bold" FontSize="18" 
+                     Visibility="{Binding IsPlayer4NameTextBoxVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <Button x:Name="EnterPlayerNamesButton" Margin="5 10 5 0" Background="ForestGreen" Foreground="White" Opacity="0.8"
                 Content="Press Here To Enter Player Names" FontWeight="Bold" FontSize="25"
-                    Visibility="Collapsed"/>
+                    Visibility="{Binding IsEnterPlayerNamesButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Command="{Binding EnterPlayerNamesCommand}"/>
 
         </StackPanel>
 

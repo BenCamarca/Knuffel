@@ -28,8 +28,28 @@ namespace Knuffel.Classes
             // declaring the default value for AmountOfPlayers
             AmountOfPlayers = 1;
 
+            // declaring the default value for the RollsLeft
+            RollsLeft = 3;
+
             // declaring the default value for the visibility of the StartGame Button
             IsStartGameButtonVisible = true;
+
+            // declaring the default values for the CoverGrids
+            CoverGridPlayer2To4 = false;
+            CoverGridPlayer3To4 = false;
+            CoverGridPlayer4 = false;
+
+            // declaring the default values for the visibility of the Enter Player Names Menu
+            IsEnterPlayer1NameLabelVisible = false;
+            IsPlayer1NameTextBoxVisible = false;
+            IsEnterPlayer2NameLabelVisible = false;
+            IsPlayer2NameTextBoxVisible = false;
+            IsEnterPlayer3NameLabelVisible = false;
+            IsPlayer3NameTextBoxVisible = false;
+            IsEnterPlayer4NameLabelVisible = false;
+            IsPlayer4NameTextBoxVisible = false;
+            IsEnterPlayerNamesButtonVisible = false;
+
 
             // initializing the command for the start game button
             StartGameCommand = new DelegateCommand(
@@ -41,8 +61,11 @@ namespace Knuffel.Classes
             {
                 int val = int.Parse((string)value);
                 AmountOfPlayers = val;
-                HideChooseAmountOfPlayerUI();                
+                HideChooseAmountOfPlayerUI();
             });
+
+            // initializing the command for the Enter Player Names Button
+            EnterPlayerNamesCommand = new DelegateCommand((o) => true, (o) => CreatePlayers());
         }
 
         // declaring the command for the start game button
@@ -50,6 +73,9 @@ namespace Knuffel.Classes
 
         // declaring the command for the 1-4 Player buttons
         public DelegateCommand PlayersButtonsCommand { get; set; }
+
+        // declaring the command for the Enter Player Names Button
+        public DelegateCommand EnterPlayerNamesCommand { get; set; }
 
         private void StartGame()
         {
@@ -81,17 +107,170 @@ namespace Knuffel.Classes
             IsTwoPlayersButtonVisible = false;
             IsThreePlayersButtonVisible = false;
             IsFourPlayersButtonVisible = false;
+
+            // calling the method where unneccessary UI elements of the scoreboard are hidden
+            HideUnneccessaryScoreBoardUIElements();
+        }
+
+        // in this method we hide the unneccessary UI elements of the scoreboard depending on the amount of players
+        private void HideUnneccessaryScoreBoardUIElements()
+        {
+            switch (AmountOfPlayers)
+            {
+                case 1:
+                    // setting the visibility of the scoreboard for player 2 to 4 to hidden
+                    CoverGridPlayer2To4 = true;
+                    break;
+                case 2:
+                    // setting the visibility of the scoreboard for player 3 to 4 to hidden
+                    CoverGridPlayer3To4 = true;
+                    break;
+                case 3:
+                    // setting the visibility of the scoreboard for player 4 to hidden
+                    CoverGridPlayer4 = true;
+                    break;
+                case 4:
+                    // setting the visibility of the scoreboard for player 2 to 4 to visible
+                    CoverGridPlayer2To4 = false;
+                    CoverGridPlayer3To4 = false;
+                    CoverGridPlayer4 = false;
+                    break;
+
+            }
+
+            // calling the method where Menu to enter the player names is shown, depending on the amount of players
+            ShowEnterPlayerNamesMenu();
         }
 
 
+        // in this method we show the Menu to enter the player names, depending on the amount of players
+        private void ShowEnterPlayerNamesMenu()
+        {
+            switch (AmountOfPlayers)
+            {
 
-        // declaring the private variables
+                case 1:
+                    // setting the visibility for the NameLabel and the TextBox for player 1 to visible
+                    // setting the EnterPlayerNamesButton to visible
+                    IsEnterPlayer1NameLabelVisible = true;
+                    IsPlayer1NameTextBoxVisible = true;
+                    IsEnterPlayerNamesButtonVisible = true;
+                    break;
+                case 2:
+                    // setting the visiility for the NameLabels and the TextBoxes for player 1 and 2 to visible
+                    // setting the EnterPlayerNamesButton to visible
+                    IsEnterPlayer1NameLabelVisible = true;
+                    IsPlayer1NameTextBoxVisible = true;
+                    IsEnterPlayer2NameLabelVisible = true;
+                    IsPlayer2NameTextBoxVisible = true;
+                    IsEnterPlayerNamesButtonVisible = true;
+                    break;
+                case 3:
+                    // setting the visiility for the NameLabels and the TextBoxes for player 1 to 3 to visible
+                    // setting the EnterPlayerNamesButton to visible
+                    IsEnterPlayer1NameLabelVisible = true;
+                    IsPlayer1NameTextBoxVisible = true;
+                    IsEnterPlayer2NameLabelVisible = true;
+                    IsPlayer2NameTextBoxVisible = true;
+                    IsEnterPlayer3NameLabelVisible = true;
+                    IsPlayer3NameTextBoxVisible = true;
+                    IsEnterPlayerNamesButtonVisible = true;
+                    break;
+                case 4:
+                    // setting the visiility for the NameLabels and the TextBoxes for player 1 to 4 to visible
+                    // setting the EnterPlayerNamesButton to visible
+                    IsEnterPlayer1NameLabelVisible = true;
+                    IsPlayer1NameTextBoxVisible = true;
+                    IsEnterPlayer2NameLabelVisible = true;
+                    IsPlayer2NameTextBoxVisible = true;
+                    IsEnterPlayer3NameLabelVisible = true;
+                    IsPlayer3NameTextBoxVisible = true;
+                    IsEnterPlayer4NameLabelVisible = true;
+                    IsPlayer4NameTextBoxVisible = true;
+                    IsEnterPlayerNamesButtonVisible = true;
+                    break;
+            }
+        }
+
+        // in this method we are hiding the Menu to enter the player names
+        private void HideEnterPlayerNamesMenu()
+        {
+            // setting the visibility for the NameLabels and the TextBoxes for player 1 to 4 to hidden
+            // setting the EnterPlayerNamesButton to hidden
+            IsEnterPlayer1NameLabelVisible = false;
+            IsPlayer1NameTextBoxVisible = false;
+            IsEnterPlayer2NameLabelVisible = false;
+            IsPlayer2NameTextBoxVisible = false;
+            IsEnterPlayer3NameLabelVisible = false;
+            IsPlayer3NameTextBoxVisible = false;
+            IsEnterPlayer4NameLabelVisible = false;
+            IsPlayer4NameTextBoxVisible = false;
+            IsEnterPlayerNamesButtonVisible = false;
+
+            // calling the method where the UI Elements for the RollButton and the RollsLeftLabel are set to visible
+            ShowRollButtonAndRollsLeftLabel();
+        }
+
+        private void ShowRollButtonAndRollsLeftLabel()
+        {
+            // setting the visibility for the RollButton and the RollsLeftLabel to visible
+            IsRollButtonVisible = true;
+            IsRollsLeftLabelVisible = true;
+        }
+
+        // in this method we are creating the players corresponding to the amount of players
+        private void CreatePlayers()
+        {
+            if (AmountOfPlayers == 4)
+            {
+                Player playerOne = new Player();
+                playerOne.Name = Player1Name;
+                Player playerTwo = new Player();
+                playerTwo.Name = Player2Name;
+                Player playerThree = new Player();
+                playerThree.Name = Player3Name;
+                Player playerFour = new Player();
+                playerFour.Name = Player4Name;
+            }       
+            else if (AmountOfPlayers == 3)
+            {
+                Player playerOne = new Player();
+                playerOne.Name = Player1Name;
+                Player playerTwo = new Player();
+                playerTwo.Name = Player2Name;
+                Player playerThree = new Player();
+                playerThree.Name = Player3Name;
+            }
+            else if (AmountOfPlayers == 2)
+            {
+                Player playerOne = new Player();
+                playerOne.Name = Player1Name;
+                Player playerTwo = new Player();
+                playerTwo.Name = Player2Name;
+            }
+            else 
+            {
+                Player playerOne = new Player();
+                playerOne.Name = Player1Name;
+            }
+
+            // calling the method where the UI elements for the Enter The Player Names Menu are hidden
+            HideEnterPlayerNamesMenu();
+        }
+
+       
+
+
+
+        // declaring the private variables for the path to the images of the dice
         private string _die1Image;
         private string _die2Image;
         private string _die3Image;
         private string _die4Image;
         private string _die5Image;
-        private string _rollsLeft;
+
+        // declaring the private variable for the amount of rolls left
+        private int _rollsLeft;
 
         // declaring the private variables for the player names
         private string _player1Name;
@@ -112,8 +291,28 @@ namespace Knuffel.Classes
         // declaring the private variables for the amount of players
         private int _amountOfPlayers;
 
+        // declaring the private variables for the visibility of the scoreboard
+        private bool _coverGridPlayer2To4;
+        private bool _coverGridPlayer3To4;
+        private bool _coverGridPlayer4;
 
-        // declaring the public properties
+        // declaring the private variables for the visibility of the Menu to enter the player names
+        private bool _isEnterPlayer1NameLabelVisible;
+        private bool _isEnterPlayer2NameLabelVisible;
+        private bool _isEnterPlayer3NameLabelVisible;
+        private bool _isEnterPlayer4NameLabelVisible;
+        private bool _isPlayer1NameTextBoxVisible;
+        private bool _isPlayer2NameTextBoxVisible;
+        private bool _isPlayer3NameTextBoxVisible;
+        private bool _isPlayer4NameTextBoxVisible;
+        private bool _isEnterPlayerNamesButtonVisible;
+
+        // declaring the private variables for the visibility of the RollButton and the RollsLeftLabel
+        private bool _isRollButtonVisible;
+        private bool _isRollsLeftLabelVisible;
+
+
+        // declaring the public properties for the dice images
         public string Die1Image
         {
             get { return _die1Image; }
@@ -174,7 +373,7 @@ namespace Knuffel.Classes
                 }
             }
         }
-        public string RollsLeft
+        public int RollsLeft
         {
             get { return _rollsLeft; }
             set
@@ -323,6 +522,182 @@ namespace Knuffel.Classes
                 {
                     _isFourPlayersButtonVisible = value;
                     OnPropertyChanged(nameof(IsFourPlayersButtonVisible));
+                }
+            }
+        }
+
+        // declaring the public properties for hidding uneccessary Scoreboard UI elements
+
+        public bool CoverGridPlayer2To4
+        {
+            get { return _coverGridPlayer2To4; }
+            set
+            {
+                if (_coverGridPlayer2To4 != value)
+                {
+                    _coverGridPlayer2To4 = value;
+                    OnPropertyChanged(nameof(CoverGridPlayer2To4));
+                }
+            }
+        }
+
+        public bool CoverGridPlayer3To4
+        {
+            get { return _coverGridPlayer3To4; }
+            set
+            {
+                if (_coverGridPlayer3To4 != value)
+                {
+                    _coverGridPlayer3To4 = value;
+                    OnPropertyChanged(nameof(CoverGridPlayer3To4));
+                }
+            }
+        }
+        public bool CoverGridPlayer4
+        {
+            get { return _coverGridPlayer4; }
+            set
+            {
+                if (_coverGridPlayer4 != value)
+                {
+                    _coverGridPlayer4 = value;
+                    OnPropertyChanged(nameof(CoverGridPlayer4));
+                }
+            }
+        }
+
+        // declaring the public properties for the visibility of the Enter Player Names Menu
+        public bool IsEnterPlayer1NameLabelVisible
+        {
+            get { return _isEnterPlayer1NameLabelVisible; }
+            set
+            {
+                if (_isEnterPlayer1NameLabelVisible != value)
+                {
+                    _isEnterPlayer1NameLabelVisible = value;
+                    OnPropertyChanged(nameof(IsEnterPlayer1NameLabelVisible));
+                }
+            }
+        }
+        public bool IsEnterPlayer2NameLabelVisible
+        {
+            get { return _isEnterPlayer2NameLabelVisible; }
+            set
+            {
+                if (_isEnterPlayer2NameLabelVisible != value)
+                {
+                    _isEnterPlayer2NameLabelVisible = value;
+                    OnPropertyChanged(nameof(IsEnterPlayer2NameLabelVisible));
+                }
+            }
+        }
+        public bool IsEnterPlayer3NameLabelVisible
+        {
+            get { return _isEnterPlayer3NameLabelVisible; }
+            set
+            {
+                if (_isEnterPlayer3NameLabelVisible != value)
+                {
+                    _isEnterPlayer3NameLabelVisible = value;
+                    OnPropertyChanged(nameof(IsEnterPlayer3NameLabelVisible));
+                }
+            }
+        }
+        public bool IsEnterPlayer4NameLabelVisible
+        {
+            get { return _isEnterPlayer4NameLabelVisible; }
+            set
+            {
+                if (_isEnterPlayer4NameLabelVisible != value)
+                {
+                    _isEnterPlayer4NameLabelVisible = value;
+                    OnPropertyChanged(nameof(IsEnterPlayer4NameLabelVisible));
+                }
+            }
+        }
+        public bool IsPlayer1NameTextBoxVisible
+        {
+            get { return _isPlayer1NameTextBoxVisible; }
+            set
+            {
+                if (_isPlayer1NameTextBoxVisible != value)
+                {
+                    _isPlayer1NameTextBoxVisible = value;
+                    OnPropertyChanged(nameof(IsPlayer1NameTextBoxVisible));
+                }
+            }
+        }
+        public bool IsPlayer2NameTextBoxVisible
+        {
+            get { return _isPlayer2NameTextBoxVisible; }
+            set
+            {
+                if (_isPlayer2NameTextBoxVisible != value)
+                {
+                    _isPlayer2NameTextBoxVisible = value;
+                    OnPropertyChanged(nameof(IsPlayer2NameTextBoxVisible));
+                }
+            }
+        }
+        public bool IsPlayer3NameTextBoxVisible
+        {
+            get { return _isPlayer3NameTextBoxVisible; }
+            set
+            {
+                if (_isPlayer3NameTextBoxVisible != value)
+                {
+                    _isPlayer3NameTextBoxVisible = value;
+                    OnPropertyChanged(nameof(IsPlayer3NameTextBoxVisible));
+                }
+            }
+        }
+        public bool IsPlayer4NameTextBoxVisible
+        {
+            get { return _isPlayer4NameTextBoxVisible; }
+            set
+            {
+                if (_isPlayer4NameTextBoxVisible != value)
+                {
+                    _isPlayer4NameTextBoxVisible = value;
+                    OnPropertyChanged(nameof(IsPlayer4NameTextBoxVisible));
+                }
+            }
+        }
+        public bool IsEnterPlayerNamesButtonVisible
+        {
+            get { return _isEnterPlayerNamesButtonVisible; }
+            set
+            {
+                if (_isEnterPlayerNamesButtonVisible != value)
+                {
+                    _isEnterPlayerNamesButtonVisible = value;
+                    OnPropertyChanged(nameof(IsEnterPlayerNamesButtonVisible));
+                }
+            }
+        }
+
+        // declaring the public properties for the visibility of the RollButton and the RollsLeftLabel
+        public bool IsRollButtonVisible
+        {
+            get { return _isRollButtonVisible; }
+            set
+            {
+                if (_isRollButtonVisible != value)
+                {
+                    _isRollButtonVisible = value;
+                    OnPropertyChanged(nameof(IsRollButtonVisible));
+                }
+            }
+        }
+        public bool IsRollsLeftLabelVisible
+        {
+            get { return _isRollsLeftLabelVisible; }
+            set
+            {
+                if (_isRollsLeftLabelVisible != value)
+                {
+                    _isRollsLeftLabelVisible = value;
+                    OnPropertyChanged(nameof(IsRollsLeftLabelVisible));
                 }
             }
         }
