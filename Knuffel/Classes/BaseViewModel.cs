@@ -20,6 +20,7 @@ namespace Knuffel.Classes
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             
             
-        }
+        }      
+
     }
 }
