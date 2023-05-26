@@ -12,7 +12,7 @@ namespace Knuffel.Classes
     {
         // Here we create the properties for the die
         public int? Value { get; set; }
-        public bool Locked { get; set; }
+        public bool Locked { get; set; } = false;
         public List<Die> DieList { get; set; }
         public Die() { }
         public Die(int value, bool locked)
@@ -47,7 +47,7 @@ namespace Knuffel.Classes
             }
         }
         // Here we create a method for changing the Locked property of the die
-        public void ChangeLockStatus(int index)
+        public void ChangeLockStatus(List<Die> DieList, int index)
         {
             if (DieList[index].Locked)
             {

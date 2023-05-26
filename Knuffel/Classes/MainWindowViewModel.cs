@@ -4,11 +4,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Windows;
 
 namespace Knuffel.Classes
 {
     internal class MainWindowViewModel : BaseViewModel
     {
+
+        //  creating 4 new players
+        Player playerOne = new Player();
+        Player playerTwo = new Player();
+        Player playerThree = new Player();
+        Player playerFour = new Player();
+
+        //declaring the images for the dice
+        string oneEyedDie = "pack://application:,,,/Images/1side.png";
+        string twoEyedDie = "pack://application:,,,/Images/2side.png";
+        string threeEyedDie = "pack://application:,,,/Images/3side.png";
+        string fourEyedDie = "pack://application:,,,/Images/4side.png";
+        string fiveEyedDie = "pack://application:,,,/Images/5side.png";
+        string sixEyedDie = "pack://application:,,,/Images/6side.png";
+        string oneEyedDieGreen = "pack://application:,,,/Images/1sideGreen.png";
+        string twoEyedDieGreen = "pack://application:,,,/Images/2sideGreen.png";
+        string threeEyedDieGreen = "pack://application:,,,/Images/3sideGreen.png";
+        string fourEyedDieGreen = "pack://application:,,,/Images/4sideGreen.png";
+        string fiveEyedDieGreen = "pack://application:,,,/Images/5sideGreen.png";
+        string sixEyedDieGreen = "pack://application:,,,/Images/6sideGreen.png";
+        string ravenDie = "pack://application:,,,/Images/RavenGamesLogo2Use.png";
+
 
         public MainWindowViewModel()
         {
@@ -19,6 +42,37 @@ namespace Knuffel.Classes
             Die4Image = "pack://application:,,,/Images/RavenGamesLogo2Use.png";
             Die5Image = "pack://application:,,,/Images/RavenGamesLogo2Use.png";
 
+
+            // creating a new list of dice
+            List<Die> dieList = new List<Die>();
+
+            // creating 5 new dice
+            Die dieOne = new Die();
+            Die dieTwo = new Die();
+            Die dieThree = new Die();
+            Die dieFour = new Die();
+            Die dieFive = new Die();
+
+            // connecting the UpdateProperty of the Lock Status to each die
+            Die1Locked = dieOne.Locked;
+            Die2Locked = dieTwo.Locked;
+            Die3Locked = dieThree.Locked;
+            Die4Locked = dieFour.Locked;
+            Die5Locked = dieFive.Locked;
+
+            // adding the 5 dice to the list of dice
+            dieList.Add(dieOne);
+            dieList.Add(dieTwo);
+            dieList.Add(dieThree);
+            dieList.Add(dieFour);
+            dieList.Add(dieFive);
+
+            //// creating an Scoreboard Array where the scores of each round of the players will be stored
+            //int?[,] scoreboardArray = new int?[4, 13];
+            //// setting the default value of the scoreboardArray to null
+            //NullScoreboard(scoreboardArray);
+
+
             // declaring the default values for the player names
             Player1Name = "Player 1";
             Player2Name = "Player 2";
@@ -28,8 +82,50 @@ namespace Knuffel.Classes
             // declaring the default value for AmountOfPlayers
             AmountOfPlayers = 1;
 
+            // declaring the default value for the ActivePlayer
+            ActivePlayer = 1;
+
+            // declaring the default value for the ActivePlayerName
+            ActivePlayerName = playerOne.Name;
+
             // declaring the default value for the RollsLeft
             RollsLeft = 3;
+
+            // declaring the default value for the RoundsLeft
+            RoundsLeft = 13;
+
+            // declaring the properties for PlayerOne that will be filled automatically 
+            PlayerOneSumUpper = PlayerOneOnes + PlayerOneTwos + PlayerOneThrees + PlayerOneFours + PlayerOneFives + PlayerOneSixes;
+            PlayerOneSumLower = PlayerOneThreeOfAKind + PlayerOneFourOfAKind + PlayerOneFullHouse + PlayerOneSmallStraight + PlayerOneLargeStraight
+                                + PlayerOneKnuffel + PlayerOneChance;
+            PlayerOneBonus = PlayerOneSumUpper >= 63 ? 35 : 0;
+            PlayerOneTotalUpper = PlayerOneSumUpper + PlayerOneBonus;
+            PlayerOneFinalScore = PlayerOneTotalUpper + PlayerOneSumLower;
+
+
+            // declaring the properties for PlayerTwo that will be filled automatically
+            PlayerTwoSumUpper = PlayerTwoOnes + PlayerTwoTwos + PlayerTwoThrees + PlayerTwoFours + PlayerTwoFives + PlayerTwoSixes;
+            PlayerTwoSumLower = PlayerTwoThreeOfAKind + PlayerTwoFourOfAKind + PlayerTwoFullHouse + PlayerTwoSmallStraight + PlayerTwoLargeStraight
+                                + PlayerTwoKnuffel + PlayerTwoChance;
+            PlayerTwoBonus = PlayerTwoSumUpper >= 63 ? 35 : 0;
+            PlayerTwoTotalUpper = PlayerTwoSumUpper + PlayerTwoBonus;
+            PlayerTwoFinalScore = PlayerTwoTotalUpper + PlayerTwoSumLower;
+
+            // declaring the properties for PlayerThree that will be filled automatically
+            PlayerThreeSumUpper = PlayerThreeOnes + PlayerThreeTwos + PlayerThreeThrees + PlayerThreeFours + PlayerThreeFives + PlayerThreeSixes;
+            PlayerThreeSumLower = PlayerThreeThreeOfAKind + PlayerThreeFourOfAKind + PlayerThreeFullHouse + PlayerThreeSmallStraight
+                                + PlayerThreeLargeStraight + PlayerThreeKnuffel + PlayerThreeChance;
+            PlayerThreeBonus = PlayerThreeSumUpper >= 63 ? 35 : 0;
+            PlayerThreeTotalUpper = PlayerThreeSumUpper + PlayerThreeBonus;
+            PlayerThreeFinalScore = PlayerThreeTotalUpper + PlayerThreeSumLower;
+
+            // declaring the properties for PlayerFour that will be filled automatically
+            PlayerFourSumUpper = PlayerFourOnes + PlayerFourTwos + PlayerFourThrees + PlayerFourFours + PlayerFourFives + PlayerFourSixes;
+            PlayerFourSumLower = PlayerFourThreeOfAKind + PlayerFourFourOfAKind + PlayerFourFullHouse + PlayerFourSmallStraight
+                                + PlayerFourLargeStraight + PlayerFourKnuffel + PlayerFourChance;
+            PlayerFourBonus = PlayerFourSumUpper >= 63 ? 35 : 0;
+            PlayerFourTotalUpper = PlayerFourSumUpper + PlayerFourBonus;
+            PlayerFourFinalScore = PlayerFourTotalUpper + PlayerFourSumLower;
 
             // declaring the default value for the visibility of the StartGame Button
             IsStartGameButtonVisible = true;
@@ -50,6 +146,14 @@ namespace Knuffel.Classes
             IsPlayer4NameTextBoxVisible = false;
             IsEnterPlayerNamesButtonVisible = false;
 
+            // declaring the default values for the visibility of the Active Player Label and the Your Turn Label
+            IsActivePlayerLabelVisible = false;
+            IsYourTurnLabelVisible = false;
+
+            // declaring the default values for the visibility of the Score Buttons
+            IsScoreButtonsLabelVisible = false;
+            IsScoreButtonsGridVisible = false;
+
 
             // initializing the command for the start game button
             StartGameCommand = new DelegateCommand(
@@ -65,8 +169,972 @@ namespace Knuffel.Classes
             });
 
             // initializing the command for the Enter Player Names Button
-            EnterPlayerNamesCommand = new DelegateCommand((o) => true, (o) => CreatePlayers());
+            EnterPlayerNamesCommand = new DelegateCommand((o) => true,
+                (o) =>
+                {
+                    CreatePlayerNames();
+                }
+                );
+
+            // initializing the command for the Roll Dice Button
+            RollDiceCommand = new DelegateCommand(
+                (o) => RollsLeft > 0 && (!Die1Locked || !Die2Locked || !Die3Locked || !Die4Locked || !Die5Locked),
+                (o) =>
+                {
+                    RollingTheDice(dieList);
+                    Die1Image = GetDieImage(dieList[0].Value, dieList[0].Locked);
+                    Die2Image = GetDieImage(dieList[1].Value, dieList[1].Locked);
+                    Die3Image = GetDieImage(dieList[2].Value, dieList[2].Locked);
+                    Die4Image = GetDieImage(dieList[3].Value, dieList[3].Locked);
+                    Die5Image = GetDieImage(dieList[4].Value, dieList[4].Locked);
+                    RollsLeft--;
+                    if (RollsLeft < 3)
+                    {
+                        IsScoreButtonsLabelVisible = true;
+                        IsScoreButtonsGridVisible = true;
+                    }
+                    RollDiceCommand.RaiseCanExecuteChanged();
+                    LockDieCommand.RaiseCanExecuteChanged();
+                    
+                }
+                );
+
+            // initializing the command for the Lock Die Buttons
+            LockDieCommand = new DelegateCommand(
+                (o) => RollsLeft < 3,
+                (value) =>
+                {
+                    int val = int.Parse((string)value);
+                    Die dieInstance = new Die();
+                    dieInstance.ChangeLockStatus(dieList, val);
+
+                    // changing the lock status of the die
+                    switch (val)
+                    {
+                        case 0:
+                            Die1Locked = dieList[val].Locked;
+                            break;
+                        case 1:
+                            Die2Locked = dieList[val].Locked;
+                            break;
+                        case 2:
+                            Die3Locked = dieList[val].Locked;
+                            break;
+                        case 3:
+                            Die4Locked = dieList[val].Locked;
+                            break;
+                        case 4:
+                            Die5Locked = dieList[val].Locked;
+                            break;
+                    }
+
+
+
+                    // changing the image of the die
+                    switch (val)
+                    {
+                        case 0:
+                            Die1Image = GetDieImage(dieList[0].Value, dieList[0].Locked);
+                            break;
+                        case 1:
+                            Die2Image = GetDieImage(dieList[1].Value, dieList[1].Locked);
+                            break;
+                        case 2:
+                            Die3Image = GetDieImage(dieList[2].Value, dieList[2].Locked);
+                            break;
+                        case 3:
+                            Die4Image = GetDieImage(dieList[3].Value, dieList[3].Locked);
+                            break;
+                        case 4:
+                            Die5Image = GetDieImage(dieList[4].Value, dieList[4].Locked);
+                            break;
+                    }
+
+                    // Checking if the Roll Dice Button should be enabled
+                    RollDiceCommand.RaiseCanExecuteChanged();
+                });
+
+            // initializing the command for the ScoreButtonOnes
+            ScoreButtonOnesCommand = new DelegateCommand(
+                  (o) => ActivePlayer == 1 && PlayerOneOnes == null ||
+                         ActivePlayer == 2 && PlayerTwoOnes == null ||
+                         ActivePlayer == 3 && PlayerThreeOnes == null ||
+                         ActivePlayer == 4 && PlayerFourOnes == null,
+                  (o) =>
+                  {
+                      // for each die in the dieList, if the value is 1, add 1 to the score
+                      int? score = 0;
+                      foreach (Die die in dieList)
+                      {
+                          if (die.Value == 1)
+                          {
+                              score += 1;
+                          }
+                      }
+                      // adding the score to the correct player
+                      switch (ActivePlayer)
+                      {
+                          case 1:
+                              PlayerOneOnes = score;
+                              break;
+                          case 2:
+                              PlayerTwoOnes = score;
+                              break;
+                          case 3:
+                              PlayerThreeOnes = score;
+                              break;
+                          case 4:
+                              PlayerFourOnes = score;
+                              break;
+                      }
+                      // changing the properties depending on the active player
+                      switch (ActivePlayer)
+                      {
+                          case 1:
+                              OnPropertyChanged(nameof(PlayerOneOnes));
+                              OnPropertyChanged(nameof(PlayerOneSumUpper));
+                              OnPropertyChanged(nameof(PlayerOneBonus));
+                              OnPropertyChanged(nameof(PlayerOneTotalUpper));
+                              OnPropertyChanged(nameof(PlayerOneFinalScore));
+                              break;
+                          case 2:
+                              OnPropertyChanged(nameof(PlayerTwoOnes));
+                              OnPropertyChanged(nameof(PlayerTwoSumUpper));
+                              OnPropertyChanged(nameof(PlayerTwoBonus));
+                              OnPropertyChanged(nameof(PlayerTwoTotalUpper));
+                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
+                              break;
+                          case 3:
+                              OnPropertyChanged(nameof(PlayerThreeOnes));
+                              OnPropertyChanged(nameof(PlayerThreeSumUpper));
+                              OnPropertyChanged(nameof(PlayerThreeBonus));
+                              OnPropertyChanged(nameof(PlayerThreeTotalUpper));
+                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
+                              break;
+                          case 4:
+                              OnPropertyChanged(nameof(PlayerFourOnes));
+                              OnPropertyChanged(nameof(PlayerFourSumUpper));
+                              OnPropertyChanged(nameof(PlayerFourBonus));
+                              OnPropertyChanged(nameof(PlayerFourTotalUpper));
+                              OnPropertyChanged(nameof(PlayerFourFinalScore));
+                              break;
+                      }
+                      // calling the method NextPlayer
+                      NextPlayer();
+                  });
+
+            // initializing the command for the ScoreButtonTwos
+            ScoreButtonTwosCommand = new DelegateCommand(
+                  (o) => ActivePlayer == 1 && PlayerOneTwos == null ||
+                         ActivePlayer == 2 && PlayerTwoTwos == null ||
+                         ActivePlayer == 3 && PlayerThreeTwos == null ||
+                         ActivePlayer == 4 && PlayerFourTwos == null,
+                  (o) =>
+                  {
+                      // for each die in the dieList, if the value is 2, add 2 to the score
+                      int? score = 0;
+                      foreach (Die die in dieList)
+                      {
+                          if (die.Value == 2)
+                          {
+                              score += 2;
+                          }
+
+                      }
+                      // adding the score to the correct player
+                      switch (ActivePlayer)
+                      {
+                          case 1:
+                              PlayerOneTwos = score;
+                              break;
+                          case 2:
+                              PlayerTwoTwos = score;
+                              break;
+                          case 3:
+                              PlayerThreeTwos = score;
+                              break;
+                          case 4:
+                              PlayerFourTwos = score;
+                              break;
+                      }
+
+                      // changing the properties depending on the active player
+                      switch (ActivePlayer)
+                      {
+                          case 1:
+                              OnPropertyChanged(nameof(PlayerOneTwos));
+                              OnPropertyChanged(nameof(PlayerOneSumUpper));
+                              OnPropertyChanged(nameof(PlayerOneBonus));
+                              OnPropertyChanged(nameof(PlayerOneTotalUpper));
+                              OnPropertyChanged(nameof(PlayerOneFinalScore));
+                              break;
+                          case 2:
+                              OnPropertyChanged(nameof(PlayerTwoTwos));
+                              OnPropertyChanged(nameof(PlayerTwoSumUpper));
+                              OnPropertyChanged(nameof(PlayerTwoBonus));
+                              OnPropertyChanged(nameof(PlayerTwoTotalUpper));
+                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
+                              break;
+                          case 3:
+                              OnPropertyChanged(nameof(PlayerThreeTwos));
+                              OnPropertyChanged(nameof(PlayerThreeSumUpper));
+                              OnPropertyChanged(nameof(PlayerThreeBonus));
+                              OnPropertyChanged(nameof(PlayerThreeTotalUpper));
+                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
+                              break;
+                          case 4:
+                              OnPropertyChanged(nameof(PlayerFourTwos));
+                              OnPropertyChanged(nameof(PlayerFourSumUpper));
+                              OnPropertyChanged(nameof(PlayerFourBonus));
+                              OnPropertyChanged(nameof(PlayerFourTotalUpper));
+                              OnPropertyChanged(nameof(PlayerFourFinalScore));
+                              break;
+                      }
+                      // calling the method NextPlayer
+                      NextPlayer();
+                  });
+
+            // initializing the command for the ScoreButtonThrees
+            ScoreButtonThreesCommand = new DelegateCommand(
+                  (o) => ActivePlayer == 1 && PlayerOneThrees == null ||
+                         ActivePlayer == 2 && PlayerTwoThrees == null ||
+                         ActivePlayer == 3 && PlayerThreeThrees == null ||
+                         ActivePlayer == 4 && PlayerFourThrees == null,
+                  (o) =>
+                  {
+                      // for each die in the dieList, if the value is 3, add 3 to the score
+                      int? score = 0;
+                      foreach (Die die in dieList)
+                      {
+                          if (die.Value == 3)
+                          {
+                              score += 3;
+                          }
+                      }
+                      // adding the score to the correct player
+                      switch (ActivePlayer)
+                      {
+                            case 1:
+                                PlayerOneThrees = score;
+                                break;
+                            case 2:
+                                PlayerTwoThrees = score;
+                                break;
+                            case 3:
+                                PlayerThreeThrees = score;
+                                break;
+                            case 4:
+                                PlayerFourThrees = score;
+                                break;
+                        }
+
+                      // changing the properties depending on the active player
+                      switch (ActivePlayer)
+                      {
+                          case 1:
+                              OnPropertyChanged(nameof(PlayerOneThrees));
+                              OnPropertyChanged(nameof(PlayerOneSumUpper));
+                              OnPropertyChanged(nameof(PlayerOneBonus));
+                              OnPropertyChanged(nameof(PlayerOneTotalUpper));
+                              OnPropertyChanged(nameof(PlayerOneFinalScore));
+                              break;
+                          case 2:
+                              OnPropertyChanged(nameof(PlayerTwoThrees));
+                              OnPropertyChanged(nameof(PlayerTwoSumUpper));
+                              OnPropertyChanged(nameof(PlayerTwoBonus));
+                              OnPropertyChanged(nameof(PlayerTwoTotalUpper));
+                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
+                              break;
+                          case 3:
+                              OnPropertyChanged(nameof(PlayerThreeThrees));
+                              OnPropertyChanged(nameof(PlayerThreeSumUpper));
+                              OnPropertyChanged(nameof(PlayerThreeBonus));
+                              OnPropertyChanged(nameof(PlayerThreeTotalUpper));
+                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
+                              break;
+                          case 4:
+                              OnPropertyChanged(nameof(PlayerFourThrees));
+                              OnPropertyChanged(nameof(PlayerFourSumUpper));
+                              OnPropertyChanged(nameof(PlayerFourBonus));
+                              OnPropertyChanged(nameof(PlayerFourTotalUpper));
+                              OnPropertyChanged(nameof(PlayerFourFinalScore));
+                              break;
+                      }
+                      // calling the method NextPlayer
+                      NextPlayer();
+                  });
+
+            // initializing the command for the ScoreButtonFours
+            ScoreButtonFoursCommand = new DelegateCommand(
+                  (o) => ActivePlayer == 1 && PlayerOneFours == null ||
+                         ActivePlayer == 2 && PlayerTwoFours == null ||
+                         ActivePlayer == 3 && PlayerThreeFours == null ||
+                         ActivePlayer == 4 && PlayerFourFours == null,
+                  (o) =>
+                  {
+                      // for each die in the dieList, if the value is 4, add 4 to the score
+                      int? score = 0;
+                      foreach (Die die in dieList)
+                      {
+                          if (die.Value == 4)
+                          {
+                              score += 4;
+                          }
+                              
+                      }
+                      // adding the score to the correct player
+                      switch (ActivePlayer)
+                      {
+                            case 1:
+                                PlayerOneFours = score;
+                                break;
+                            case 2:
+                                PlayerTwoFours = score;
+                                break;
+                            case 3:
+                                PlayerThreeFours = score;
+                                break;
+                            case 4:
+                                PlayerFourFours = score;
+                                break;
+                        }
+                      // changing the properties depending on the active player
+                      switch (ActivePlayer)
+                      {
+                          case 1:
+                              OnPropertyChanged(nameof(PlayerOneFours));
+                              OnPropertyChanged(nameof(PlayerOneSumUpper));
+                              OnPropertyChanged(nameof(PlayerOneBonus));
+                              OnPropertyChanged(nameof(PlayerOneTotalUpper));
+                              OnPropertyChanged(nameof(PlayerOneFinalScore));
+                              break;
+                          case 2:
+                              OnPropertyChanged(nameof(PlayerTwoFours));
+                              OnPropertyChanged(nameof(PlayerTwoSumUpper));
+                              OnPropertyChanged(nameof(PlayerTwoBonus));
+                              OnPropertyChanged(nameof(PlayerTwoTotalUpper));
+                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
+                              break;
+                          case 3:
+                              OnPropertyChanged(nameof(PlayerThreeFours));
+                              OnPropertyChanged(nameof(PlayerThreeSumUpper));
+                              OnPropertyChanged(nameof(PlayerThreeBonus));
+                              OnPropertyChanged(nameof(PlayerThreeTotalUpper));
+                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
+                              break;
+                          case 4:
+                              OnPropertyChanged(nameof(PlayerFourFours));
+                              OnPropertyChanged(nameof(PlayerFourSumUpper));
+                              OnPropertyChanged(nameof(PlayerFourBonus));
+                              OnPropertyChanged(nameof(PlayerFourTotalUpper));
+                              OnPropertyChanged(nameof(PlayerFourFinalScore));
+                              break;
+                      }
+                      // calling the method NextPlayer
+                      NextPlayer();
+                  });
+
+            // initializing the command for the ScoreButtonFives
+            ScoreButtonFivesCommand = new DelegateCommand(
+                  (o) => ActivePlayer == 1 && PlayerOneFives == null ||
+                         ActivePlayer == 2 && PlayerTwoFives == null ||
+                         ActivePlayer == 3 && PlayerThreeFives == null ||
+                         ActivePlayer == 4 && PlayerFourFives == null,
+                  (o) =>
+                  {
+                      // for each die in the dieList, if the value is 5, add 5 to the score
+                      int? score = 0;
+                      foreach (Die die in dieList)
+                      {
+                          if (die.Value == 5)
+                          {
+                              score += 5;
+                          }
+                             
+                      }
+                      // adding the score to the correct player
+                      switch (ActivePlayer)
+                      {
+                                case 1:
+                                    PlayerOneFives = score;
+                                    break;
+                                case 2:
+                                    PlayerTwoFives = score;
+                                    break;
+                                case 3:
+                                    PlayerThreeFives = score;
+                                    break;
+                                case 4:
+                                    PlayerFourFives = score;
+                                    break;
+                      }
+                      // changing the properties depending on the active player
+                      switch (ActivePlayer)
+                      {
+                          case 1:
+                              OnPropertyChanged(nameof(PlayerOneFives));
+                              OnPropertyChanged(nameof(PlayerOneSumUpper));
+                              OnPropertyChanged(nameof(PlayerOneBonus));
+                              OnPropertyChanged(nameof(PlayerOneTotalUpper));
+                              OnPropertyChanged(nameof(PlayerOneFinalScore));
+                              break;
+                          case 2:
+                              OnPropertyChanged(nameof(PlayerTwoFives));
+                              OnPropertyChanged(nameof(PlayerTwoSumUpper));
+                              OnPropertyChanged(nameof(PlayerTwoBonus));
+                              OnPropertyChanged(nameof(PlayerTwoTotalUpper));
+                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
+                              break;
+                          case 3:
+                              OnPropertyChanged(nameof(PlayerThreeFives));
+                              OnPropertyChanged(nameof(PlayerThreeSumUpper));
+                              OnPropertyChanged(nameof(PlayerThreeBonus));
+                              OnPropertyChanged(nameof(PlayerThreeTotalUpper));
+                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
+                              break;
+                          case 4:
+                              OnPropertyChanged(nameof(PlayerFourFives));
+                              OnPropertyChanged(nameof(PlayerFourSumUpper));
+                              OnPropertyChanged(nameof(PlayerFourBonus));
+                              OnPropertyChanged(nameof(PlayerFourTotalUpper));
+                              OnPropertyChanged(nameof(PlayerFourFinalScore));
+                              break;
+                      }
+                      // calling the method NextPlayer
+                      NextPlayer();
+                  });
+
+            // initializing the command for the ScoreButtonSixes
+            ScoreButtonSixesCommand = new DelegateCommand(
+                  (o) => ActivePlayer == 1 && PlayerOneSixes == null ||
+                         ActivePlayer == 2 && PlayerTwoSixes == null ||
+                         ActivePlayer == 3 && PlayerThreeSixes == null ||
+                         ActivePlayer == 4 && PlayerFourSixes == null,
+                  (o) =>
+                  {
+                      // for each die in the dieList, if the value is 6, add 6 to the score
+                      int? score = 0;
+                      foreach (Die die in dieList)
+                      {
+                          if (die.Value == 6)
+                          {
+                              score += 6;
+                          }
+                              
+                      }
+                      // adding the score to the correct player
+                      switch (ActivePlayer)
+                      {
+                                    case 1:
+                                        PlayerOneSixes = score;
+                                        break;
+                                    case 2:
+                                        PlayerTwoSixes = score;
+                                        break;
+                                    case 3:
+                                        PlayerThreeSixes = score;
+                                        break;
+                                    case 4:
+                                        PlayerFourSixes = score;
+                                        break;
+                      }
+                      // changing the properties depending on the active player
+                      switch (ActivePlayer)
+                      {
+                          case 1:
+                              OnPropertyChanged(nameof(PlayerOneSixes));
+                              OnPropertyChanged(nameof(PlayerOneSumUpper));
+                              OnPropertyChanged(nameof(PlayerOneBonus));
+                              OnPropertyChanged(nameof(PlayerOneTotalUpper));
+                              OnPropertyChanged(nameof(PlayerOneFinalScore));
+                              break;
+                          case 2:
+                              OnPropertyChanged(nameof(PlayerTwoSixes));
+                              OnPropertyChanged(nameof(PlayerTwoSumUpper));
+                              OnPropertyChanged(nameof(PlayerTwoBonus));
+                              OnPropertyChanged(nameof(PlayerTwoTotalUpper));
+                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
+                              break;
+                          case 3:
+                              OnPropertyChanged(nameof(PlayerThreeSixes));
+                              OnPropertyChanged(nameof(PlayerThreeSumUpper));
+                              OnPropertyChanged(nameof(PlayerThreeBonus));
+                              OnPropertyChanged(nameof(PlayerThreeTotalUpper));
+                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
+                              break;
+                          case 4:
+                              OnPropertyChanged(nameof(PlayerFourSixes));
+                              OnPropertyChanged(nameof(PlayerFourSumUpper));
+                              OnPropertyChanged(nameof(PlayerFourBonus));
+                              OnPropertyChanged(nameof(PlayerFourTotalUpper));
+                              OnPropertyChanged(nameof(PlayerFourFinalScore));
+                              break;
+                      }
+                      // calling the method NextPlayer
+                      NextPlayer();
+                  });
+
+            // initializing the command for the ScoreButtonThreeOfAKind
+            ScoreButtonThreeOfAKindCommand = new DelegateCommand(
+                  (o) => ActivePlayer == 1 && PlayerOneThreeOfAKind == null ||
+                         ActivePlayer == 2 && PlayerTwoThreeOfAKind == null ||
+                         ActivePlayer == 3 && PlayerThreeThreeOfAKind == null ||
+                         ActivePlayer == 4 && PlayerFourThreeOfAKind == null,
+                  (o) =>
+                  {
+                      // declaring the variable for the score
+                      int? score = 0;
+                      // checking if the dieList contains at least three die with the same value
+                      if (dieList.Any(die => dieList.Count(d => d.Value == die.Value) >= 3))
+                      {
+                          // adding the value of each die to the score
+                          foreach (Die die in dieList)
+                          {
+                              score += die.Value;
+                          }
+                      }
+
+
+                      {
+                          switch (ActivePlayer)
+                          {
+                              case 1:
+                                  PlayerOneThreeOfAKind = score;
+                                  break;
+                              case 2:
+                                  PlayerTwoThreeOfAKind = score;
+                                  break;
+                              case 3:
+                                  PlayerThreeThreeOfAKind = score;
+                                  break;
+                              case 4:
+                                  PlayerFourThreeOfAKind = score;
+                                  break;
+                          }
+                      }
+                      // changing the properties depending on the active player
+                      switch (ActivePlayer)
+                      {
+                          case 1:
+                              OnPropertyChanged(nameof(PlayerOneThreeOfAKind));
+                              OnPropertyChanged(nameof(PlayerOneSumLower));
+                              OnPropertyChanged(nameof(PlayerOneFinalScore));
+                              break;
+                          case 2:
+                              OnPropertyChanged(nameof(PlayerTwoThreeOfAKind));
+                              OnPropertyChanged(nameof(PlayerTwoSumLower));
+                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
+                              break;
+                          case 3:
+                              OnPropertyChanged(nameof(PlayerThreeThreeOfAKind));
+                              OnPropertyChanged(nameof(PlayerThreeSumLower));
+                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
+                              break;
+                          case 4:
+                              OnPropertyChanged(nameof(PlayerFourThreeOfAKind));
+                              OnPropertyChanged(nameof(PlayerFourSumLower));
+                              OnPropertyChanged(nameof(PlayerFourFinalScore));
+                              break;
+                      }
+                      // calling the method NextPlayer
+                      NextPlayer();
+                  });
+
+            // initializing the command for the ScoreButtonFourOfAKind
+            ScoreButtonFourOfAKindCommand = new DelegateCommand(
+                  (o) => ActivePlayer == 1 && PlayerOneFourOfAKind == null ||
+                         ActivePlayer == 2 && PlayerTwoFourOfAKind == null ||
+                         ActivePlayer == 3 && PlayerThreeFourOfAKind == null ||
+                         ActivePlayer == 4 && PlayerFourFourOfAKind == null,
+                  (o) =>
+                  {
+                      // declaring the variable for the score
+                      int? score = 0;
+                      // checking if the dieList contains at least four die with the same value
+                      if (dieList.Any(die => dieList.Count(d => d.Value == die.Value) >= 4))
+                      {
+                          // adding the value of each die to the score
+                          foreach (Die die in dieList)
+                          {
+                              score += die.Value;
+                          }
+                      }
+
+
+                      {
+                          switch (ActivePlayer)
+                          {
+                              case 1:
+                                  PlayerOneFourOfAKind = score;
+                                  break;
+                              case 2:
+                                  PlayerTwoFourOfAKind = score;
+                                  break;
+                              case 3:
+                                  PlayerThreeFourOfAKind = score;
+                                  break;
+                              case 4:
+                                  PlayerFourFourOfAKind = score;
+                                  break;
+                          }
+                      }
+                      // changing the properties depending on the active player
+                      switch (ActivePlayer)
+                      {
+                          case 1:
+                              OnPropertyChanged(nameof(PlayerOneFourOfAKind));
+                              OnPropertyChanged(nameof(PlayerOneSumLower));
+                              OnPropertyChanged(nameof(PlayerOneFinalScore));
+                              break;
+                          case 2:
+                              OnPropertyChanged(nameof(PlayerTwoFourOfAKind));
+                              OnPropertyChanged(nameof(PlayerTwoSumLower));
+                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
+                              break;
+                          case 3:
+                              OnPropertyChanged(nameof(PlayerThreeFourOfAKind));
+                              OnPropertyChanged(nameof(PlayerThreeSumLower));
+                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
+                              break;
+                          case 4:
+                              OnPropertyChanged(nameof(PlayerFourFourOfAKind));
+                              OnPropertyChanged(nameof(PlayerFourSumLower));
+                              OnPropertyChanged(nameof(PlayerFourFinalScore));
+                              break;
+                      }
+                      // calling the method NextPlayer
+                      NextPlayer();
+                  });
+
+            // initializing the command for the ScoreButtonFullHouse
+            ScoreButtonFullHouseCommand = new DelegateCommand(
+                  (o) => ActivePlayer == 1 && PlayerOneFullHouse == null ||
+                         ActivePlayer == 2 && PlayerTwoFullHouse == null ||
+                         ActivePlayer == 3 && PlayerThreeFullHouse == null ||
+                         ActivePlayer == 4 && PlayerFourFullHouse == null,
+                  (o) =>
+                  {
+                      // declaring the variable for the score
+                      int? score = 0;
+                      // checking if the dieList contains three die with the same value and two die with the same value
+                      if (dieList.Any(die => dieList.Count(d => d.Value == die.Value) == 3) &&
+                          dieList.Any(die => dieList.Count(d => d.Value == die.Value) == 2))
+                      {
+                          // adding the value of each die to the score
+                          foreach (Die die in dieList)
+                          {
+                              score += die.Value;
+                          }
+                      }
+
+                      {
+                          switch (ActivePlayer)
+                          {
+                              case 1:
+                                  PlayerOneFullHouse = score;
+                                  break;
+                              case 2:
+                                  PlayerTwoFullHouse = score;
+                                  break;
+                              case 3:
+                                  PlayerThreeFullHouse = score;
+                                  break;
+                              case 4:
+                                  PlayerFourFullHouse = score;
+                                  break;
+                          }
+                      }
+                      // changing the properties depending on the active player
+                      switch (ActivePlayer)
+                      {
+                          case 1:
+                              OnPropertyChanged(nameof(PlayerOneFullHouse));
+                              OnPropertyChanged(nameof(PlayerOneSumLower));
+                              OnPropertyChanged(nameof(PlayerOneFinalScore));
+                              break;
+                          case 2:
+                              OnPropertyChanged(nameof(PlayerTwoFullHouse));
+                              OnPropertyChanged(nameof(PlayerTwoSumLower));
+                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
+                              break;
+                          case 3:
+                              OnPropertyChanged(nameof(PlayerThreeFullHouse));
+                              OnPropertyChanged(nameof(PlayerThreeSumLower));
+                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
+                              break;
+                          case 4:
+                              OnPropertyChanged(nameof(PlayerFourFullHouse));
+                              OnPropertyChanged(nameof(PlayerFourSumLower));
+                              OnPropertyChanged(nameof(PlayerFourFinalScore));
+                              break;
+                      }
+                      // calling the method NextPlayer
+                      NextPlayer();
+                  });
+
+            // initializing the command for the ScoreButtonSmallStraight
+            ScoreButtonSmallStraightCommand = new DelegateCommand(
+                  (o) => ActivePlayer == 1 && PlayerOneSmallStraight == null ||
+                         ActivePlayer == 2 && PlayerTwoSmallStraight == null ||
+                         ActivePlayer == 3 && PlayerThreeSmallStraight == null ||
+                         ActivePlayer == 4 && PlayerFourSmallStraight == null,
+                  (o) =>
+                  {
+                      // declaring the variable for the score
+                      int? score = 0;
+                      // checking if the dieList contains at least four die with consecutive values
+                      if (dieList.Any(die => dieList.Count(d => d.Value == die.Value) >= 1) &&
+                          dieList.Any(die => dieList.Count(d => d.Value == die.Value + 1) >= 1) &&
+                          dieList.Any(die => dieList.Count(d => d.Value == die.Value + 2) >= 1) &&
+                          dieList.Any(die => dieList.Count(d => d.Value == die.Value + 3) >= 1))
+                                                      {
+                          // adding the value of each die to the score
+                          foreach (Die die in dieList)
+                          {
+                              score += die.Value;
+                          }
+                      }
+
+                      {
+                          switch (ActivePlayer)
+                          {
+                              case 1:
+                                  PlayerOneSmallStraight = score;
+                                  break;
+                              case 2:
+                                  PlayerTwoSmallStraight = score;
+                                  break;
+                              case 3:
+                                  PlayerThreeSmallStraight = score;
+                                  break;
+                              case 4:
+                                  PlayerFourSmallStraight = score;
+                                  break;
+                          }
+                      }
+                      // changing the properties depending on the active player
+                      switch (ActivePlayer)
+                                                      {
+                          case 1:
+                              OnPropertyChanged(nameof(PlayerOneSmallStraight));
+                              OnPropertyChanged(nameof(PlayerOneSumLower));
+                              OnPropertyChanged(nameof(PlayerOneFinalScore));
+                              break;
+                          case 2:
+                              OnPropertyChanged(nameof(PlayerTwoSmallStraight));
+                              OnPropertyChanged(nameof(PlayerTwoSumLower));
+                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
+                              break;
+                          case 3:
+                              OnPropertyChanged(nameof(PlayerThreeSmallStraight));
+                              OnPropertyChanged(nameof(PlayerThreeSumLower));
+                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
+                              break;
+                          case 4:
+                              OnPropertyChanged(nameof(PlayerFourSmallStraight));
+                              OnPropertyChanged(nameof(PlayerFourSumLower));
+                              OnPropertyChanged(nameof(PlayerFourFinalScore));
+                              break;
+                      }
+                      // calling the method NextPlayer
+                      NextPlayer();
+                  });
+
+            // initializing the command for the ScoreButtonLargeStraight
+            ScoreButtonLargeStraightCommand = new DelegateCommand(
+                 (o) => ActivePlayer == 1 && PlayerOneLargeStraight == null ||
+                        ActivePlayer == 2 && PlayerTwoLargeStraight == null ||
+                        ActivePlayer == 3 && PlayerThreeLargeStraight == null ||
+                        ActivePlayer == 4 && PlayerFourLargeStraight == null,
+                 (o) =>
+                 {
+                     // declaring the variable for the score
+                     int? score = 0;
+                     // checking if the dieList contains five die with consecutive values
+                     if (dieList.Any(die => dieList.Count(d => d.Value == die.Value) >= 1) &&
+                         dieList.Any(die => dieList.Count(d => d.Value == die.Value + 1) >= 1) &&
+                         dieList.Any(die => dieList.Count(d => d.Value == die.Value + 2) >= 1) &&
+                         dieList.Any(die => dieList.Count(d => d.Value == die.Value + 3) >= 1) &&
+                                                                                                                                                         dieList.Any(die => dieList.Count(d => d.Value == die.Value + 4) >= 1))
+                     {
+                         // adding the value of each die to the score
+                         foreach (Die die in dieList)
+                         {
+                             score += die.Value;
+                         }
+                     }
+
+                     {
+                         switch (ActivePlayer)
+                         {
+                             case 1:
+                                 PlayerOneLargeStraight = score;
+                                 break;
+                             case 2:
+                                 PlayerTwoLargeStraight = score;
+                                 break;
+                             case 3:
+                                 PlayerThreeLargeStraight = score;
+                                 break;
+                             case 4:
+                                 PlayerFourLargeStraight = score;
+                                 break;
+                         }
+                     }
+                     // changing the properties depending on the active player
+                     switch (ActivePlayer)
+                     {
+                         case 1:
+                             OnPropertyChanged(nameof(PlayerOneLargeStraight));
+                             OnPropertyChanged(nameof(PlayerOneSumLower));
+                             OnPropertyChanged(nameof(PlayerOneFinalScore));
+                             break;
+                         case 2:
+                             OnPropertyChanged(nameof(PlayerTwoLargeStraight));
+                             OnPropertyChanged(nameof(PlayerTwoSumLower));
+                             OnPropertyChanged(nameof(PlayerTwoFinalScore));
+                             break;
+                         case 3:
+                             OnPropertyChanged(nameof(PlayerThreeLargeStraight));
+                             OnPropertyChanged(nameof(PlayerThreeSumLower));
+                             OnPropertyChanged(nameof(PlayerThreeFinalScore));
+                             break;
+                         case 4:
+                             OnPropertyChanged(nameof(PlayerFourLargeStraight));
+                             OnPropertyChanged(nameof(PlayerFourSumLower));
+                             OnPropertyChanged(nameof(PlayerFourFinalScore));
+                             break;
+                     }
+                     // calling the method NextPlayer
+                     NextPlayer();
+                 });
+
+            // initializing the command for the ScoreButtonKnuffel
+            ScoreButtonKnuffelCommand = new DelegateCommand(
+                 (o) => ActivePlayer == 1 && PlayerOneKnuffel == null ||
+                        ActivePlayer == 2 && PlayerTwoKnuffel == null ||
+                        ActivePlayer == 3 && PlayerThreeKnuffel == null ||
+                        ActivePlayer == 4 && PlayerFourKnuffel == null,
+                 (o) =>
+                 {
+                     // declaring the variable for the score
+                     int? score = 0;
+                     // checking if the dieList contains five die with the same value
+                     if (dieList.Any(die => dieList.Count(d => d.Value == die.Value) >= 5))
+                     {
+                         // setting the score to 50
+                         score = 50;
+                         
+                     }
+
+                     {
+                         switch (ActivePlayer)
+                         {
+                             case 1:
+                                 PlayerOneKnuffel = score;
+                                 break;
+                             case 2:
+                                 PlayerTwoKnuffel = score;
+                                 break;
+                             case 3:
+                                 PlayerThreeKnuffel = score;
+                                 break;
+                             case 4:
+                                 PlayerFourKnuffel = score;
+                                 break;
+                         }
+                     }
+                     // changing the properties depending on the active player
+                     switch (ActivePlayer)
+                                                    {
+                         case 1:
+                             OnPropertyChanged(nameof(PlayerOneKnuffel));
+                             OnPropertyChanged(nameof(PlayerOneSumLower));
+                             OnPropertyChanged(nameof(PlayerOneFinalScore));
+                             break;
+                         case 2:
+                             OnPropertyChanged(nameof(PlayerTwoKnuffel));
+                             OnPropertyChanged(nameof(PlayerTwoSumLower));
+                             OnPropertyChanged(nameof(PlayerTwoFinalScore));
+                             break;
+                         case 3:
+                             OnPropertyChanged(nameof(PlayerThreeKnuffel));
+                             OnPropertyChanged(nameof(PlayerThreeSumLower));
+                             OnPropertyChanged(nameof(PlayerThreeFinalScore));
+                             break;
+                         case 4:
+                             OnPropertyChanged(nameof(PlayerFourKnuffel));
+                             OnPropertyChanged(nameof(PlayerFourSumLower));
+                             OnPropertyChanged(nameof(PlayerFourFinalScore));
+                             break;
+                     }
+                     // calling the method NextPlayer
+                     NextPlayer();
+                 });
+
+            // initializing the command for the ScoreButtonChance
+            ScoreButtonChanceCommand = new DelegateCommand(
+                (o) => ActivePlayer == 1 && PlayerOneChance == null ||
+                       ActivePlayer == 2 && PlayerTwoChance == null ||
+                       ActivePlayer == 3 && PlayerThreeChance == null ||
+                       ActivePlayer == 4 && PlayerFourChance == null,
+                (o) =>
+                {
+                     // declaring the variable for the score
+                     int? score = 0;
+                     // adding the value of each die to the score
+                     foreach (Die die in dieList)
+                     {
+                         score += die.Value;
+                     }
+
+                     {
+                         switch (ActivePlayer)
+                         {
+                             case 1:
+                                 PlayerOneChance = score;
+                                 break;
+                             case 2:
+                                 PlayerTwoChance = score;
+                                 break;
+                             case 3:
+                                 PlayerThreeChance = score;
+                                 break;
+                             case 4:
+                                 PlayerFourChance = score;
+                                 break;
+                         }
+                     }
+                     // changing the properties depending on the active player
+                     switch (ActivePlayer)
+                                                    {
+                         case 1:
+                             OnPropertyChanged(nameof(PlayerOneChance));
+                             OnPropertyChanged(nameof(PlayerOneSumLower));
+                             OnPropertyChanged(nameof(PlayerOneFinalScore));
+                             break;
+                         case 2:
+                             OnPropertyChanged(nameof(PlayerTwoChance));
+                             OnPropertyChanged(nameof(PlayerTwoSumLower));
+                             OnPropertyChanged(nameof(PlayerTwoFinalScore));
+                             break;
+                         case 3:
+                             OnPropertyChanged(nameof(PlayerThreeChance));
+                             OnPropertyChanged(nameof(PlayerThreeSumLower));
+                             OnPropertyChanged(nameof(PlayerThreeFinalScore));
+                             break;
+                         case 4:
+                             OnPropertyChanged(nameof(PlayerFourChance));
+                             OnPropertyChanged(nameof(PlayerFourSumLower));
+                             OnPropertyChanged(nameof(PlayerFourFinalScore));
+                             break;
+                     }
+                    // calling the method NextPlayer
+                    NextPlayer();
+                 });
         }
+
+
 
         // declaring the command for the start game button
         public DelegateCommand StartGameCommand { get; set; }
@@ -76,6 +1144,27 @@ namespace Knuffel.Classes
 
         // declaring the command for the Enter Player Names Button
         public DelegateCommand EnterPlayerNamesCommand { get; set; }
+
+        // declaring the command for the Roll Dice Button
+        public DelegateCommand RollDiceCommand { get; set; }
+
+        // declaring the command for the Lock Die Buttons
+        public DelegateCommand LockDieCommand { get; set; }        
+
+        // declaring the commands for the Score Buttons
+        public DelegateCommand ScoreButtonOnesCommand { get; set; }
+        public DelegateCommand ScoreButtonTwosCommand { get; set; }
+        public DelegateCommand ScoreButtonThreesCommand { get; set; }
+        public DelegateCommand ScoreButtonFoursCommand { get; set; }
+        public DelegateCommand ScoreButtonFivesCommand { get; set; }
+        public DelegateCommand ScoreButtonSixesCommand { get; set; }
+        public DelegateCommand ScoreButtonThreeOfAKindCommand { get; set; }
+        public DelegateCommand ScoreButtonFourOfAKindCommand { get; set; }
+        public DelegateCommand ScoreButtonFullHouseCommand { get; set; }
+        public DelegateCommand ScoreButtonSmallStraightCommand { get; set; }
+        public DelegateCommand ScoreButtonLargeStraightCommand { get; set; }
+        public DelegateCommand ScoreButtonKnuffelCommand { get; set; }
+        public DelegateCommand ScoreButtonChanceCommand { get; set; }
 
         private void StartGame()
         {
@@ -209,57 +1298,269 @@ namespace Knuffel.Classes
 
             // calling the method where the UI Elements for the RollButton and the RollsLeftLabel are set to visible
             ShowRollButtonAndRollsLeftLabel();
+
+            // calling the method where the UI Elements for the YourTurnLabel and the ActivePlayerLabel are set to visible
+            ShowYourTurnLabelAndActivePlayerLabel();
         }
 
+
+        // in this method we are setting the visibility for the RollButton and the RollsLeftLabel to visible
         private void ShowRollButtonAndRollsLeftLabel()
         {
-            // setting the visibility for the RollButton and the RollsLeftLabel to visible
             IsRollButtonVisible = true;
             IsRollsLeftLabelVisible = true;
         }
 
+        // in this method we are setting the visibility for the RollButton and the RollsLeftLabel to hidden
+        private void HideRollButtonAndRollsLeftLabel()
+        {
+            IsRollButtonVisible = false;
+            IsRollsLeftLabelVisible = false;
+        }
+
+        // in this method we are setting the visibility for the YourTurnLabel and the ActivePlayerLabel to visible
+        private void ShowYourTurnLabelAndActivePlayerLabel()
+        {
+            IsYourTurnLabelVisible = true;
+            IsActivePlayerLabelVisible = true;
+        }
+
+        // in this method we are setting the visibility for the YourTurnLabel and the ActivePlayerLabel to hidden
+        private void HideYourTurnLabelAndActivePlayerLabel()
+        {
+            IsYourTurnLabelVisible = false;
+            IsActivePlayerLabelVisible = false;
+        }
+
         // in this method we are creating the players corresponding to the amount of players
-        private void CreatePlayers()
+        private void CreatePlayerNames()
         {
             if (AmountOfPlayers == 4)
             {
-                Player playerOne = new Player();
                 playerOne.Name = Player1Name;
-                Player playerTwo = new Player();
                 playerTwo.Name = Player2Name;
-                Player playerThree = new Player();
                 playerThree.Name = Player3Name;
-                Player playerFour = new Player();
                 playerFour.Name = Player4Name;
-            }       
+            }
             else if (AmountOfPlayers == 3)
             {
-                Player playerOne = new Player();
                 playerOne.Name = Player1Name;
-                Player playerTwo = new Player();
                 playerTwo.Name = Player2Name;
-                Player playerThree = new Player();
                 playerThree.Name = Player3Name;
             }
             else if (AmountOfPlayers == 2)
             {
-                Player playerOne = new Player();
                 playerOne.Name = Player1Name;
-                Player playerTwo = new Player();
                 playerTwo.Name = Player2Name;
             }
-            else 
+            else
             {
-                Player playerOne = new Player();
                 playerOne.Name = Player1Name;
             }
 
             // calling the method where the UI elements for the Enter The Player Names Menu are hidden
             HideEnterPlayerNamesMenu();
+
+            // calling the method where we are setting the ActivePlayerName to the actual active player
+            SetActivePlayerName();
         }
 
-       
+        // in this method we are setting the ActivePlayerName to the actual active player
+        private void SetActivePlayerName()
+        {
+            // setting the ActivePlayerName to the name of the player who is active
+            switch (ActivePlayer)
+            {
+                case 1:
+                    ActivePlayerName = playerOne.Name;
+                    break;
+                case 2:
+                    ActivePlayerName = playerTwo.Name;
+                    break;
+                case 3:
+                    ActivePlayerName = playerThree.Name;
+                    break;
+                case 4:
+                    ActivePlayerName = playerFour.Name;
+                    break;
 
+            }
+        }
+
+        // in this method we roll all the dice wich are in the list
+
+        private void RollingTheDice(List<Die> listOfDie)
+        {
+            Random random = new Random();
+            foreach (Die die in listOfDie)
+            {
+                die.Roll(random);
+            }
+        }
+
+        // in this method we set the images for the dice in relation to the value of the dice
+        private string GetDieImage(int? value, bool locked)
+        {
+            switch (value)
+            {
+
+                case null:
+                    if (locked)
+                    {
+                        return ravenDie;
+                    }
+                    else
+                    {
+                        return ravenDie;
+                    }
+                case 0:
+                    if (locked)
+                    {
+                        return ravenDie;
+                    }
+                    else
+                    {
+                        return ravenDie;
+                    }
+                case 1:
+                    if (locked)
+                    {
+                        return oneEyedDieGreen;
+                    }
+                    else
+                    {
+                        return oneEyedDie;
+                    }
+                case 2:
+                    if (locked)
+                    {
+                        return twoEyedDieGreen;
+                    }
+                    else
+                    {
+                        return twoEyedDie;
+                    }
+                case 3:
+                    if (locked)
+                    {
+                        return threeEyedDieGreen;
+                    }
+                    else
+                    {
+                        return threeEyedDie;
+                    }
+                case 4:
+                    if (locked)
+                    {
+                        return fourEyedDieGreen;
+                    }
+                    else
+                    {
+                        return fourEyedDie;
+                    }
+                case 5:
+                    if (locked)
+                    {
+                        return fiveEyedDieGreen;
+                    }
+                    else
+                    {
+                        return fiveEyedDie;
+                    }
+                case 6:
+                    if (locked)
+                    {
+                        return sixEyedDieGreen;
+                    }
+                    else
+                    {
+                        return sixEyedDie;
+                    }
+
+                default:
+                    return "";
+            }
+
+        }
+
+        //// in this method we are setting the values of the Scoreboard Array to null
+        //private void NullScoreboard(int?[,] scoreboard)
+        //{
+        //    for (int i = 0; i < 4; i++)
+        //    {
+        //        for (int j = 0; j < 13; j++)
+        //        {
+        //            scoreboard[i, j] = null;
+        //        }
+        //    }
+        //}
+
+        // in this method we are checking if the game advances to the next player
+        private void NextPlayer()
+        {
+            // here we are checking if the active player is equal to the amount of players, and if there are still rounds to play
+            if (ActivePlayer == AmountOfPlayers && RoundsLeft > 0)
+            {
+                // if the above is true, we are setting the active player to 1
+                ActivePlayer = 1;
+                // and we are decreasing the amount of rounds left by 1
+                RoundsLeft--;
+                // here we are setting the amount of rolls left to 3
+                RollsLeft = 3;
+            }
+            // here we are checking if the active player is not equal to the amount of players, and if there are still rounds to play
+            else if (ActivePlayer != AmountOfPlayers && RoundsLeft > 0)
+            {
+                // if the above is true, we are increasing the active player by 1
+                ActivePlayer++;
+                // here we are setting the amount of rolls left to 3
+                RollsLeft = 3;
+            };
+
+            // here we check if there are no rounds left
+            if (RoundsLeft == 0)
+            {
+                // if the above is true, we are calling the method GameFinished
+                GameFinished();
+
+            }
+            else
+            {
+                // if the above is not true, we are setting the ActivePlayerName to the actual active player
+                SetActivePlayerName();
+                IsScoreButtonCommandAvailable();
+                RollDiceCommand.RaiseCanExecuteChanged();
+            }
+            
+
+        }
+
+        // in this method we are checking if the ScoreButtonCommands can be executed
+        private void IsScoreButtonCommandAvailable()
+        {
+            ScoreButtonOnesCommand.RaiseCanExecuteChanged();
+            ScoreButtonTwosCommand.RaiseCanExecuteChanged();
+            ScoreButtonThreesCommand.RaiseCanExecuteChanged();
+            ScoreButtonFoursCommand.RaiseCanExecuteChanged();
+            ScoreButtonFivesCommand.RaiseCanExecuteChanged();
+            ScoreButtonSixesCommand.RaiseCanExecuteChanged();
+            ScoreButtonThreeOfAKindCommand.RaiseCanExecuteChanged();
+            ScoreButtonFourOfAKindCommand.RaiseCanExecuteChanged();
+            ScoreButtonFullHouseCommand.RaiseCanExecuteChanged();
+            ScoreButtonSmallStraightCommand.RaiseCanExecuteChanged();
+            ScoreButtonLargeStraightCommand.RaiseCanExecuteChanged();
+            ScoreButtonKnuffelCommand.RaiseCanExecuteChanged();
+            ScoreButtonChanceCommand.RaiseCanExecuteChanged();
+        }
+
+        private void GameFinished()
+        {
+            // we are setting the visibility of the YourTurnLabel and the ActivePlayerLabel to hidden
+            HideYourTurnLabelAndActivePlayerLabel();
+            // Showing a MessageBox with the text "Game Finished"
+            MessageBox.Show("Game Finished! Edit this Method further, until it´s doing what it´s supposed to do");
+            // we need to check if there shall be a new round, otherwise we check for the overall winner and entering the highscore
+        }
 
 
         // declaring the private variables for the path to the images of the dice
@@ -269,8 +1570,18 @@ namespace Knuffel.Classes
         private string _die4Image;
         private string _die5Image;
 
+        // declaring the private variables for the Lock Status of each die
+        private bool _die1Locked;
+        private bool _die2Locked;
+        private bool _die3Locked;
+        private bool _die4Locked;
+        private bool _die5Locked;
+
         // declaring the private variable for the amount of rolls left
         private int _rollsLeft;
+
+        // declaring the private variable for the amount of rounds left
+        private int _roundsLeft;
 
         // declaring the private variables for the player names
         private string _player1Name;
@@ -288,8 +1599,14 @@ namespace Knuffel.Classes
         private bool _isThreePlayersButtonVisible;
         private bool _isFourPlayersButtonVisible;
 
-        // declaring the private variables for the amount of players
+        // declaring the private variable for the amount of players
         private int _amountOfPlayers;
+
+        // declaring the private variable for the active player
+        private int _activePlayer;
+
+        // declaring the private variable for the Name of the active player
+        private string _activePlayerName;
 
         // declaring the private variables for the visibility of the scoreboard
         private bool _coverGridPlayer2To4;
@@ -310,6 +1627,99 @@ namespace Knuffel.Classes
         // declaring the private variables for the visibility of the RollButton and the RollsLeftLabel
         private bool _isRollButtonVisible;
         private bool _isRollsLeftLabelVisible;
+
+        // declaring the private variables for the visibility of the ActivePlayerLabel and the YourTurnLabel
+        private bool _isYourTurnLabelVisible;
+        private bool _isActivePlayerLabelVisible;
+
+        // declaring the private variables for the visibility of the ScoreButtons
+        private bool _isScoreButtonsLabelVisible;
+        private bool _isScoreButtonsGridVisible;
+
+        // declaring the private nullable int variables for the Scoreboard Entries of Player 1
+        private int? _playerOneOnes = null;
+        private int? _playerOneTwos = null;
+        private int? _playerOneThrees = null;
+        private int? _playerOneFours = null;
+        private int? _playerOneFives = null;
+        private int? _playerOneSixes = null;
+        private int? _playerOneSumUpper = null;
+        private int? _playerOneBonus = null;
+        private int? _playerOneTotalUpper = null;
+        private int? _playerOneThreeOfAKind = null;
+        private int? _playerOneFourOfAKind = null;
+        private int? _playerOneFullHouse = null;
+        private int? _playerOneSmallStraight = null;
+        private int? _playerOneLargeStraight = null;
+        private int? _playerOneKnuffel = null;
+        private int? _playerOneChance = null;
+        private int? _playerOneSumLower = null;
+        private int? _playerOneExtraKnuffels = null;
+        private int? _playerOneFinalScore = null;
+
+        // declaring the private nullable int variables for the Scoreboard Entries of Player 2
+        private int? _playerTwoOnes = null;
+        private int? _playerTwoTwos = null;
+        private int? _playerTwoThrees = null;
+        private int? _playerTwoFours = null;
+        private int? _playerTwoFives = null;
+        private int? _playerTwoSixes = null;
+        private int? _playerTwoSumUpper = null;
+        private int? _playerTwoBonus = null;
+        private int? _playerTwoTotalUpper = null;
+        private int? _playerTwoThreeOfAKind = null;
+        private int? _playerTwoFourOfAKind = null;
+        private int? _playerTwoFullHouse = null;
+        private int? _playerTwoSmallStraight = null;
+        private int? _playerTwoLargeStraight = null;
+        private int? _playerTwoKnuffel = null;
+        private int? _playerTwoChance = null;
+        private int? _playerTwoSumLower = null;
+        private int? _playerTwoExtraKnuffels = null;
+        private int? _playerTwoFinalScore = null;
+
+        // declaring the private nullable int variables for the Scoreboard Entries of Player 3
+        private int? _playerThreeOnes = null;
+        private int? _playerThreeTwos = null;
+        private int? _playerThreeThrees = null;
+        private int? _playerThreeFours = null;
+        private int? _playerThreeFives = null;
+        private int? _playerThreeSixes = null;
+        private int? _playerThreeSumUpper = null;
+        private int? _playerThreeBonus = null;
+        private int? _playerThreeTotalUpper = null;
+        private int? _playerThreeThreeOfAKind = null;
+        private int? _playerThreeFourOfAKind = null;
+        private int? _playerThreeFullHouse = null;
+        private int? _playerThreeSmallStraight = null;
+        private int? _playerThreeLargeStraight = null;
+        private int? _playerThreeKnuffel = null;
+        private int? _playerThreeChance = null;
+        private int? _playerThreeSumLower = null;
+        private int? _playerThreeExtraKnuffels = null;
+        private int? _playerThreeFinalScore = null;
+
+        // declaring the private nullable int variables for the Scoreboard Entries of Player 4
+        private int? _playerFourOnes = null;
+        private int? _playerFourTwos = null;
+        private int? _playerFourThrees = null;
+        private int? _playerFourFours = null;
+        private int? _playerFourFives = null;
+        private int? _playerFourSixes = null;
+        private int? _playerFourSumUpper = null;
+        private int? _playerFourBonus = null;
+        private int? _playerFourTotalUpper = null;
+        private int? _playerFourThreeOfAKind = null;
+        private int? _playerFourFourOfAKind = null;
+        private int? _playerFourFullHouse = null;
+        private int? _playerFourSmallStraight = null;
+        private int? _playerFourLargeStraight = null;
+        private int? _playerFourKnuffel = null;
+        private int? _playerFourChance = null;
+        private int? _playerFourSumLower = null;
+        private int? _playerFourExtraKnuffels = null;
+        private int? _playerFourFinalScore = null;
+
 
 
         // declaring the public properties for the dice images
@@ -373,6 +1783,76 @@ namespace Knuffel.Classes
                 }
             }
         }
+
+
+        // declaring the public properties for the LockStatus of each die
+        public bool Die1Locked
+        {
+            get { return _die1Locked; }
+            set
+            {
+                if (_die1Locked != value)
+                {
+                    _die1Locked = value;
+                    OnPropertyChanged(nameof(Die1Locked));
+                    OnPropertyChanged(nameof(Die1Image));
+                }
+            }
+        }
+        public bool Die2Locked
+        {
+            get { return _die2Locked; }
+            set
+            {
+                if (_die2Locked != value)
+                {
+                    _die2Locked = value;
+                    OnPropertyChanged(nameof(Die2Locked));
+                    OnPropertyChanged(nameof(Die2Image));
+                }
+            }
+        }
+        public bool Die3Locked
+        {
+            get { return _die3Locked; }
+            set
+            {
+                if (_die3Locked != value)
+                {
+                    _die3Locked = value;
+                    OnPropertyChanged(nameof(Die3Locked));
+                    OnPropertyChanged(nameof(Die3Image));
+                }
+            }
+        }
+        public bool Die4Locked
+        {
+            get { return _die4Locked; }
+            set
+            {
+                if (_die4Locked != value)
+                {
+                    _die4Locked = value;
+                    OnPropertyChanged(nameof(Die4Locked));
+                    OnPropertyChanged(nameof(Die4Image));
+                }
+            }
+        }
+        public bool Die5Locked
+        {
+            get { return _die5Locked; }
+            set
+            {
+                if (_die5Locked != value)
+                {
+                    _die5Locked = value;
+                    OnPropertyChanged(nameof(Die5Locked));
+                    OnPropertyChanged(nameof(Die5Image));
+                }
+            }
+        }
+
+        // declaring the public property for the amount of rolls left
         public int RollsLeft
         {
             get { return _rollsLeft; }
@@ -382,6 +1862,20 @@ namespace Knuffel.Classes
                 {
                     _rollsLeft = value;
                     OnPropertyChanged(nameof(RollsLeft));
+                }
+            }
+        }
+
+        // declaring the public properties for the rounds left
+        public int RoundsLeft
+        {
+            get { return _roundsLeft; }
+            set
+            {
+                if (_roundsLeft != value)
+                {
+                    _roundsLeft = value;
+                    OnPropertyChanged(nameof(RoundsLeft));
                 }
             }
         }
@@ -460,6 +1954,954 @@ namespace Knuffel.Classes
                 {
                     _amountOfPlayers = value;
                     OnPropertyChanged(nameof(AmountOfPlayers));
+                }
+            }
+        }
+
+        // declaring the public property ActivePlayer
+        public int ActivePlayer
+        {
+            get { return _activePlayer; }
+            set
+            {
+                if (_activePlayer != value)
+                {
+                    _activePlayer = value;
+                    OnPropertyChanged(nameof(ActivePlayer));
+                }
+            }
+        }
+
+        // declaring the public property ActivePlayerName
+        public string ActivePlayerName
+        {
+            get { return _activePlayerName; }
+            set
+            {
+                if (_activePlayerName != value)
+                {
+                    _activePlayerName = value;
+                    OnPropertyChanged(nameof(ActivePlayerName));
+                }
+            }
+        }
+
+        // declaring the public nullable int properties for the PlayerOne Scoreboard Section
+        public int? PlayerOneOnes
+        {
+            get { return _playerOneOnes; }
+            set
+            {
+                if (_playerOneOnes != value)
+                {
+                    _playerOneOnes = value;
+                    OnPropertyChanged(nameof(PlayerOneOnes));
+                }
+            }
+        }
+        public int? PlayerOneTwos
+        {
+            get { return _playerOneTwos; }
+            set
+            {
+                if (_playerOneTwos != value)
+                {
+                    _playerOneTwos = value;
+                    OnPropertyChanged(nameof(PlayerOneTwos));
+                }
+            }
+        }
+        public int? PlayerOneThrees
+        {
+            get { return _playerOneThrees; }
+            set
+            {
+                if (_playerOneThrees != value)
+                {
+                    _playerOneThrees = value;
+                    OnPropertyChanged(nameof(PlayerOneThrees));
+                }
+            }
+        }
+        public int? PlayerOneFours
+        {
+            get { return _playerOneFours; }
+            set
+            {
+                if (_playerOneFours != value)
+                {
+                    _playerOneFours = value;
+                    OnPropertyChanged(nameof(PlayerOneFours));
+                }
+            }
+        }
+        public int? PlayerOneFives
+        {
+            get { return _playerOneFives; }
+            set
+            {
+                if (_playerOneFives != value)
+                {
+                    _playerOneFives = value;
+                    OnPropertyChanged(nameof(PlayerOneFives));
+                }
+            }
+        }
+        public int? PlayerOneSixes
+        {
+            get { return _playerOneSixes; }
+            set
+            {
+                if (_playerOneSixes != value)
+                {
+                    _playerOneSixes = value;
+                    OnPropertyChanged(nameof(PlayerOneSixes));
+                }
+            }
+        }
+        public int? PlayerOneSumUpper
+        {
+            get { return _playerOneSumUpper; }
+            set
+            {
+                if (_playerOneSumUpper != value)
+                {
+                    _playerOneSumUpper = value;
+                    OnPropertyChanged(nameof(PlayerOneSumUpper));
+                }
+            }
+        }
+        public int? PlayerOneBonus
+        {
+            get { return _playerOneBonus; }
+            set
+            {
+                if (_playerOneBonus != value)
+                {
+                    _playerOneBonus = value;
+                    OnPropertyChanged(nameof(PlayerOneBonus));
+                }
+            }
+        }
+        public int? PlayerOneTotalUpper
+        {
+            get { return _playerOneTotalUpper; }
+            set
+            {
+                if (_playerOneTotalUpper != value)
+                {
+                    _playerOneTotalUpper = value;
+                    OnPropertyChanged(nameof(PlayerOneTotalUpper));
+                }
+            }
+        }
+        public int? PlayerOneThreeOfAKind
+        {
+            get { return _playerOneThreeOfAKind; }
+            set
+            {
+                if (_playerOneThreeOfAKind != value)
+                {
+                    _playerOneThreeOfAKind = value;
+                    OnPropertyChanged(nameof(PlayerOneThreeOfAKind));
+                }
+            }
+        }
+        public int? PlayerOneFourOfAKind
+        {
+            get { return _playerOneFourOfAKind; }
+            set
+            {
+                if (_playerOneFourOfAKind != value)
+                {
+                    _playerOneFourOfAKind = value;
+                    OnPropertyChanged(nameof(PlayerOneFourOfAKind));
+                }
+            }
+        }
+        public int? PlayerOneFullHouse
+        {
+            get { return _playerOneFullHouse; }
+            set
+            {
+                if (_playerOneFullHouse != value)
+                {
+                    _playerOneFullHouse = value;
+                    OnPropertyChanged(nameof(PlayerOneFullHouse));
+                }
+            }
+        }
+        public int? PlayerOneSmallStraight
+        {
+            get { return _playerOneSmallStraight; }
+            set
+            {
+                if (_playerOneSmallStraight != value)
+                {
+                    _playerOneSmallStraight = value;
+                    OnPropertyChanged(nameof(PlayerOneSmallStraight));
+                }
+            }
+        }
+        public int? PlayerOneLargeStraight
+        {
+            get { return _playerOneLargeStraight; }
+            set
+            {
+                if (_playerOneLargeStraight != value)
+                {
+                    _playerOneLargeStraight = value;
+                    OnPropertyChanged(nameof(PlayerOneLargeStraight));
+                }
+            }
+        }
+        public int? PlayerOneKnuffel
+        {
+            get { return _playerOneKnuffel; }
+            set
+            {
+                if (_playerOneKnuffel != value)
+                {
+                    _playerOneKnuffel = value;
+                    OnPropertyChanged(nameof(PlayerOneKnuffel));
+                }
+            }
+        }
+        public int? PlayerOneChance
+        {
+            get { return _playerOneChance; }
+            set
+            {
+                if (_playerOneChance != value)
+                {
+                    _playerOneChance = value;
+                    OnPropertyChanged(nameof(PlayerOneChance));
+                }
+            }
+        }
+        public int? PlayerOneSumLower
+        {
+            get { return _playerOneSumLower; }
+            set
+            {
+                if (_playerOneSumLower != value)
+                {
+                    _playerOneSumLower = value;
+                    OnPropertyChanged(nameof(PlayerOneSumLower));
+                }
+            }
+        }
+        public int? PlayerOneExtraKnuffels
+        {
+            get { return _playerOneExtraKnuffels; }
+            set
+            {
+                if (_playerOneExtraKnuffels != value)
+                {
+                    _playerOneExtraKnuffels = value;
+                    OnPropertyChanged(nameof(PlayerOneExtraKnuffels));
+                }
+            }
+        }
+        public int? PlayerOneFinalScore
+        {
+            get { return _playerOneFinalScore; }
+            set
+            {
+                if (_playerOneFinalScore != value)
+                {
+                    _playerOneFinalScore = value;
+                    OnPropertyChanged(nameof(PlayerOneFinalScore));
+                }
+            }
+        }
+
+        // declaring the public properties for the PlayerTwo Scoreboard Section
+        public int? PlayerTwoOnes
+        {
+            get { return _playerTwoOnes; }
+            set
+            {
+                if (_playerTwoOnes != value)
+                {
+                    _playerTwoOnes = value;
+                    OnPropertyChanged(nameof(PlayerTwoOnes));
+                }
+            }
+        }
+        public int? PlayerTwoTwos
+        {
+            get { return _playerTwoTwos; }
+            set
+            {
+                if (_playerTwoTwos != value)
+                {
+                    _playerTwoTwos = value;
+                    OnPropertyChanged(nameof(PlayerTwoTwos));
+                }
+            }
+        }
+        public int? PlayerTwoThrees
+        {
+            get { return _playerTwoThrees; }
+            set
+            {
+                if (_playerTwoThrees != value)
+                {
+                    _playerTwoThrees = value;
+                    OnPropertyChanged(nameof(PlayerTwoThrees));
+                }
+            }
+        }
+        public int? PlayerTwoFours
+        {
+            get { return _playerTwoFours; }
+            set
+            {
+                if (_playerTwoFours != value)
+                {
+                    _playerTwoFours = value;
+                    OnPropertyChanged(nameof(PlayerTwoFours));
+                }
+            }
+        }
+        public int? PlayerTwoFives
+        {
+            get { return _playerTwoFives; }
+            set
+            {
+                if (_playerTwoFives != value)
+                {
+                    _playerTwoFives = value;
+                    OnPropertyChanged(nameof(PlayerTwoFives));
+                }
+            }
+        }
+        public int? PlayerTwoSixes
+        {
+            get { return _playerTwoSixes; }
+            set
+            {
+                if (_playerTwoSixes != value)
+                {
+                    _playerTwoSixes = value;
+                    OnPropertyChanged(nameof(PlayerTwoSixes));
+                }
+            }
+        }
+        public int? PlayerTwoSumUpper
+        {
+            get { return _playerTwoSumUpper; }
+            set
+            {
+                if (_playerTwoSumUpper != value)
+                {
+                    _playerTwoSumUpper = value;
+                    OnPropertyChanged(nameof(PlayerTwoSumUpper));
+                }
+            }
+        }
+        public int? PlayerTwoBonus
+        {
+            get { return _playerTwoBonus; }
+            set
+            {
+                if (_playerTwoBonus != value)
+                {
+                    _playerTwoBonus = value;
+                    OnPropertyChanged(nameof(PlayerTwoBonus));
+                }
+            }
+        }
+        public int? PlayerTwoTotalUpper
+        {
+            get { return _playerTwoTotalUpper; }
+            set
+            {
+                if (_playerTwoTotalUpper != value)
+                {
+                    _playerTwoTotalUpper = value;
+                    OnPropertyChanged(nameof(PlayerTwoTotalUpper));
+                }
+            }
+        }
+        public int? PlayerTwoThreeOfAKind
+        {
+            get { return _playerTwoThreeOfAKind; }
+            set
+            {
+                if (_playerTwoThreeOfAKind != value)
+                {
+                    _playerTwoThreeOfAKind = value;
+                    OnPropertyChanged(nameof(PlayerTwoThreeOfAKind));
+                }
+            }
+        }
+        public int? PlayerTwoFourOfAKind
+        {
+            get { return _playerTwoFourOfAKind; }
+            set
+            {
+                if (_playerTwoFourOfAKind != value)
+                {
+                    _playerTwoFourOfAKind = value;
+                    OnPropertyChanged(nameof(PlayerTwoFourOfAKind));
+                }
+            }
+        }
+        public int? PlayerTwoFullHouse
+        {
+            get { return _playerTwoFullHouse; }
+            set
+            {
+                if (_playerTwoFullHouse != value)
+                {
+                    _playerTwoFullHouse = value;
+                    OnPropertyChanged(nameof(PlayerTwoFullHouse));
+                }
+            }
+        }
+        public int? PlayerTwoSmallStraight
+        {
+            get { return _playerTwoSmallStraight; }
+            set
+            {
+                if (_playerTwoSmallStraight != value)
+                {
+                    _playerTwoSmallStraight = value;
+                    OnPropertyChanged(nameof(PlayerTwoSmallStraight));
+                }
+            }
+        }
+        public int? PlayerTwoLargeStraight
+        {
+            get { return _playerTwoLargeStraight; }
+            set
+            {
+                if (_playerTwoLargeStraight != value)
+                {
+                    _playerTwoLargeStraight = value;
+                    OnPropertyChanged(nameof(PlayerTwoLargeStraight));
+                }
+            }
+        }
+        public int? PlayerTwoKnuffel
+        {
+            get { return _playerTwoKnuffel; }
+            set
+            {
+                if (_playerTwoKnuffel != value)
+                {
+                    _playerTwoKnuffel = value;
+                    OnPropertyChanged(nameof(PlayerTwoKnuffel));
+                }
+            }
+        }
+        public int? PlayerTwoChance
+        {
+            get { return _playerTwoChance; }
+            set
+            {
+                if (_playerTwoChance != value)
+                {
+                    _playerTwoChance = value;
+                    OnPropertyChanged(nameof(PlayerTwoChance));
+                }
+            }
+        }
+        public int? PlayerTwoSumLower
+        {
+            get { return _playerTwoSumLower; }
+            set
+            {
+                if (_playerTwoSumLower != value)
+                {
+                    _playerTwoSumLower = value;
+                    OnPropertyChanged(nameof(PlayerTwoSumLower));
+                }
+            }
+        }
+        public int? PlayerTwoExtraKnuffels
+        {
+            get { return _playerTwoExtraKnuffels; }
+            set
+            {
+                if (_playerTwoExtraKnuffels != value)
+                {
+                    _playerTwoExtraKnuffels = value;
+                    OnPropertyChanged(nameof(PlayerTwoExtraKnuffels));
+                }
+            }
+        }
+        public int? PlayerTwoFinalScore
+        {
+            get { return _playerTwoFinalScore; }
+            set
+            {
+                if (_playerTwoFinalScore != value)
+                {
+                    _playerTwoFinalScore = value;
+                    OnPropertyChanged(nameof(PlayerTwoFinalScore));
+                }
+            }
+        }
+
+        // declaring the public properties for the PlayerThree Scoreboard Section
+        public int? PlayerThreeOnes
+        {
+            get { return _playerThreeOnes; }
+            set
+            {
+                if (_playerThreeOnes != value)
+                {
+                    _playerThreeOnes = value;
+                    OnPropertyChanged(nameof(PlayerThreeOnes));
+                }
+            }
+        }
+        public int? PlayerThreeTwos
+        {
+            get { return _playerThreeTwos; }
+            set
+            {
+                if (_playerThreeTwos != value)
+                {
+                    _playerThreeTwos = value;
+                    OnPropertyChanged(nameof(PlayerThreeTwos));
+                }
+            }
+        }
+        public int? PlayerThreeThrees
+        {
+            get { return _playerThreeThrees; }
+            set
+            {
+                if (_playerThreeThrees != value)
+                {
+                    _playerThreeThrees = value;
+                    OnPropertyChanged(nameof(PlayerThreeThrees));
+                }
+            }
+        }
+        public int? PlayerThreeFours
+        {
+            get { return _playerThreeFours; }
+            set
+            {
+                if (_playerThreeFours != value)
+                {
+                    _playerThreeFours = value;
+                    OnPropertyChanged(nameof(PlayerThreeFours));
+                }
+            }
+        }
+        public int? PlayerThreeFives
+        {
+            get { return _playerThreeFives; }
+            set
+            {
+                if (_playerThreeFives != value)
+                {
+                    _playerThreeFives = value;
+                    OnPropertyChanged(nameof(PlayerThreeFives));
+                }
+            }
+        }
+        public int? PlayerThreeSixes
+        {
+            get { return _playerThreeSixes; }
+            set
+            {
+                if (_playerThreeSixes != value)
+                {
+                    _playerThreeSixes = value;
+                    OnPropertyChanged(nameof(PlayerThreeSixes));
+                }
+            }
+        }
+        public int? PlayerThreeSumUpper
+        {
+            get { return _playerThreeSumUpper; }
+            set
+            {
+                if (_playerThreeSumUpper != value)
+                {
+                    _playerThreeSumUpper = value;
+                    OnPropertyChanged(nameof(PlayerThreeSumUpper));
+                }
+            }
+        }
+        public int? PlayerThreeBonus
+        {
+            get { return _playerThreeBonus; }
+            set
+            {
+                if (_playerThreeBonus != value)
+                {
+                    _playerThreeBonus = value;
+                    OnPropertyChanged(nameof(PlayerThreeBonus));
+                }
+            }
+        }
+        public int? PlayerThreeTotalUpper
+        {
+            get { return _playerThreeTotalUpper; }
+            set
+            {
+                if (_playerThreeTotalUpper != value)
+                {
+                    _playerThreeTotalUpper = value;
+                    OnPropertyChanged(nameof(PlayerThreeTotalUpper));
+                }
+            }
+        }
+        public int? PlayerThreeThreeOfAKind
+        {
+            get { return _playerThreeThreeOfAKind; }
+            set
+            {
+                if (_playerThreeThreeOfAKind != value)
+                {
+                    _playerThreeThreeOfAKind = value;
+                    OnPropertyChanged(nameof(PlayerThreeThreeOfAKind));
+                }
+            }
+        }
+        public int? PlayerThreeFourOfAKind
+        {
+            get { return _playerThreeFourOfAKind; }
+            set
+            {
+                if (_playerThreeFourOfAKind != value)
+                {
+                    _playerThreeFourOfAKind = value;
+                    OnPropertyChanged(nameof(PlayerThreeFourOfAKind));
+                }
+            }
+        }
+        public int? PlayerThreeFullHouse
+        {
+            get { return _playerThreeFullHouse; }
+            set
+            {
+                if (_playerThreeFullHouse != value)
+                {
+                    _playerThreeFullHouse = value;
+                    OnPropertyChanged(nameof(PlayerThreeFullHouse));
+                }
+            }
+        }
+        public int? PlayerThreeSmallStraight
+        {
+            get { return _playerThreeSmallStraight; }
+            set
+            {
+                if (_playerThreeSmallStraight != value)
+                {
+                    _playerThreeSmallStraight = value;
+                    OnPropertyChanged(nameof(PlayerThreeSmallStraight));
+                }
+            }
+        }
+        public int? PlayerThreeLargeStraight
+        {
+            get { return _playerThreeLargeStraight; }
+            set
+            {
+                if (_playerThreeLargeStraight != value)
+                {
+                    _playerThreeLargeStraight = value;
+                    OnPropertyChanged(nameof(PlayerThreeLargeStraight));
+                }
+            }
+        }
+        public int? PlayerThreeKnuffel
+        {
+            get { return _playerThreeKnuffel; }
+            set
+            {
+                if (_playerThreeKnuffel != value)
+                {
+                    _playerThreeKnuffel = value;
+                    OnPropertyChanged(nameof(PlayerThreeKnuffel));
+                }
+            }
+        }
+        public int? PlayerThreeChance
+        {
+            get { return _playerThreeChance; }
+            set
+            {
+                if (_playerThreeChance != value)
+                {
+                    _playerThreeChance = value;
+                    OnPropertyChanged(nameof(PlayerThreeChance));
+                }
+            }
+        }
+        public int? PlayerThreeSumLower
+        {
+            get { return _playerThreeSumLower; }
+            set
+            {
+                if (_playerThreeSumLower != value)
+                {
+                    _playerThreeSumLower = value;
+                    OnPropertyChanged(nameof(PlayerThreeSumLower));
+                }
+            }
+        }
+        public int? PlayerThreeExtraKnuffels
+        {
+            get { return _playerThreeExtraKnuffels; }
+            set
+            {
+                if (_playerThreeExtraKnuffels != value)
+                {
+                    _playerThreeExtraKnuffels = value;
+                    OnPropertyChanged(nameof(PlayerThreeExtraKnuffels));
+                }
+            }
+        }
+        public int? PlayerThreeFinalScore
+        {
+            get { return _playerThreeFinalScore; }
+            set
+            {
+                if (_playerThreeFinalScore != value)
+                {
+                    _playerThreeFinalScore = value;
+                    OnPropertyChanged(nameof(PlayerThreeFinalScore));
+                }
+            }
+        }
+
+        // declaring the public properties for the PlayerFour Scoreboard Section
+        public int? PlayerFourOnes
+        {
+            get { return _playerFourOnes; }
+            set
+            {
+                if (_playerFourOnes != value)
+                {
+                    _playerFourOnes = value;
+                    OnPropertyChanged(nameof(PlayerFourOnes));
+                }
+            }
+        }
+        public int? PlayerFourTwos
+        {
+            get { return _playerFourTwos; }
+            set
+            {
+                if (_playerFourTwos != value)
+                {
+                    _playerFourTwos = value;
+                    OnPropertyChanged(nameof(PlayerFourTwos));
+                }
+            }
+        }
+        public int? PlayerFourThrees
+        {
+            get { return _playerFourThrees; }
+            set
+            {
+                if (_playerFourThrees != value)
+                {
+                    _playerFourThrees = value;
+                    OnPropertyChanged(nameof(PlayerFourThrees));
+                }
+            }
+        }
+        public int? PlayerFourFours
+        {
+            get { return _playerFourFours; }
+            set
+            {
+                if (_playerFourFours != value)
+                {
+                    _playerFourFours = value;
+                    OnPropertyChanged(nameof(PlayerFourFours));
+                }
+            }
+        }
+        public int? PlayerFourFives
+        {
+            get { return _playerFourFives; }
+            set
+            {
+                if (_playerFourFives != value)
+                {
+                    _playerFourFives = value;
+                    OnPropertyChanged(nameof(PlayerFourFives));
+                }
+            }
+        }
+        public int? PlayerFourSixes
+        {
+            get { return _playerFourSixes; }
+            set
+            {
+                if (_playerFourSixes != value)
+                {
+                    _playerFourSixes = value;
+                    OnPropertyChanged(nameof(PlayerFourSixes));
+                }
+            }
+        }
+        public int? PlayerFourSumUpper
+        {
+            get { return _playerFourSumUpper; }
+            set
+            {
+                if (_playerFourSumUpper != value)
+                {
+                    _playerFourSumUpper = value;
+                    OnPropertyChanged(nameof(PlayerFourSumUpper));
+                }
+            }
+        }
+        public int? PlayerFourBonus
+        {
+            get { return _playerFourBonus; }
+            set
+            {
+                if (_playerFourBonus != value)
+                {
+                    _playerFourBonus = value;
+                    OnPropertyChanged(nameof(PlayerFourBonus));
+                }
+            }
+        }
+        public int? PlayerFourTotalUpper
+        {
+            get { return _playerFourTotalUpper; }
+            set
+            {
+                if (_playerFourTotalUpper != value)
+                {
+                    _playerFourTotalUpper = value;
+                    OnPropertyChanged(nameof(PlayerFourTotalUpper));
+                }
+            }
+        }
+        public int? PlayerFourThreeOfAKind
+        {
+            get { return _playerFourThreeOfAKind; }
+            set
+            {
+                if (_playerFourThreeOfAKind != value)
+                {
+                    _playerFourThreeOfAKind = value;
+                    OnPropertyChanged(nameof(PlayerFourThreeOfAKind));
+                }
+            }
+        }
+        public int? PlayerFourFourOfAKind
+        {
+            get { return _playerFourFourOfAKind; }
+            set
+            {
+                if (_playerFourFourOfAKind != value)
+                {
+                    _playerFourFourOfAKind = value;
+                    OnPropertyChanged(nameof(PlayerFourFourOfAKind));
+                }
+            }
+        }
+        public int? PlayerFourFullHouse
+        {
+            get { return _playerFourFullHouse; }
+            set
+            {
+                if (_playerFourFullHouse != value)
+                {
+                    _playerFourFullHouse = value;
+                    OnPropertyChanged(nameof(PlayerFourFullHouse));
+                }
+            }
+        }
+        public int? PlayerFourSmallStraight
+        {
+            get { return _playerFourSmallStraight; }
+            set
+            {
+                if (_playerFourSmallStraight != value)
+                {
+                    _playerFourSmallStraight = value;
+                    OnPropertyChanged(nameof(PlayerFourSmallStraight));
+                }
+            }
+        }
+        public int? PlayerFourLargeStraight
+        {
+            get { return _playerFourLargeStraight; }
+            set
+            {
+                if (_playerFourLargeStraight != value)
+                {
+                    _playerFourLargeStraight = value;
+                    OnPropertyChanged(nameof(PlayerFourLargeStraight));
+                }
+            }
+        }
+        public int? PlayerFourKnuffel
+        {
+            get { return _playerFourKnuffel; }
+            set
+            {
+                if (_playerFourKnuffel != value)
+                {
+                    _playerFourKnuffel = value;
+                    OnPropertyChanged(nameof(PlayerFourKnuffel));
+                }
+            }
+        }
+        public int? PlayerFourChance
+        {
+            get { return _playerFourChance; }
+            set
+            {
+                if (_playerFourChance != value)
+                {
+                    _playerFourChance = value;
+                    OnPropertyChanged(nameof(PlayerFourChance));
+                }
+            }
+        }
+        public int? PlayerFourSumLower
+        {
+            get { return _playerFourSumLower; }
+            set
+            {
+                if (_playerFourSumLower != value)
+                {
+                    _playerFourSumLower = value;
+                    OnPropertyChanged(nameof(PlayerFourSumLower));
+                }
+            }
+        }
+        public int? PlayerFourExtraKnuffels
+        {
+            get { return _playerFourExtraKnuffels; }
+            set
+            {
+                if (_playerFourExtraKnuffels != value)
+                {
+                    _playerFourExtraKnuffels = value;
+                    OnPropertyChanged(nameof(PlayerFourExtraKnuffels));
+                }
+            }
+        }
+        public int? PlayerFourFinalScore
+        {
+            get { return _playerFourFinalScore; }
+            set
+            {
+                if (_playerFourFinalScore != value)
+                {
+                    _playerFourFinalScore = value;
+                    OnPropertyChanged(nameof(PlayerFourFinalScore));
                 }
             }
         }
@@ -701,6 +3143,58 @@ namespace Knuffel.Classes
                 }
             }
         }
+
+        // declaring the public properties for the visibility of the Labels for the active Player
+        public bool IsYourTurnLabelVisible
+        {
+            get { return _isYourTurnLabelVisible; }
+            set
+            {
+                if (_isYourTurnLabelVisible != value)
+                {
+                    _isYourTurnLabelVisible = value;
+                    OnPropertyChanged(nameof(IsYourTurnLabelVisible));
+                }
+            }
+        }
+        public bool IsActivePlayerLabelVisible
+        {
+            get { return _isActivePlayerLabelVisible; }
+            set
+            {
+                if (_isActivePlayerLabelVisible != value)
+                {
+                    _isActivePlayerLabelVisible = value;
+                    OnPropertyChanged(nameof(IsActivePlayerLabelVisible));
+                }
+            }
+        }
+        // declaring the public properties for the visibility of the Score-Buttons
+        public bool IsScoreButtonsLabelVisible
+        {
+            get { return _isScoreButtonsLabelVisible; }
+            set
+            {
+                if (_isScoreButtonsLabelVisible != value)
+                {
+                    _isScoreButtonsLabelVisible = value;
+                    OnPropertyChanged(nameof(IsScoreButtonsLabelVisible));
+                }
+            }
+        }
+        public bool IsScoreButtonsGridVisible
+        {
+            get { return _isScoreButtonsGridVisible; }
+            set
+            {
+                if (_isScoreButtonsGridVisible != value)
+                {
+                    _isScoreButtonsGridVisible = value;
+                    OnPropertyChanged(nameof(IsScoreButtonsGridVisible));
+                }
+            }
+        }
+
     }
 
 }
