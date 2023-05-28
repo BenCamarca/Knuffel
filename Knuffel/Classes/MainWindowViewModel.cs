@@ -67,11 +67,6 @@ namespace Knuffel.Classes
             dieList.Add(dieFour);
             dieList.Add(dieFive);
 
-            //// creating an Scoreboard Array where the scores of each round of the players will be stored
-            //int?[,] scoreboardArray = new int?[4, 13];
-            //// setting the default value of the scoreboardArray to null
-            //NullScoreboard(scoreboardArray);
-
 
             // declaring the default values for the player names
             Player1Name = "Player 1";
@@ -92,40 +87,7 @@ namespace Knuffel.Classes
             RollsLeft = 3;
 
             // declaring the default value for the RoundsLeft
-            RoundsLeft = 13;
-
-            // declaring the properties for PlayerOne that will be filled automatically 
-            PlayerOneSumUpper = PlayerOneOnes + PlayerOneTwos + PlayerOneThrees + PlayerOneFours + PlayerOneFives + PlayerOneSixes;
-            PlayerOneSumLower = PlayerOneThreeOfAKind + PlayerOneFourOfAKind + PlayerOneFullHouse + PlayerOneSmallStraight + PlayerOneLargeStraight
-                                + PlayerOneKnuffel + PlayerOneChance;
-            PlayerOneBonus = PlayerOneSumUpper >= 63 ? 35 : 0;
-            PlayerOneTotalUpper = PlayerOneSumUpper + PlayerOneBonus;
-            PlayerOneFinalScore = PlayerOneTotalUpper + PlayerOneSumLower;
-
-
-            // declaring the properties for PlayerTwo that will be filled automatically
-            PlayerTwoSumUpper = PlayerTwoOnes + PlayerTwoTwos + PlayerTwoThrees + PlayerTwoFours + PlayerTwoFives + PlayerTwoSixes;
-            PlayerTwoSumLower = PlayerTwoThreeOfAKind + PlayerTwoFourOfAKind + PlayerTwoFullHouse + PlayerTwoSmallStraight + PlayerTwoLargeStraight
-                                + PlayerTwoKnuffel + PlayerTwoChance;
-            PlayerTwoBonus = PlayerTwoSumUpper >= 63 ? 35 : 0;
-            PlayerTwoTotalUpper = PlayerTwoSumUpper + PlayerTwoBonus;
-            PlayerTwoFinalScore = PlayerTwoTotalUpper + PlayerTwoSumLower;
-
-            // declaring the properties for PlayerThree that will be filled automatically
-            PlayerThreeSumUpper = PlayerThreeOnes + PlayerThreeTwos + PlayerThreeThrees + PlayerThreeFours + PlayerThreeFives + PlayerThreeSixes;
-            PlayerThreeSumLower = PlayerThreeThreeOfAKind + PlayerThreeFourOfAKind + PlayerThreeFullHouse + PlayerThreeSmallStraight
-                                + PlayerThreeLargeStraight + PlayerThreeKnuffel + PlayerThreeChance;
-            PlayerThreeBonus = PlayerThreeSumUpper >= 63 ? 35 : 0;
-            PlayerThreeTotalUpper = PlayerThreeSumUpper + PlayerThreeBonus;
-            PlayerThreeFinalScore = PlayerThreeTotalUpper + PlayerThreeSumLower;
-
-            // declaring the properties for PlayerFour that will be filled automatically
-            PlayerFourSumUpper = PlayerFourOnes + PlayerFourTwos + PlayerFourThrees + PlayerFourFours + PlayerFourFives + PlayerFourSixes;
-            PlayerFourSumLower = PlayerFourThreeOfAKind + PlayerFourFourOfAKind + PlayerFourFullHouse + PlayerFourSmallStraight
-                                + PlayerFourLargeStraight + PlayerFourKnuffel + PlayerFourChance;
-            PlayerFourBonus = PlayerFourSumUpper >= 63 ? 35 : 0;
-            PlayerFourTotalUpper = PlayerFourSumUpper + PlayerFourBonus;
-            PlayerFourFinalScore = PlayerFourTotalUpper + PlayerFourSumLower;
+            RoundsLeft = 13;            
 
             // declaring the default value for the visibility of the StartGame Button
             IsStartGameButtonVisible = true;
@@ -181,7 +143,8 @@ namespace Knuffel.Classes
                 (o) => RollsLeft > 0 && (!Die1Locked || !Die2Locked || !Die3Locked || !Die4Locked || !Die5Locked),
                 (o) =>
                 {
-                    RollingTheDice(dieList);
+                    RollingTheDice(dieList);              
+
                     Die1Image = GetDieImage(dieList[0].Value, dieList[0].Locked);
                     Die2Image = GetDieImage(dieList[1].Value, dieList[1].Locked);
                     Die3Image = GetDieImage(dieList[2].Value, dieList[2].Locked);
@@ -195,7 +158,8 @@ namespace Knuffel.Classes
                     }
                     RollDiceCommand.RaiseCanExecuteChanged();
                     LockDieCommand.RaiseCanExecuteChanged();
-                    
+                    ScoreButtonExtraKnuffelsCommand.RaiseCanExecuteChanged();
+
                 }
                 );
 
@@ -252,6 +216,7 @@ namespace Knuffel.Classes
 
                     // Checking if the Roll Dice Button should be enabled
                     RollDiceCommand.RaiseCanExecuteChanged();
+                    LockDieCommand.RaiseCanExecuteChanged();
                 });
 
             // initializing the command for the ScoreButtonOnes
@@ -276,49 +241,26 @@ namespace Knuffel.Classes
                       {
                           case 1:
                               PlayerOneOnes = score;
+                              PlayerOneSumUpper += score;
                               break;
                           case 2:
                               PlayerTwoOnes = score;
+                              PlayerTwoSumUpper += score;
                               break;
                           case 3:
                               PlayerThreeOnes = score;
+                              PlayerThreeSumUpper += score;
                               break;
                           case 4:
                               PlayerFourOnes = score;
+                              PlayerFourSumUpper += score;
                               break;
                       }
-                      // changing the properties depending on the active player
-                      switch (ActivePlayer)
-                      {
-                          case 1:
-                              OnPropertyChanged(nameof(PlayerOneOnes));
-                              OnPropertyChanged(nameof(PlayerOneSumUpper));
-                              OnPropertyChanged(nameof(PlayerOneBonus));
-                              OnPropertyChanged(nameof(PlayerOneTotalUpper));
-                              OnPropertyChanged(nameof(PlayerOneFinalScore));
-                              break;
-                          case 2:
-                              OnPropertyChanged(nameof(PlayerTwoOnes));
-                              OnPropertyChanged(nameof(PlayerTwoSumUpper));
-                              OnPropertyChanged(nameof(PlayerTwoBonus));
-                              OnPropertyChanged(nameof(PlayerTwoTotalUpper));
-                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
-                              break;
-                          case 3:
-                              OnPropertyChanged(nameof(PlayerThreeOnes));
-                              OnPropertyChanged(nameof(PlayerThreeSumUpper));
-                              OnPropertyChanged(nameof(PlayerThreeBonus));
-                              OnPropertyChanged(nameof(PlayerThreeTotalUpper));
-                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
-                              break;
-                          case 4:
-                              OnPropertyChanged(nameof(PlayerFourOnes));
-                              OnPropertyChanged(nameof(PlayerFourSumUpper));
-                              OnPropertyChanged(nameof(PlayerFourBonus));
-                              OnPropertyChanged(nameof(PlayerFourTotalUpper));
-                              OnPropertyChanged(nameof(PlayerFourFinalScore));
-                              break;
-                      }
+                      // calling the method SetAutoFillScores();
+                      SetAutoFillScores();
+
+                      // nulling the die values
+                      NullDieValues(dieList);
                       // calling the method NextPlayer
                       NextPlayer();
                   });
@@ -346,50 +288,27 @@ namespace Knuffel.Classes
                       {
                           case 1:
                               PlayerOneTwos = score;
+                              PlayerOneSumUpper += score;
                               break;
                           case 2:
                               PlayerTwoTwos = score;
+                              PlayerTwoSumUpper += score;
                               break;
                           case 3:
                               PlayerThreeTwos = score;
+                              PlayerThreeSumUpper += score;
                               break;
                           case 4:
                               PlayerFourTwos = score;
+                              PlayerFourSumUpper += score;
                               break;
                       }
+                     
 
-                      // changing the properties depending on the active player
-                      switch (ActivePlayer)
-                      {
-                          case 1:
-                              OnPropertyChanged(nameof(PlayerOneTwos));
-                              OnPropertyChanged(nameof(PlayerOneSumUpper));
-                              OnPropertyChanged(nameof(PlayerOneBonus));
-                              OnPropertyChanged(nameof(PlayerOneTotalUpper));
-                              OnPropertyChanged(nameof(PlayerOneFinalScore));
-                              break;
-                          case 2:
-                              OnPropertyChanged(nameof(PlayerTwoTwos));
-                              OnPropertyChanged(nameof(PlayerTwoSumUpper));
-                              OnPropertyChanged(nameof(PlayerTwoBonus));
-                              OnPropertyChanged(nameof(PlayerTwoTotalUpper));
-                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
-                              break;
-                          case 3:
-                              OnPropertyChanged(nameof(PlayerThreeTwos));
-                              OnPropertyChanged(nameof(PlayerThreeSumUpper));
-                              OnPropertyChanged(nameof(PlayerThreeBonus));
-                              OnPropertyChanged(nameof(PlayerThreeTotalUpper));
-                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
-                              break;
-                          case 4:
-                              OnPropertyChanged(nameof(PlayerFourTwos));
-                              OnPropertyChanged(nameof(PlayerFourSumUpper));
-                              OnPropertyChanged(nameof(PlayerFourBonus));
-                              OnPropertyChanged(nameof(PlayerFourTotalUpper));
-                              OnPropertyChanged(nameof(PlayerFourFinalScore));
-                              break;
-                      }
+                      // calling the method SetAutoFillScores();
+                      SetAutoFillScores();
+                      // nulling the die values
+                      NullDieValues(dieList);
                       // calling the method NextPlayer
                       NextPlayer();
                   });
@@ -414,52 +333,29 @@ namespace Knuffel.Classes
                       // adding the score to the correct player
                       switch (ActivePlayer)
                       {
-                            case 1:
-                                PlayerOneThrees = score;
-                                break;
-                            case 2:
-                                PlayerTwoThrees = score;
-                                break;
-                            case 3:
-                                PlayerThreeThrees = score;
-                                break;
-                            case 4:
-                                PlayerFourThrees = score;
-                                break;
-                        }
-
-                      // changing the properties depending on the active player
-                      switch (ActivePlayer)
-                      {
                           case 1:
-                              OnPropertyChanged(nameof(PlayerOneThrees));
-                              OnPropertyChanged(nameof(PlayerOneSumUpper));
-                              OnPropertyChanged(nameof(PlayerOneBonus));
-                              OnPropertyChanged(nameof(PlayerOneTotalUpper));
-                              OnPropertyChanged(nameof(PlayerOneFinalScore));
+                              PlayerOneThrees = score;
+                              PlayerOneSumUpper += score;
                               break;
                           case 2:
-                              OnPropertyChanged(nameof(PlayerTwoThrees));
-                              OnPropertyChanged(nameof(PlayerTwoSumUpper));
-                              OnPropertyChanged(nameof(PlayerTwoBonus));
-                              OnPropertyChanged(nameof(PlayerTwoTotalUpper));
-                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
+                              PlayerTwoThrees = score;
+                              PlayerTwoSumUpper += score;
                               break;
                           case 3:
-                              OnPropertyChanged(nameof(PlayerThreeThrees));
-                              OnPropertyChanged(nameof(PlayerThreeSumUpper));
-                              OnPropertyChanged(nameof(PlayerThreeBonus));
-                              OnPropertyChanged(nameof(PlayerThreeTotalUpper));
-                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
+                              PlayerThreeThrees = score;
+                              PlayerThreeSumUpper += score;
                               break;
                           case 4:
-                              OnPropertyChanged(nameof(PlayerFourThrees));
-                              OnPropertyChanged(nameof(PlayerFourSumUpper));
-                              OnPropertyChanged(nameof(PlayerFourBonus));
-                              OnPropertyChanged(nameof(PlayerFourTotalUpper));
-                              OnPropertyChanged(nameof(PlayerFourFinalScore));
+                              PlayerFourThrees = score;
+                              PlayerFourSumUpper += score;
                               break;
-                      }
+                      }                      
+
+                      // calling the method SetAutoFillScores();
+                      SetAutoFillScores();
+
+                      // nulling the die values
+                      NullDieValues(dieList);
                       // calling the method NextPlayer
                       NextPlayer();
                   });
@@ -480,56 +376,34 @@ namespace Knuffel.Classes
                           {
                               score += 4;
                           }
-                              
+
                       }
                       // adding the score to the correct player
                       switch (ActivePlayer)
                       {
-                            case 1:
-                                PlayerOneFours = score;
-                                break;
-                            case 2:
-                                PlayerTwoFours = score;
-                                break;
-                            case 3:
-                                PlayerThreeFours = score;
-                                break;
-                            case 4:
-                                PlayerFourFours = score;
-                                break;
-                        }
-                      // changing the properties depending on the active player
-                      switch (ActivePlayer)
-                      {
                           case 1:
-                              OnPropertyChanged(nameof(PlayerOneFours));
-                              OnPropertyChanged(nameof(PlayerOneSumUpper));
-                              OnPropertyChanged(nameof(PlayerOneBonus));
-                              OnPropertyChanged(nameof(PlayerOneTotalUpper));
-                              OnPropertyChanged(nameof(PlayerOneFinalScore));
+                              PlayerOneFours = score;
+                              PlayerOneSumUpper += score;
                               break;
                           case 2:
-                              OnPropertyChanged(nameof(PlayerTwoFours));
-                              OnPropertyChanged(nameof(PlayerTwoSumUpper));
-                              OnPropertyChanged(nameof(PlayerTwoBonus));
-                              OnPropertyChanged(nameof(PlayerTwoTotalUpper));
-                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
+                              PlayerTwoFours = score;
+                              PlayerTwoSumUpper += score;
                               break;
                           case 3:
-                              OnPropertyChanged(nameof(PlayerThreeFours));
-                              OnPropertyChanged(nameof(PlayerThreeSumUpper));
-                              OnPropertyChanged(nameof(PlayerThreeBonus));
-                              OnPropertyChanged(nameof(PlayerThreeTotalUpper));
-                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
+                              PlayerThreeFours = score;
+                              PlayerThreeSumUpper += score;
                               break;
                           case 4:
-                              OnPropertyChanged(nameof(PlayerFourFours));
-                              OnPropertyChanged(nameof(PlayerFourSumUpper));
-                              OnPropertyChanged(nameof(PlayerFourBonus));
-                              OnPropertyChanged(nameof(PlayerFourTotalUpper));
-                              OnPropertyChanged(nameof(PlayerFourFinalScore));
+                              PlayerFourFours = score;
+                              PlayerFourSumUpper += score;
                               break;
-                      }
+                      }                     
+
+                      // calling the method SetAutoFillScores();
+                      SetAutoFillScores();
+
+                      // nulling the die values
+                      NullDieValues(dieList);
                       // calling the method NextPlayer
                       NextPlayer();
                   });
@@ -550,56 +424,34 @@ namespace Knuffel.Classes
                           {
                               score += 5;
                           }
-                             
+
                       }
                       // adding the score to the correct player
                       switch (ActivePlayer)
                       {
-                                case 1:
-                                    PlayerOneFives = score;
-                                    break;
-                                case 2:
-                                    PlayerTwoFives = score;
-                                    break;
-                                case 3:
-                                    PlayerThreeFives = score;
-                                    break;
-                                case 4:
-                                    PlayerFourFives = score;
-                                    break;
-                      }
-                      // changing the properties depending on the active player
-                      switch (ActivePlayer)
-                      {
                           case 1:
-                              OnPropertyChanged(nameof(PlayerOneFives));
-                              OnPropertyChanged(nameof(PlayerOneSumUpper));
-                              OnPropertyChanged(nameof(PlayerOneBonus));
-                              OnPropertyChanged(nameof(PlayerOneTotalUpper));
-                              OnPropertyChanged(nameof(PlayerOneFinalScore));
+                              PlayerOneFives = score;
+                              PlayerOneSumUpper += score;
                               break;
                           case 2:
-                              OnPropertyChanged(nameof(PlayerTwoFives));
-                              OnPropertyChanged(nameof(PlayerTwoSumUpper));
-                              OnPropertyChanged(nameof(PlayerTwoBonus));
-                              OnPropertyChanged(nameof(PlayerTwoTotalUpper));
-                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
+                              PlayerTwoFives = score;
+                              PlayerTwoSumUpper += score;
                               break;
                           case 3:
-                              OnPropertyChanged(nameof(PlayerThreeFives));
-                              OnPropertyChanged(nameof(PlayerThreeSumUpper));
-                              OnPropertyChanged(nameof(PlayerThreeBonus));
-                              OnPropertyChanged(nameof(PlayerThreeTotalUpper));
-                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
+                              PlayerThreeFives = score;
+                              PlayerThreeSumUpper += score;
                               break;
                           case 4:
-                              OnPropertyChanged(nameof(PlayerFourFives));
-                              OnPropertyChanged(nameof(PlayerFourSumUpper));
-                              OnPropertyChanged(nameof(PlayerFourBonus));
-                              OnPropertyChanged(nameof(PlayerFourTotalUpper));
-                              OnPropertyChanged(nameof(PlayerFourFinalScore));
+                              PlayerFourFives = score;
+                              PlayerFourSumUpper += score;
                               break;
-                      }
+                      }                     
+
+                      // calling the method SetAutoFillScores();
+                      SetAutoFillScores();
+
+                      // nulling the die values
+                      NullDieValues(dieList);
                       // calling the method NextPlayer
                       NextPlayer();
                   });
@@ -620,56 +472,34 @@ namespace Knuffel.Classes
                           {
                               score += 6;
                           }
-                              
+
                       }
                       // adding the score to the correct player
                       switch (ActivePlayer)
                       {
-                                    case 1:
-                                        PlayerOneSixes = score;
-                                        break;
-                                    case 2:
-                                        PlayerTwoSixes = score;
-                                        break;
-                                    case 3:
-                                        PlayerThreeSixes = score;
-                                        break;
-                                    case 4:
-                                        PlayerFourSixes = score;
-                                        break;
-                      }
-                      // changing the properties depending on the active player
-                      switch (ActivePlayer)
-                      {
                           case 1:
-                              OnPropertyChanged(nameof(PlayerOneSixes));
-                              OnPropertyChanged(nameof(PlayerOneSumUpper));
-                              OnPropertyChanged(nameof(PlayerOneBonus));
-                              OnPropertyChanged(nameof(PlayerOneTotalUpper));
-                              OnPropertyChanged(nameof(PlayerOneFinalScore));
+                              PlayerOneSixes = score;
+                              PlayerOneSumUpper += score;
                               break;
                           case 2:
-                              OnPropertyChanged(nameof(PlayerTwoSixes));
-                              OnPropertyChanged(nameof(PlayerTwoSumUpper));
-                              OnPropertyChanged(nameof(PlayerTwoBonus));
-                              OnPropertyChanged(nameof(PlayerTwoTotalUpper));
-                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
+                              PlayerTwoSixes = score;
+                              PlayerTwoSumUpper += score;
                               break;
                           case 3:
-                              OnPropertyChanged(nameof(PlayerThreeSixes));
-                              OnPropertyChanged(nameof(PlayerThreeSumUpper));
-                              OnPropertyChanged(nameof(PlayerThreeBonus));
-                              OnPropertyChanged(nameof(PlayerThreeTotalUpper));
-                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
+                              PlayerThreeSixes = score;
+                              PlayerThreeSumUpper += score;
                               break;
                           case 4:
-                              OnPropertyChanged(nameof(PlayerFourSixes));
-                              OnPropertyChanged(nameof(PlayerFourSumUpper));
-                              OnPropertyChanged(nameof(PlayerFourBonus));
-                              OnPropertyChanged(nameof(PlayerFourTotalUpper));
-                              OnPropertyChanged(nameof(PlayerFourFinalScore));
+                              PlayerFourSixes = score;
+                              PlayerFourSumUpper += score;
                               break;
                       }
+                     
+                      // calling the method SetAutoFillScores();
+                      SetAutoFillScores();
+
+                      // nulling the die values
+                      NullDieValues(dieList);
                       // calling the method NextPlayer
                       NextPlayer();
                   });
@@ -700,42 +530,28 @@ namespace Knuffel.Classes
                           {
                               case 1:
                                   PlayerOneThreeOfAKind = score;
+                                  PlayerOneSumLower += score;
                                   break;
                               case 2:
                                   PlayerTwoThreeOfAKind = score;
+                                  PlayerTwoSumLower += score;
                                   break;
                               case 3:
                                   PlayerThreeThreeOfAKind = score;
+                                  PlayerThreeSumLower += score;
                                   break;
                               case 4:
                                   PlayerFourThreeOfAKind = score;
+                                  PlayerFourSumLower += score;
                                   break;
                           }
-                      }
-                      // changing the properties depending on the active player
-                      switch (ActivePlayer)
-                      {
-                          case 1:
-                              OnPropertyChanged(nameof(PlayerOneThreeOfAKind));
-                              OnPropertyChanged(nameof(PlayerOneSumLower));
-                              OnPropertyChanged(nameof(PlayerOneFinalScore));
-                              break;
-                          case 2:
-                              OnPropertyChanged(nameof(PlayerTwoThreeOfAKind));
-                              OnPropertyChanged(nameof(PlayerTwoSumLower));
-                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
-                              break;
-                          case 3:
-                              OnPropertyChanged(nameof(PlayerThreeThreeOfAKind));
-                              OnPropertyChanged(nameof(PlayerThreeSumLower));
-                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
-                              break;
-                          case 4:
-                              OnPropertyChanged(nameof(PlayerFourThreeOfAKind));
-                              OnPropertyChanged(nameof(PlayerFourSumLower));
-                              OnPropertyChanged(nameof(PlayerFourFinalScore));
-                              break;
-                      }
+                      }                     
+
+                      // calling the method SetAutoFillScores();
+                      SetAutoFillScores();
+
+                      // nulling the die values
+                      NullDieValues(dieList);
                       // calling the method NextPlayer
                       NextPlayer();
                   });
@@ -766,42 +582,28 @@ namespace Knuffel.Classes
                           {
                               case 1:
                                   PlayerOneFourOfAKind = score;
+                                  PlayerOneSumLower += score;
                                   break;
                               case 2:
                                   PlayerTwoFourOfAKind = score;
+                                  PlayerTwoSumLower += score;
                                   break;
                               case 3:
                                   PlayerThreeFourOfAKind = score;
+                                  PlayerThreeSumLower += score;
                                   break;
                               case 4:
                                   PlayerFourFourOfAKind = score;
+                                  PlayerFourSumLower += score;
                                   break;
                           }
-                      }
-                      // changing the properties depending on the active player
-                      switch (ActivePlayer)
-                      {
-                          case 1:
-                              OnPropertyChanged(nameof(PlayerOneFourOfAKind));
-                              OnPropertyChanged(nameof(PlayerOneSumLower));
-                              OnPropertyChanged(nameof(PlayerOneFinalScore));
-                              break;
-                          case 2:
-                              OnPropertyChanged(nameof(PlayerTwoFourOfAKind));
-                              OnPropertyChanged(nameof(PlayerTwoSumLower));
-                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
-                              break;
-                          case 3:
-                              OnPropertyChanged(nameof(PlayerThreeFourOfAKind));
-                              OnPropertyChanged(nameof(PlayerThreeSumLower));
-                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
-                              break;
-                          case 4:
-                              OnPropertyChanged(nameof(PlayerFourFourOfAKind));
-                              OnPropertyChanged(nameof(PlayerFourSumLower));
-                              OnPropertyChanged(nameof(PlayerFourFinalScore));
-                              break;
-                      }
+                      }                      
+
+                      // calling the method SetAutoFillScores();
+                      SetAutoFillScores();
+
+                      // nulling the die values
+                      NullDieValues(dieList);
                       // calling the method NextPlayer
                       NextPlayer();
                   });
@@ -820,11 +622,8 @@ namespace Knuffel.Classes
                       if (dieList.Any(die => dieList.Count(d => d.Value == die.Value) == 3) &&
                           dieList.Any(die => dieList.Count(d => d.Value == die.Value) == 2))
                       {
-                          // adding the value of each die to the score
-                          foreach (Die die in dieList)
-                          {
-                              score += die.Value;
-                          }
+                          // setting the score to 25
+                          score = 25;
                       }
 
                       {
@@ -832,42 +631,28 @@ namespace Knuffel.Classes
                           {
                               case 1:
                                   PlayerOneFullHouse = score;
+                                  PlayerOneSumLower += score;
                                   break;
                               case 2:
                                   PlayerTwoFullHouse = score;
+                                  PlayerTwoSumLower += score;
                                   break;
                               case 3:
                                   PlayerThreeFullHouse = score;
+                                  PlayerThreeSumLower += score;
                                   break;
                               case 4:
                                   PlayerFourFullHouse = score;
+                                  PlayerFourSumLower += score;
                                   break;
                           }
-                      }
-                      // changing the properties depending on the active player
-                      switch (ActivePlayer)
-                      {
-                          case 1:
-                              OnPropertyChanged(nameof(PlayerOneFullHouse));
-                              OnPropertyChanged(nameof(PlayerOneSumLower));
-                              OnPropertyChanged(nameof(PlayerOneFinalScore));
-                              break;
-                          case 2:
-                              OnPropertyChanged(nameof(PlayerTwoFullHouse));
-                              OnPropertyChanged(nameof(PlayerTwoSumLower));
-                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
-                              break;
-                          case 3:
-                              OnPropertyChanged(nameof(PlayerThreeFullHouse));
-                              OnPropertyChanged(nameof(PlayerThreeSumLower));
-                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
-                              break;
-                          case 4:
-                              OnPropertyChanged(nameof(PlayerFourFullHouse));
-                              OnPropertyChanged(nameof(PlayerFourSumLower));
-                              OnPropertyChanged(nameof(PlayerFourFinalScore));
-                              break;
-                      }
+                      }                     
+
+                      // calling the method SetAutoFillScores();
+                      SetAutoFillScores();
+
+                      // nulling the die values
+                      NullDieValues(dieList);
                       // calling the method NextPlayer
                       NextPlayer();
                   });
@@ -887,12 +672,9 @@ namespace Knuffel.Classes
                           dieList.Any(die => dieList.Count(d => d.Value == die.Value + 1) >= 1) &&
                           dieList.Any(die => dieList.Count(d => d.Value == die.Value + 2) >= 1) &&
                           dieList.Any(die => dieList.Count(d => d.Value == die.Value + 3) >= 1))
-                                                      {
-                          // adding the value of each die to the score
-                          foreach (Die die in dieList)
-                          {
-                              score += die.Value;
-                          }
+                      {
+                          // setting the score to 30
+                          score = 30;
                       }
 
                       {
@@ -900,42 +682,28 @@ namespace Knuffel.Classes
                           {
                               case 1:
                                   PlayerOneSmallStraight = score;
+                                  PlayerOneSumLower += score;
                                   break;
                               case 2:
                                   PlayerTwoSmallStraight = score;
+                                  PlayerTwoSumLower += score;
                                   break;
                               case 3:
                                   PlayerThreeSmallStraight = score;
+                                  PlayerThreeSumLower += score;
                                   break;
                               case 4:
                                   PlayerFourSmallStraight = score;
+                                  PlayerFourSumLower += score;
                                   break;
                           }
-                      }
-                      // changing the properties depending on the active player
-                      switch (ActivePlayer)
-                                                      {
-                          case 1:
-                              OnPropertyChanged(nameof(PlayerOneSmallStraight));
-                              OnPropertyChanged(nameof(PlayerOneSumLower));
-                              OnPropertyChanged(nameof(PlayerOneFinalScore));
-                              break;
-                          case 2:
-                              OnPropertyChanged(nameof(PlayerTwoSmallStraight));
-                              OnPropertyChanged(nameof(PlayerTwoSumLower));
-                              OnPropertyChanged(nameof(PlayerTwoFinalScore));
-                              break;
-                          case 3:
-                              OnPropertyChanged(nameof(PlayerThreeSmallStraight));
-                              OnPropertyChanged(nameof(PlayerThreeSumLower));
-                              OnPropertyChanged(nameof(PlayerThreeFinalScore));
-                              break;
-                          case 4:
-                              OnPropertyChanged(nameof(PlayerFourSmallStraight));
-                              OnPropertyChanged(nameof(PlayerFourSumLower));
-                              OnPropertyChanged(nameof(PlayerFourFinalScore));
-                              break;
-                      }
+                      }                      
+
+                      // calling the method SetAutoFillScores();
+                      SetAutoFillScores();
+
+                      // nulling the die values
+                      NullDieValues(dieList);
                       // calling the method NextPlayer
                       NextPlayer();
                   });
@@ -957,11 +725,8 @@ namespace Knuffel.Classes
                          dieList.Any(die => dieList.Count(d => d.Value == die.Value + 3) >= 1) &&
                                                                                                                                                          dieList.Any(die => dieList.Count(d => d.Value == die.Value + 4) >= 1))
                      {
-                         // adding the value of each die to the score
-                         foreach (Die die in dieList)
-                         {
-                             score += die.Value;
-                         }
+                         // setting the score to 40
+                         score = 40;
                      }
 
                      {
@@ -969,42 +734,28 @@ namespace Knuffel.Classes
                          {
                              case 1:
                                  PlayerOneLargeStraight = score;
+                                 PlayerOneSumLower += score;
                                  break;
                              case 2:
                                  PlayerTwoLargeStraight = score;
+                                 PlayerTwoSumLower += score;
                                  break;
                              case 3:
                                  PlayerThreeLargeStraight = score;
+                                 PlayerThreeSumLower += score;
                                  break;
                              case 4:
                                  PlayerFourLargeStraight = score;
+                                 PlayerFourSumLower += score;
                                  break;
                          }
-                     }
-                     // changing the properties depending on the active player
-                     switch (ActivePlayer)
-                     {
-                         case 1:
-                             OnPropertyChanged(nameof(PlayerOneLargeStraight));
-                             OnPropertyChanged(nameof(PlayerOneSumLower));
-                             OnPropertyChanged(nameof(PlayerOneFinalScore));
-                             break;
-                         case 2:
-                             OnPropertyChanged(nameof(PlayerTwoLargeStraight));
-                             OnPropertyChanged(nameof(PlayerTwoSumLower));
-                             OnPropertyChanged(nameof(PlayerTwoFinalScore));
-                             break;
-                         case 3:
-                             OnPropertyChanged(nameof(PlayerThreeLargeStraight));
-                             OnPropertyChanged(nameof(PlayerThreeSumLower));
-                             OnPropertyChanged(nameof(PlayerThreeFinalScore));
-                             break;
-                         case 4:
-                             OnPropertyChanged(nameof(PlayerFourLargeStraight));
-                             OnPropertyChanged(nameof(PlayerFourSumLower));
-                             OnPropertyChanged(nameof(PlayerFourFinalScore));
-                             break;
-                     }
+                     }                    
+
+                     // calling the method SetAutoFillScores();
+                     SetAutoFillScores();
+
+                     // nulling the die values
+                     NullDieValues(dieList);
                      // calling the method NextPlayer
                      NextPlayer();
                  });
@@ -1024,7 +775,7 @@ namespace Knuffel.Classes
                      {
                          // setting the score to 50
                          score = 50;
-                         
+
                      }
 
                      {
@@ -1032,42 +783,27 @@ namespace Knuffel.Classes
                          {
                              case 1:
                                  PlayerOneKnuffel = score;
+                                 PlayerOneSumLower += score;
                                  break;
                              case 2:
                                  PlayerTwoKnuffel = score;
+                                 PlayerTwoSumLower += score;
                                  break;
                              case 3:
                                  PlayerThreeKnuffel = score;
+                                 PlayerThreeSumLower += score;
                                  break;
                              case 4:
                                  PlayerFourKnuffel = score;
+                                 PlayerFourSumLower += score;
                                  break;
                          }
-                     }
-                     // changing the properties depending on the active player
-                     switch (ActivePlayer)
-                                                    {
-                         case 1:
-                             OnPropertyChanged(nameof(PlayerOneKnuffel));
-                             OnPropertyChanged(nameof(PlayerOneSumLower));
-                             OnPropertyChanged(nameof(PlayerOneFinalScore));
-                             break;
-                         case 2:
-                             OnPropertyChanged(nameof(PlayerTwoKnuffel));
-                             OnPropertyChanged(nameof(PlayerTwoSumLower));
-                             OnPropertyChanged(nameof(PlayerTwoFinalScore));
-                             break;
-                         case 3:
-                             OnPropertyChanged(nameof(PlayerThreeKnuffel));
-                             OnPropertyChanged(nameof(PlayerThreeSumLower));
-                             OnPropertyChanged(nameof(PlayerThreeFinalScore));
-                             break;
-                         case 4:
-                             OnPropertyChanged(nameof(PlayerFourKnuffel));
-                             OnPropertyChanged(nameof(PlayerFourSumLower));
-                             OnPropertyChanged(nameof(PlayerFourFinalScore));
-                             break;
-                     }
+                     }                    
+
+                     // calling the method SetAutoFillScores();
+                     SetAutoFillScores();
+                     // nulling the die values
+                     NullDieValues(dieList);
                      // calling the method NextPlayer
                      NextPlayer();
                  });
@@ -1080,58 +816,106 @@ namespace Knuffel.Classes
                        ActivePlayer == 4 && PlayerFourChance == null,
                 (o) =>
                 {
-                     // declaring the variable for the score
-                     int? score = 0;
-                     // adding the value of each die to the score
-                     foreach (Die die in dieList)
-                     {
-                         score += die.Value;
-                     }
+                    // declaring the variable for the score
+                    int? score = 0;
+                    // adding the value of each die to the score
+                    foreach (Die die in dieList)
+                    {
+                        score += die.Value;
+                    }
 
-                     {
-                         switch (ActivePlayer)
-                         {
-                             case 1:
-                                 PlayerOneChance = score;
-                                 break;
-                             case 2:
-                                 PlayerTwoChance = score;
-                                 break;
-                             case 3:
-                                 PlayerThreeChance = score;
-                                 break;
-                             case 4:
-                                 PlayerFourChance = score;
-                                 break;
-                         }
-                     }
-                     // changing the properties depending on the active player
-                     switch (ActivePlayer)
-                                                    {
-                         case 1:
-                             OnPropertyChanged(nameof(PlayerOneChance));
-                             OnPropertyChanged(nameof(PlayerOneSumLower));
-                             OnPropertyChanged(nameof(PlayerOneFinalScore));
-                             break;
-                         case 2:
-                             OnPropertyChanged(nameof(PlayerTwoChance));
-                             OnPropertyChanged(nameof(PlayerTwoSumLower));
-                             OnPropertyChanged(nameof(PlayerTwoFinalScore));
-                             break;
-                         case 3:
-                             OnPropertyChanged(nameof(PlayerThreeChance));
-                             OnPropertyChanged(nameof(PlayerThreeSumLower));
-                             OnPropertyChanged(nameof(PlayerThreeFinalScore));
-                             break;
-                         case 4:
-                             OnPropertyChanged(nameof(PlayerFourChance));
-                             OnPropertyChanged(nameof(PlayerFourSumLower));
-                             OnPropertyChanged(nameof(PlayerFourFinalScore));
-                             break;
-                     }
+                    {
+                        switch (ActivePlayer)
+                        {
+                            case 1:
+                                PlayerOneChance = score;
+                                PlayerOneSumLower += score;
+                                break;
+                            case 2:
+                                PlayerTwoChance = score;
+                                PlayerTwoSumLower += score;
+                                break;
+                            case 3:
+                                PlayerThreeChance = score;
+                                PlayerThreeSumLower += score;
+                                break;
+                            case 4:
+                                PlayerFourChance = score;
+                                PlayerFourSumLower += score;
+                                break;
+                        }
+                    }                   
+
+                    // calling the method SetAutoFillScores();
+                    SetAutoFillScores();
+
+                    // nulling the die values
+                    NullDieValues(dieList);
                     // calling the method NextPlayer
                     NextPlayer();
-                 });
+                });
+
+            // initializing the command for the ScoreButtonExtraKnuffels
+            ScoreButtonExtraKnuffelsCommand = new DelegateCommand(
+                (o) => ActivePlayer == 1 && PlayerOneKnuffel == 50 
+                        && RollsLeft < 3
+                       //&& !dieList.Any(die => die.Value == null || die.Value == 0) 
+                       && (dieList.Any(die => dieList.Count(d => d.Value == die.Value) >= 5)) ||
+                       ActivePlayer == 2 && PlayerTwoKnuffel == 50
+                       && RollsLeft < 3
+                       //&& !dieList.Any(die => die.Value == null || die.Value == 0) 
+                       && (dieList.Any(die => dieList.Count(d => d.Value == die.Value) >= 5)) ||
+                       ActivePlayer == 3 && PlayerThreeKnuffel == 50
+                       && RollsLeft < 3
+                       //&& !dieList.Any(die => die.Value == null || die.Value == 0) 
+                       && (dieList.Any(die => dieList.Count(d => d.Value == die.Value) >= 5)) || 
+                       ActivePlayer == 4 && PlayerFourKnuffel == 50 
+                       && RollsLeft < 3
+                       //&& !dieList.Any(die => die.Value == null || die.Value == 0) 
+                       && (dieList.Any(die => dieList.Count(d => d.Value == die.Value) >= 5)),
+                (o) =>
+                {
+                    // declaring the variable for the score
+                    int? score = 50;
+
+
+                    {
+                        switch (ActivePlayer)
+                        {
+                            case 1:
+                                PlayerOneExtraKnuffels += score;
+                                PlayerOneSumLower += score;
+                                break;
+                            case 2:
+                                PlayerTwoExtraKnuffels += score;
+                                PlayerTwoSumLower += score;
+                                break;
+                            case 3:
+                                PlayerThreeExtraKnuffels += score;
+                                PlayerThreeSumLower += score;
+                                break;
+                            case 4:
+                                PlayerFourExtraKnuffels += score;
+                                PlayerFourSumLower += score;
+                                break;
+                        }
+                    }                   
+
+                    // calling the method SetAutoFillScores();
+                    SetAutoFillScores();
+
+                    // nulling the die values
+                    NullDieValues(dieList);
+
+                    // show MessageBox "Congratulations, you have earned an extra 50 points! It´s your turn again!"
+                    MessageBox.Show("Congratulations, you have earned an extra 50 points! It´s your turn again!");
+
+                    // the active player gets another turn
+                    ActivePlayer--;
+
+                    // calling the method NextPlayer
+                    NextPlayer();
+                });
         }
 
 
@@ -1149,7 +933,7 @@ namespace Knuffel.Classes
         public DelegateCommand RollDiceCommand { get; set; }
 
         // declaring the command for the Lock Die Buttons
-        public DelegateCommand LockDieCommand { get; set; }        
+        public DelegateCommand LockDieCommand { get; set; }
 
         // declaring the commands for the Score Buttons
         public DelegateCommand ScoreButtonOnesCommand { get; set; }
@@ -1165,6 +949,7 @@ namespace Knuffel.Classes
         public DelegateCommand ScoreButtonLargeStraightCommand { get; set; }
         public DelegateCommand ScoreButtonKnuffelCommand { get; set; }
         public DelegateCommand ScoreButtonChanceCommand { get; set; }
+        public DelegateCommand ScoreButtonExtraKnuffelsCommand { get; set; }
 
         private void StartGame()
         {
@@ -1229,7 +1014,9 @@ namespace Knuffel.Classes
 
             // calling the method where Menu to enter the player names is shown, depending on the amount of players
             ShowEnterPlayerNamesMenu();
-        }
+            SetSumScoreValues();
+        }     
+
 
 
         // in this method we show the Menu to enter the player names, depending on the amount of players
@@ -1238,25 +1025,19 @@ namespace Knuffel.Classes
             switch (AmountOfPlayers)
             {
 
-                case 1:
-                    // setting the visibility for the NameLabel and the TextBox for player 1 to visible
-                    // setting the EnterPlayerNamesButton to visible
+                case 1:                    
                     IsEnterPlayer1NameLabelVisible = true;
                     IsPlayer1NameTextBoxVisible = true;
                     IsEnterPlayerNamesButtonVisible = true;
                     break;
-                case 2:
-                    // setting the visiility for the NameLabels and the TextBoxes for player 1 and 2 to visible
-                    // setting the EnterPlayerNamesButton to visible
+                case 2:                    
                     IsEnterPlayer1NameLabelVisible = true;
                     IsPlayer1NameTextBoxVisible = true;
                     IsEnterPlayer2NameLabelVisible = true;
                     IsPlayer2NameTextBoxVisible = true;
                     IsEnterPlayerNamesButtonVisible = true;
                     break;
-                case 3:
-                    // setting the visiility for the NameLabels and the TextBoxes for player 1 to 3 to visible
-                    // setting the EnterPlayerNamesButton to visible
+                case 3:                    
                     IsEnterPlayer1NameLabelVisible = true;
                     IsPlayer1NameTextBoxVisible = true;
                     IsEnterPlayer2NameLabelVisible = true;
@@ -1265,9 +1046,7 @@ namespace Knuffel.Classes
                     IsPlayer3NameTextBoxVisible = true;
                     IsEnterPlayerNamesButtonVisible = true;
                     break;
-                case 4:
-                    // setting the visiility for the NameLabels and the TextBoxes for player 1 to 4 to visible
-                    // setting the EnterPlayerNamesButton to visible
+                case 4:                   
                     IsEnterPlayer1NameLabelVisible = true;
                     IsPlayer1NameTextBoxVisible = true;
                     IsEnterPlayer2NameLabelVisible = true;
@@ -1303,6 +1082,78 @@ namespace Knuffel.Classes
             ShowYourTurnLabelAndActivePlayerLabel();
         }
 
+        // in this method we are setting the Sum-Score values for the players depending on the amount of players
+        private void SetSumScoreValues()
+        {
+            switch (AmountOfPlayers)
+            {
+                case 1:
+                    // setting all the Sum-Score values for player 1 to 0
+                    PlayerOneSumUpper = 0;
+                    PlayerOneSumLower = 0;
+                    PlayerOneTotalUpper = 0;
+                    PlayerOneExtraKnuffels = 0;
+                    PlayerOneFinalScore = 0;
+                    break;
+
+                case 2:
+                    // setting all the Sum-Score values for player 1 and 2 to 0
+                    PlayerOneSumUpper = 0;
+                    PlayerOneSumLower = 0;
+                    PlayerOneTotalUpper = 0;
+                    PlayerOneExtraKnuffels = 0;
+                    PlayerOneFinalScore = 0;
+                    PlayerTwoSumUpper = 0;
+                    PlayerTwoSumLower = 0;
+                    PlayerTwoTotalUpper = 0;
+                    PlayerTwoExtraKnuffels = 0;
+                    PlayerTwoFinalScore = 0;
+                    break;
+
+                case 3:
+                    // setting all the Sum-Score values for player 1 to 3 to 0
+                    PlayerOneSumUpper = 0;
+                    PlayerOneSumLower = 0;
+                    PlayerOneTotalUpper = 0;
+                    PlayerOneExtraKnuffels = 0;
+                    PlayerOneFinalScore = 0;
+                    PlayerTwoSumUpper = 0;
+                    PlayerTwoSumLower = 0;
+                    PlayerTwoTotalUpper = 0;
+                    PlayerTwoExtraKnuffels = 0;
+                    PlayerTwoFinalScore = 0;
+                    PlayerThreeSumUpper = 0;
+                    PlayerThreeSumLower = 0;
+                    PlayerThreeTotalUpper = 0;
+                    PlayerThreeExtraKnuffels = 0;
+                    PlayerThreeFinalScore = 0;
+                    break;
+
+                case 4:
+                    // setting all the Sum-Score values for player 1 to 4 to 0
+                    PlayerOneSumUpper = 0;
+                    PlayerOneSumLower = 0;
+                    PlayerOneTotalUpper = 0;
+                    PlayerOneExtraKnuffels = 0;
+                    PlayerOneFinalScore = 0;
+                    PlayerTwoSumUpper = 0;
+                    PlayerTwoSumLower = 0;
+                    PlayerTwoTotalUpper = 0;
+                    PlayerTwoExtraKnuffels = 0;
+                    PlayerTwoFinalScore = 0;
+                    PlayerThreeSumUpper = 0;
+                    PlayerThreeSumLower = 0;
+                    PlayerThreeTotalUpper = 0;
+                    PlayerThreeExtraKnuffels = 0;
+                    PlayerThreeFinalScore = 0;
+                    PlayerFourSumUpper = 0;
+                    PlayerFourSumLower = 0;
+                    PlayerFourTotalUpper = 0;
+                    PlayerFourExtraKnuffels = 0;
+                    PlayerFourFinalScore = 0;
+                    break;
+            }
+        }
 
         // in this method we are setting the visibility for the RollButton and the RollsLeftLabel to visible
         private void ShowRollButtonAndRollsLeftLabel()
@@ -1483,21 +1334,62 @@ namespace Knuffel.Classes
 
         }
 
-        //// in this method we are setting the values of the Scoreboard Array to null
-        //private void NullScoreboard(int?[,] scoreboard)
-        //{
-        //    for (int i = 0; i < 4; i++)
-        //    {
-        //        for (int j = 0; j < 13; j++)
-        //        {
-        //            scoreboard[i, j] = null;
-        //        }
-        //    }
-        //}
+        // in this method we are setting a switch case depending on the actualPlayer
+        // where we declare the conditions for the SumUpper, SumLower Bonus, TotalUpper and FinalScore for each player
+        private void SetAutoFillScores()
+        {
+            switch (ActivePlayer)
+            {
+                case 1:                    
+                    PlayerOneBonus = PlayerOneSumUpper >= 63 ? 35 : 0;
+                    PlayerOneTotalUpper = PlayerOneSumUpper + PlayerOneBonus;
+                    PlayerOneFinalScore = PlayerOneTotalUpper + PlayerOneSumLower;
+                    break;
+                case 2:                    
+                    PlayerTwoBonus = PlayerTwoSumUpper >= 63 ? 35 : 0;
+                    PlayerTwoTotalUpper = PlayerTwoSumUpper + PlayerTwoBonus;
+                    PlayerTwoFinalScore = PlayerTwoTotalUpper + PlayerTwoSumLower;
+                    break;
+                case 3:                    
+                    PlayerThreeBonus = PlayerThreeSumUpper >= 63 ? 35 : 0;
+                    PlayerThreeTotalUpper = PlayerThreeSumUpper + PlayerThreeBonus;
+                    PlayerThreeFinalScore = PlayerThreeTotalUpper + PlayerThreeSumLower;
+                    break;
+                case 4:                   
+                    PlayerFourBonus = PlayerFourSumUpper >= 63 ? 35 : 0;
+                    PlayerFourTotalUpper = PlayerFourSumUpper + PlayerFourBonus;
+                    PlayerFourFinalScore = PlayerFourTotalUpper + PlayerFourSumLower;
+                    break;
+            }
+        }
+
+
+        // in this method we are setting the value of each die to null and the locked value to false
+        private void NullDieValues(List<Die> listOfDie)
+        {
+            foreach (Die die in listOfDie)
+            {
+                die.Value = null;
+                die.Locked = false;
+            }
+            Die1Locked = false;
+            Die2Locked = false;
+            Die3Locked = false;
+            Die4Locked = false;
+            Die5Locked = false;
+            Die1Image = GetDieImage(listOfDie[0].Value, listOfDie[0].Locked);
+            Die2Image = GetDieImage(listOfDie[1].Value, listOfDie[1].Locked);
+            Die3Image = GetDieImage(listOfDie[2].Value, listOfDie[2].Locked);
+            Die4Image = GetDieImage(listOfDie[3].Value, listOfDie[3].Locked);
+            Die5Image = GetDieImage(listOfDie[4].Value, listOfDie[4].Locked);
+
+        }
 
         // in this method we are checking if the game advances to the next player
         private void NextPlayer()
         {
+            // calling the method SetAutoFillScores
+            SetAutoFillScores();
             // here we are checking if the active player is equal to the amount of players, and if there are still rounds to play
             if (ActivePlayer == AmountOfPlayers && RoundsLeft > 0)
             {
@@ -1530,8 +1422,10 @@ namespace Knuffel.Classes
                 SetActivePlayerName();
                 IsScoreButtonCommandAvailable();
                 RollDiceCommand.RaiseCanExecuteChanged();
+                LockDieCommand.RaiseCanExecuteChanged();
+
             }
-            
+
 
         }
 
@@ -1551,6 +1445,7 @@ namespace Knuffel.Classes
             ScoreButtonLargeStraightCommand.RaiseCanExecuteChanged();
             ScoreButtonKnuffelCommand.RaiseCanExecuteChanged();
             ScoreButtonChanceCommand.RaiseCanExecuteChanged();
+            ScoreButtonExtraKnuffelsCommand.RaiseCanExecuteChanged();
         }
 
         private void GameFinished()
@@ -1996,6 +1891,11 @@ namespace Knuffel.Classes
                 {
                     _playerOneOnes = value;
                     OnPropertyChanged(nameof(PlayerOneOnes));
+                    OnPropertyChanged(nameof(PlayerOneSumUpper));
+                    OnPropertyChanged(nameof(PlayerOneBonus));
+                    OnPropertyChanged(nameof(PlayerOneTotalUpper));
+                    OnPropertyChanged(nameof(PlayerOneFinalScore));
+
                 }
             }
         }
@@ -2008,6 +1908,10 @@ namespace Knuffel.Classes
                 {
                     _playerOneTwos = value;
                     OnPropertyChanged(nameof(PlayerOneTwos));
+                    OnPropertyChanged(nameof(PlayerOneSumUpper));
+                    OnPropertyChanged(nameof(PlayerOneBonus));
+                    OnPropertyChanged(nameof(PlayerOneTotalUpper));
+                    OnPropertyChanged(nameof(PlayerOneFinalScore));
                 }
             }
         }
@@ -2020,6 +1924,10 @@ namespace Knuffel.Classes
                 {
                     _playerOneThrees = value;
                     OnPropertyChanged(nameof(PlayerOneThrees));
+                    OnPropertyChanged(nameof(PlayerOneSumUpper));
+                    OnPropertyChanged(nameof(PlayerOneBonus));
+                    OnPropertyChanged(nameof(PlayerOneTotalUpper));
+                    OnPropertyChanged(nameof(PlayerOneFinalScore));
                 }
             }
         }
@@ -2032,6 +1940,10 @@ namespace Knuffel.Classes
                 {
                     _playerOneFours = value;
                     OnPropertyChanged(nameof(PlayerOneFours));
+                    OnPropertyChanged(nameof(PlayerOneSumUpper));
+                    OnPropertyChanged(nameof(PlayerOneBonus));
+                    OnPropertyChanged(nameof(PlayerOneTotalUpper));
+                    OnPropertyChanged(nameof(PlayerOneFinalScore));
                 }
             }
         }
@@ -2044,6 +1956,10 @@ namespace Knuffel.Classes
                 {
                     _playerOneFives = value;
                     OnPropertyChanged(nameof(PlayerOneFives));
+                    OnPropertyChanged(nameof(PlayerOneSumUpper));
+                    OnPropertyChanged(nameof(PlayerOneBonus));
+                    OnPropertyChanged(nameof(PlayerOneTotalUpper));
+                    OnPropertyChanged(nameof(PlayerOneFinalScore));
                 }
             }
         }
@@ -2056,6 +1972,10 @@ namespace Knuffel.Classes
                 {
                     _playerOneSixes = value;
                     OnPropertyChanged(nameof(PlayerOneSixes));
+                    OnPropertyChanged(nameof(PlayerOneSumUpper));
+                    OnPropertyChanged(nameof(PlayerOneBonus));
+                    OnPropertyChanged(nameof(PlayerOneTotalUpper));
+                    OnPropertyChanged(nameof(PlayerOneFinalScore));
                 }
             }
         }
@@ -2068,6 +1988,9 @@ namespace Knuffel.Classes
                 {
                     _playerOneSumUpper = value;
                     OnPropertyChanged(nameof(PlayerOneSumUpper));
+                    OnPropertyChanged(nameof(PlayerOneBonus));
+                    OnPropertyChanged(nameof(PlayerOneTotalUpper));
+                    OnPropertyChanged(nameof(PlayerOneFinalScore));
                 }
             }
         }
@@ -2080,6 +2003,8 @@ namespace Knuffel.Classes
                 {
                     _playerOneBonus = value;
                     OnPropertyChanged(nameof(PlayerOneBonus));
+                    OnPropertyChanged(nameof(PlayerOneTotalUpper));
+                    OnPropertyChanged(nameof(PlayerOneFinalScore));
                 }
             }
         }
@@ -2092,6 +2017,7 @@ namespace Knuffel.Classes
                 {
                     _playerOneTotalUpper = value;
                     OnPropertyChanged(nameof(PlayerOneTotalUpper));
+                    OnPropertyChanged(nameof(PlayerOneFinalScore));
                 }
             }
         }
@@ -2104,6 +2030,8 @@ namespace Knuffel.Classes
                 {
                     _playerOneThreeOfAKind = value;
                     OnPropertyChanged(nameof(PlayerOneThreeOfAKind));
+                    OnPropertyChanged(nameof(PlayerOneSumLower));
+                    OnPropertyChanged(nameof(PlayerOneFinalScore));
                 }
             }
         }
@@ -2116,6 +2044,8 @@ namespace Knuffel.Classes
                 {
                     _playerOneFourOfAKind = value;
                     OnPropertyChanged(nameof(PlayerOneFourOfAKind));
+                    OnPropertyChanged(nameof(PlayerOneSumLower));
+                    OnPropertyChanged(nameof(PlayerOneFinalScore));
                 }
             }
         }
@@ -2128,6 +2058,8 @@ namespace Knuffel.Classes
                 {
                     _playerOneFullHouse = value;
                     OnPropertyChanged(nameof(PlayerOneFullHouse));
+                    OnPropertyChanged(nameof(PlayerOneSumLower));
+                    OnPropertyChanged(nameof(PlayerOneFinalScore));
                 }
             }
         }
@@ -2140,6 +2072,8 @@ namespace Knuffel.Classes
                 {
                     _playerOneSmallStraight = value;
                     OnPropertyChanged(nameof(PlayerOneSmallStraight));
+                    OnPropertyChanged(nameof(PlayerOneSumLower));
+                    OnPropertyChanged(nameof(PlayerOneFinalScore));
                 }
             }
         }
@@ -2152,6 +2086,8 @@ namespace Knuffel.Classes
                 {
                     _playerOneLargeStraight = value;
                     OnPropertyChanged(nameof(PlayerOneLargeStraight));
+                    OnPropertyChanged(nameof(PlayerOneSumLower));
+                    OnPropertyChanged(nameof(PlayerOneFinalScore));
                 }
             }
         }
@@ -2164,6 +2100,8 @@ namespace Knuffel.Classes
                 {
                     _playerOneKnuffel = value;
                     OnPropertyChanged(nameof(PlayerOneKnuffel));
+                    OnPropertyChanged(nameof(PlayerOneSumLower));
+                    OnPropertyChanged(nameof(PlayerOneFinalScore));
                 }
             }
         }
@@ -2176,6 +2114,8 @@ namespace Knuffel.Classes
                 {
                     _playerOneChance = value;
                     OnPropertyChanged(nameof(PlayerOneChance));
+                    OnPropertyChanged(nameof(PlayerOneSumLower));
+                    OnPropertyChanged(nameof(PlayerOneFinalScore));
                 }
             }
         }
@@ -2188,6 +2128,7 @@ namespace Knuffel.Classes
                 {
                     _playerOneSumLower = value;
                     OnPropertyChanged(nameof(PlayerOneSumLower));
+                    OnPropertyChanged(nameof(PlayerOneFinalScore));
                 }
             }
         }
@@ -2200,6 +2141,8 @@ namespace Knuffel.Classes
                 {
                     _playerOneExtraKnuffels = value;
                     OnPropertyChanged(nameof(PlayerOneExtraKnuffels));
+                    OnPropertyChanged(nameof(PlayerOneSumLower));
+                    OnPropertyChanged(nameof(PlayerOneFinalScore));
                 }
             }
         }
@@ -2226,6 +2169,10 @@ namespace Knuffel.Classes
                 {
                     _playerTwoOnes = value;
                     OnPropertyChanged(nameof(PlayerTwoOnes));
+                    OnPropertyChanged(nameof(PlayerTwoSumUpper));
+                    OnPropertyChanged(nameof(PlayerTwoBonus));
+                    OnPropertyChanged(nameof(PlayerTwoTotalUpper));
+                    OnPropertyChanged(nameof(PlayerTwoFinalScore));
                 }
             }
         }
@@ -2238,6 +2185,10 @@ namespace Knuffel.Classes
                 {
                     _playerTwoTwos = value;
                     OnPropertyChanged(nameof(PlayerTwoTwos));
+                    OnPropertyChanged(nameof(PlayerTwoSumUpper));
+                    OnPropertyChanged(nameof(PlayerTwoBonus));
+                    OnPropertyChanged(nameof(PlayerTwoTotalUpper));
+                    OnPropertyChanged(nameof(PlayerTwoFinalScore));
                 }
             }
         }
@@ -2250,6 +2201,10 @@ namespace Knuffel.Classes
                 {
                     _playerTwoThrees = value;
                     OnPropertyChanged(nameof(PlayerTwoThrees));
+                    OnPropertyChanged(nameof(PlayerTwoSumUpper));
+                    OnPropertyChanged(nameof(PlayerTwoBonus));
+                    OnPropertyChanged(nameof(PlayerTwoTotalUpper));
+                    OnPropertyChanged(nameof(PlayerTwoFinalScore));
                 }
             }
         }
@@ -2262,6 +2217,10 @@ namespace Knuffel.Classes
                 {
                     _playerTwoFours = value;
                     OnPropertyChanged(nameof(PlayerTwoFours));
+                    OnPropertyChanged(nameof(PlayerTwoSumUpper));
+                    OnPropertyChanged(nameof(PlayerTwoBonus));
+                    OnPropertyChanged(nameof(PlayerTwoTotalUpper));
+                    OnPropertyChanged(nameof(PlayerTwoFinalScore));
                 }
             }
         }
@@ -2274,6 +2233,10 @@ namespace Knuffel.Classes
                 {
                     _playerTwoFives = value;
                     OnPropertyChanged(nameof(PlayerTwoFives));
+                    OnPropertyChanged(nameof(PlayerTwoSumUpper));
+                    OnPropertyChanged(nameof(PlayerTwoBonus));
+                    OnPropertyChanged(nameof(PlayerTwoTotalUpper));
+                    OnPropertyChanged(nameof(PlayerTwoFinalScore));
                 }
             }
         }
@@ -2286,6 +2249,10 @@ namespace Knuffel.Classes
                 {
                     _playerTwoSixes = value;
                     OnPropertyChanged(nameof(PlayerTwoSixes));
+                    OnPropertyChanged(nameof(PlayerTwoSumUpper));
+                    OnPropertyChanged(nameof(PlayerTwoBonus));
+                    OnPropertyChanged(nameof(PlayerTwoTotalUpper));
+                    OnPropertyChanged(nameof(PlayerTwoFinalScore));
                 }
             }
         }
@@ -2298,6 +2265,9 @@ namespace Knuffel.Classes
                 {
                     _playerTwoSumUpper = value;
                     OnPropertyChanged(nameof(PlayerTwoSumUpper));
+                    OnPropertyChanged(nameof(PlayerTwoBonus));
+                    OnPropertyChanged(nameof(PlayerTwoTotalUpper));
+                    OnPropertyChanged(nameof(PlayerTwoFinalScore));
                 }
             }
         }
@@ -2310,6 +2280,8 @@ namespace Knuffel.Classes
                 {
                     _playerTwoBonus = value;
                     OnPropertyChanged(nameof(PlayerTwoBonus));
+                    OnPropertyChanged(nameof(PlayerTwoTotalUpper));
+                    OnPropertyChanged(nameof(PlayerTwoFinalScore));
                 }
             }
         }
@@ -2322,6 +2294,7 @@ namespace Knuffel.Classes
                 {
                     _playerTwoTotalUpper = value;
                     OnPropertyChanged(nameof(PlayerTwoTotalUpper));
+                    OnPropertyChanged(nameof(PlayerTwoFinalScore));
                 }
             }
         }
@@ -2334,6 +2307,8 @@ namespace Knuffel.Classes
                 {
                     _playerTwoThreeOfAKind = value;
                     OnPropertyChanged(nameof(PlayerTwoThreeOfAKind));
+                    OnPropertyChanged(nameof(PlayerTwoSumLower));
+                    OnPropertyChanged(nameof(PlayerTwoFinalScore));
                 }
             }
         }
@@ -2346,6 +2321,8 @@ namespace Knuffel.Classes
                 {
                     _playerTwoFourOfAKind = value;
                     OnPropertyChanged(nameof(PlayerTwoFourOfAKind));
+                    OnPropertyChanged(nameof(PlayerTwoSumLower));
+                    OnPropertyChanged(nameof(PlayerTwoFinalScore));
                 }
             }
         }
@@ -2358,6 +2335,8 @@ namespace Knuffel.Classes
                 {
                     _playerTwoFullHouse = value;
                     OnPropertyChanged(nameof(PlayerTwoFullHouse));
+                    OnPropertyChanged(nameof(PlayerTwoSumLower));
+                    OnPropertyChanged(nameof(PlayerTwoFinalScore));
                 }
             }
         }
@@ -2370,6 +2349,8 @@ namespace Knuffel.Classes
                 {
                     _playerTwoSmallStraight = value;
                     OnPropertyChanged(nameof(PlayerTwoSmallStraight));
+                    OnPropertyChanged(nameof(PlayerTwoSumLower));
+                    OnPropertyChanged(nameof(PlayerTwoFinalScore));
                 }
             }
         }
@@ -2382,6 +2363,8 @@ namespace Knuffel.Classes
                 {
                     _playerTwoLargeStraight = value;
                     OnPropertyChanged(nameof(PlayerTwoLargeStraight));
+                    OnPropertyChanged(nameof(PlayerTwoSumLower));
+                    OnPropertyChanged(nameof(PlayerTwoFinalScore));
                 }
             }
         }
@@ -2394,6 +2377,8 @@ namespace Knuffel.Classes
                 {
                     _playerTwoKnuffel = value;
                     OnPropertyChanged(nameof(PlayerTwoKnuffel));
+                    OnPropertyChanged(nameof(PlayerTwoSumLower));
+                    OnPropertyChanged(nameof(PlayerTwoFinalScore));
                 }
             }
         }
@@ -2406,6 +2391,8 @@ namespace Knuffel.Classes
                 {
                     _playerTwoChance = value;
                     OnPropertyChanged(nameof(PlayerTwoChance));
+                    OnPropertyChanged(nameof(PlayerTwoSumLower));
+                    OnPropertyChanged(nameof(PlayerTwoFinalScore));
                 }
             }
         }
@@ -2418,6 +2405,7 @@ namespace Knuffel.Classes
                 {
                     _playerTwoSumLower = value;
                     OnPropertyChanged(nameof(PlayerTwoSumLower));
+                    OnPropertyChanged(nameof(PlayerTwoFinalScore));
                 }
             }
         }
@@ -2430,6 +2418,8 @@ namespace Knuffel.Classes
                 {
                     _playerTwoExtraKnuffels = value;
                     OnPropertyChanged(nameof(PlayerTwoExtraKnuffels));
+                    OnPropertyChanged(nameof(PlayerTwoSumLower));
+                    OnPropertyChanged(nameof(PlayerTwoFinalScore));
                 }
             }
         }
@@ -2456,6 +2446,10 @@ namespace Knuffel.Classes
                 {
                     _playerThreeOnes = value;
                     OnPropertyChanged(nameof(PlayerThreeOnes));
+                    OnPropertyChanged(nameof(PlayerThreeSumUpper));
+                    OnPropertyChanged(nameof(PlayerThreeBonus));
+                    OnPropertyChanged(nameof(PlayerThreeTotalUpper));
+                    OnPropertyChanged(nameof(PlayerThreeFinalScore));
                 }
             }
         }
@@ -2468,6 +2462,10 @@ namespace Knuffel.Classes
                 {
                     _playerThreeTwos = value;
                     OnPropertyChanged(nameof(PlayerThreeTwos));
+                    OnPropertyChanged(nameof(PlayerThreeSumUpper));
+                    OnPropertyChanged(nameof(PlayerThreeBonus));
+                    OnPropertyChanged(nameof(PlayerThreeTotalUpper));
+                    OnPropertyChanged(nameof(PlayerThreeFinalScore));
                 }
             }
         }
@@ -2480,6 +2478,10 @@ namespace Knuffel.Classes
                 {
                     _playerThreeThrees = value;
                     OnPropertyChanged(nameof(PlayerThreeThrees));
+                    OnPropertyChanged(nameof(PlayerThreeSumUpper));
+                    OnPropertyChanged(nameof(PlayerThreeBonus));
+                    OnPropertyChanged(nameof(PlayerThreeTotalUpper));
+                    OnPropertyChanged(nameof(PlayerThreeFinalScore));
                 }
             }
         }
@@ -2492,6 +2494,10 @@ namespace Knuffel.Classes
                 {
                     _playerThreeFours = value;
                     OnPropertyChanged(nameof(PlayerThreeFours));
+                    OnPropertyChanged(nameof(PlayerThreeSumUpper));
+                    OnPropertyChanged(nameof(PlayerThreeBonus));
+                    OnPropertyChanged(nameof(PlayerThreeTotalUpper));
+                    OnPropertyChanged(nameof(PlayerThreeFinalScore));
                 }
             }
         }
@@ -2504,6 +2510,10 @@ namespace Knuffel.Classes
                 {
                     _playerThreeFives = value;
                     OnPropertyChanged(nameof(PlayerThreeFives));
+                    OnPropertyChanged(nameof(PlayerThreeSumUpper));
+                    OnPropertyChanged(nameof(PlayerThreeBonus));
+                    OnPropertyChanged(nameof(PlayerThreeTotalUpper));
+                    OnPropertyChanged(nameof(PlayerThreeFinalScore));
                 }
             }
         }
@@ -2516,6 +2526,10 @@ namespace Knuffel.Classes
                 {
                     _playerThreeSixes = value;
                     OnPropertyChanged(nameof(PlayerThreeSixes));
+                    OnPropertyChanged(nameof(PlayerThreeSumUpper));
+                    OnPropertyChanged(nameof(PlayerThreeBonus));
+                    OnPropertyChanged(nameof(PlayerThreeTotalUpper));
+                    OnPropertyChanged(nameof(PlayerThreeFinalScore));
                 }
             }
         }
@@ -2528,6 +2542,9 @@ namespace Knuffel.Classes
                 {
                     _playerThreeSumUpper = value;
                     OnPropertyChanged(nameof(PlayerThreeSumUpper));
+                    OnPropertyChanged(nameof(PlayerThreeBonus));
+                    OnPropertyChanged(nameof(PlayerThreeTotalUpper));
+                    OnPropertyChanged(nameof(PlayerThreeFinalScore));
                 }
             }
         }
@@ -2540,6 +2557,8 @@ namespace Knuffel.Classes
                 {
                     _playerThreeBonus = value;
                     OnPropertyChanged(nameof(PlayerThreeBonus));
+                    OnPropertyChanged(nameof(PlayerThreeTotalUpper));
+                    OnPropertyChanged(nameof(PlayerThreeFinalScore));
                 }
             }
         }
@@ -2552,6 +2571,7 @@ namespace Knuffel.Classes
                 {
                     _playerThreeTotalUpper = value;
                     OnPropertyChanged(nameof(PlayerThreeTotalUpper));
+                    OnPropertyChanged(nameof(PlayerThreeFinalScore));
                 }
             }
         }
@@ -2564,6 +2584,8 @@ namespace Knuffel.Classes
                 {
                     _playerThreeThreeOfAKind = value;
                     OnPropertyChanged(nameof(PlayerThreeThreeOfAKind));
+                    OnPropertyChanged(nameof(PlayerThreeSumLower));
+                    OnPropertyChanged(nameof(PlayerThreeFinalScore));
                 }
             }
         }
@@ -2576,6 +2598,8 @@ namespace Knuffel.Classes
                 {
                     _playerThreeFourOfAKind = value;
                     OnPropertyChanged(nameof(PlayerThreeFourOfAKind));
+                    OnPropertyChanged(nameof(PlayerThreeSumLower));
+                    OnPropertyChanged(nameof(PlayerThreeFinalScore));
                 }
             }
         }
@@ -2588,6 +2612,8 @@ namespace Knuffel.Classes
                 {
                     _playerThreeFullHouse = value;
                     OnPropertyChanged(nameof(PlayerThreeFullHouse));
+                    OnPropertyChanged(nameof(PlayerThreeSumLower));
+                    OnPropertyChanged(nameof(PlayerThreeFinalScore));
                 }
             }
         }
@@ -2600,6 +2626,8 @@ namespace Knuffel.Classes
                 {
                     _playerThreeSmallStraight = value;
                     OnPropertyChanged(nameof(PlayerThreeSmallStraight));
+                    OnPropertyChanged(nameof(PlayerThreeSumLower));
+                    OnPropertyChanged(nameof(PlayerThreeFinalScore));
                 }
             }
         }
@@ -2612,6 +2640,8 @@ namespace Knuffel.Classes
                 {
                     _playerThreeLargeStraight = value;
                     OnPropertyChanged(nameof(PlayerThreeLargeStraight));
+                    OnPropertyChanged(nameof(PlayerThreeSumLower));
+                    OnPropertyChanged(nameof(PlayerThreeFinalScore));
                 }
             }
         }
@@ -2624,6 +2654,8 @@ namespace Knuffel.Classes
                 {
                     _playerThreeKnuffel = value;
                     OnPropertyChanged(nameof(PlayerThreeKnuffel));
+                    OnPropertyChanged(nameof(PlayerThreeSumLower));
+                    OnPropertyChanged(nameof(PlayerThreeFinalScore));
                 }
             }
         }
@@ -2636,6 +2668,8 @@ namespace Knuffel.Classes
                 {
                     _playerThreeChance = value;
                     OnPropertyChanged(nameof(PlayerThreeChance));
+                    OnPropertyChanged(nameof(PlayerThreeSumLower));
+                    OnPropertyChanged(nameof(PlayerThreeFinalScore));
                 }
             }
         }
@@ -2648,6 +2682,7 @@ namespace Knuffel.Classes
                 {
                     _playerThreeSumLower = value;
                     OnPropertyChanged(nameof(PlayerThreeSumLower));
+                    OnPropertyChanged(nameof(PlayerThreeFinalScore));
                 }
             }
         }
@@ -2660,6 +2695,8 @@ namespace Knuffel.Classes
                 {
                     _playerThreeExtraKnuffels = value;
                     OnPropertyChanged(nameof(PlayerThreeExtraKnuffels));
+                    OnPropertyChanged(nameof(PlayerThreeSumLower));
+                    OnPropertyChanged(nameof(PlayerThreeFinalScore));
                 }
             }
         }
@@ -2686,6 +2723,10 @@ namespace Knuffel.Classes
                 {
                     _playerFourOnes = value;
                     OnPropertyChanged(nameof(PlayerFourOnes));
+                    OnPropertyChanged(nameof(PlayerFourSumUpper));
+                    OnPropertyChanged(nameof(PlayerFourBonus));
+                    OnPropertyChanged(nameof(PlayerFourTotalUpper));
+                    OnPropertyChanged(nameof(PlayerFourFinalScore));
                 }
             }
         }
@@ -2698,6 +2739,10 @@ namespace Knuffel.Classes
                 {
                     _playerFourTwos = value;
                     OnPropertyChanged(nameof(PlayerFourTwos));
+                    OnPropertyChanged(nameof(PlayerFourSumUpper));
+                    OnPropertyChanged(nameof(PlayerFourBonus));
+                    OnPropertyChanged(nameof(PlayerFourTotalUpper));
+                    OnPropertyChanged(nameof(PlayerFourFinalScore));
                 }
             }
         }
@@ -2710,6 +2755,10 @@ namespace Knuffel.Classes
                 {
                     _playerFourThrees = value;
                     OnPropertyChanged(nameof(PlayerFourThrees));
+                    OnPropertyChanged(nameof(PlayerFourSumUpper));
+                    OnPropertyChanged(nameof(PlayerFourBonus));
+                    OnPropertyChanged(nameof(PlayerFourTotalUpper));
+                    OnPropertyChanged(nameof(PlayerFourFinalScore));
                 }
             }
         }
@@ -2722,6 +2771,10 @@ namespace Knuffel.Classes
                 {
                     _playerFourFours = value;
                     OnPropertyChanged(nameof(PlayerFourFours));
+                    OnPropertyChanged(nameof(PlayerFourSumUpper));
+                    OnPropertyChanged(nameof(PlayerFourBonus));
+                    OnPropertyChanged(nameof(PlayerFourTotalUpper));
+                    OnPropertyChanged(nameof(PlayerFourFinalScore));
                 }
             }
         }
@@ -2734,6 +2787,10 @@ namespace Knuffel.Classes
                 {
                     _playerFourFives = value;
                     OnPropertyChanged(nameof(PlayerFourFives));
+                    OnPropertyChanged(nameof(PlayerFourSumUpper));
+                    OnPropertyChanged(nameof(PlayerFourBonus));
+                    OnPropertyChanged(nameof(PlayerFourTotalUpper));
+                    OnPropertyChanged(nameof(PlayerFourFinalScore));
                 }
             }
         }
@@ -2746,6 +2803,10 @@ namespace Knuffel.Classes
                 {
                     _playerFourSixes = value;
                     OnPropertyChanged(nameof(PlayerFourSixes));
+                    OnPropertyChanged(nameof(PlayerFourSumUpper));
+                    OnPropertyChanged(nameof(PlayerFourBonus));
+                    OnPropertyChanged(nameof(PlayerFourTotalUpper));
+                    OnPropertyChanged(nameof(PlayerFourFinalScore));
                 }
             }
         }
@@ -2758,6 +2819,9 @@ namespace Knuffel.Classes
                 {
                     _playerFourSumUpper = value;
                     OnPropertyChanged(nameof(PlayerFourSumUpper));
+                    OnPropertyChanged(nameof(PlayerFourBonus));
+                    OnPropertyChanged(nameof(PlayerFourTotalUpper));
+                    OnPropertyChanged(nameof(PlayerFourFinalScore));
                 }
             }
         }
@@ -2770,6 +2834,8 @@ namespace Knuffel.Classes
                 {
                     _playerFourBonus = value;
                     OnPropertyChanged(nameof(PlayerFourBonus));
+                    OnPropertyChanged(nameof(PlayerFourTotalUpper));
+                    OnPropertyChanged(nameof(PlayerFourFinalScore));
                 }
             }
         }
@@ -2782,6 +2848,7 @@ namespace Knuffel.Classes
                 {
                     _playerFourTotalUpper = value;
                     OnPropertyChanged(nameof(PlayerFourTotalUpper));
+                    OnPropertyChanged(nameof(PlayerFourFinalScore));
                 }
             }
         }
@@ -2794,6 +2861,8 @@ namespace Knuffel.Classes
                 {
                     _playerFourThreeOfAKind = value;
                     OnPropertyChanged(nameof(PlayerFourThreeOfAKind));
+                    OnPropertyChanged(nameof(PlayerFourSumLower));
+                    OnPropertyChanged(nameof(PlayerFourFinalScore));
                 }
             }
         }
@@ -2806,6 +2875,8 @@ namespace Knuffel.Classes
                 {
                     _playerFourFourOfAKind = value;
                     OnPropertyChanged(nameof(PlayerFourFourOfAKind));
+                    OnPropertyChanged(nameof(PlayerFourSumLower));
+                    OnPropertyChanged(nameof(PlayerFourFinalScore));
                 }
             }
         }
@@ -2818,6 +2889,8 @@ namespace Knuffel.Classes
                 {
                     _playerFourFullHouse = value;
                     OnPropertyChanged(nameof(PlayerFourFullHouse));
+                    OnPropertyChanged(nameof(PlayerFourSumLower));
+                    OnPropertyChanged(nameof(PlayerFourFinalScore));
                 }
             }
         }
@@ -2830,6 +2903,8 @@ namespace Knuffel.Classes
                 {
                     _playerFourSmallStraight = value;
                     OnPropertyChanged(nameof(PlayerFourSmallStraight));
+                    OnPropertyChanged(nameof(PlayerFourSumLower));
+                    OnPropertyChanged(nameof(PlayerFourFinalScore));
                 }
             }
         }
@@ -2842,6 +2917,8 @@ namespace Knuffel.Classes
                 {
                     _playerFourLargeStraight = value;
                     OnPropertyChanged(nameof(PlayerFourLargeStraight));
+                    OnPropertyChanged(nameof(PlayerFourSumLower));
+                    OnPropertyChanged(nameof(PlayerFourFinalScore));
                 }
             }
         }
@@ -2854,6 +2931,8 @@ namespace Knuffel.Classes
                 {
                     _playerFourKnuffel = value;
                     OnPropertyChanged(nameof(PlayerFourKnuffel));
+                    OnPropertyChanged(nameof(PlayerFourSumLower));
+                    OnPropertyChanged(nameof(PlayerFourFinalScore));
                 }
             }
         }
@@ -2866,6 +2945,8 @@ namespace Knuffel.Classes
                 {
                     _playerFourChance = value;
                     OnPropertyChanged(nameof(PlayerFourChance));
+                    OnPropertyChanged(nameof(PlayerFourSumLower));
+                    OnPropertyChanged(nameof(PlayerFourFinalScore));
                 }
             }
         }
@@ -2878,6 +2959,7 @@ namespace Knuffel.Classes
                 {
                     _playerFourSumLower = value;
                     OnPropertyChanged(nameof(PlayerFourSumLower));
+                    OnPropertyChanged(nameof(PlayerFourFinalScore));
                 }
             }
         }
@@ -2890,6 +2972,8 @@ namespace Knuffel.Classes
                 {
                     _playerFourExtraKnuffels = value;
                     OnPropertyChanged(nameof(PlayerFourExtraKnuffels));
+                    OnPropertyChanged(nameof(PlayerFourSumLower));
+                    OnPropertyChanged(nameof(PlayerFourFinalScore));
                 }
             }
         }

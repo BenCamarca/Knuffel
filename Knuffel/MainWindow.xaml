@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Knuffel.Classes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="1250">
+        Title="MainWindow" Height="900" Width="1200">
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
@@ -397,7 +397,7 @@
         </Grid>
 
         <!--This is where the EnterPlayerLabels and there corresponding TextBoxes are-->
-        <StackPanel Grid.Column="6" Grid.Row="13" Grid.ColumnSpan="1" Grid.RowSpan="11">
+        <StackPanel Grid.Column="6" Grid.Row="11" Grid.ColumnSpan="1" Grid.RowSpan="13">
             <Label x:Name="EnterPlayer1NameLabel" Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8"
                    Content="Enter the Name of Player 1:" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                    FontWeight="Bold" FontSize="18" 
@@ -474,27 +474,30 @@
             <Button x:Name="ScoreButtonSixes" Margin="5 10 5 0" Background="ForestGreen" Foreground="White" Opacity="0.8"
                     Content="Sixes" FontWeight="Bold" FontSize="23"
                     Command="{Binding ScoreButtonSixesCommand}"/>
-            <Button x:Name="ScoreButtonThreeOfAKind" Margin="5 10 5 0" Background="ForestGreen" Foreground="White" Opacity="0.8"
+            <Button x:Name="ScoreButtonThreeOfAKind" Margin="5 10 5 0" Background="MediumSeaGreen" Foreground="White" Opacity="0.8"
                     Content="Three of a Kind" FontWeight="Bold" FontSize="23"
                     Command="{Binding ScoreButtonThreeOfAKindCommand}"/>
-            <Button x:Name="ScoreButtonFourOfAKind" Margin="5 10 5 0" Background="ForestGreen" Foreground="White" Opacity="0.8"
+            <Button x:Name="ScoreButtonFourOfAKind" Margin="5 10 5 0" Background="MediumSeaGreen" Foreground="White" Opacity="0.8"
                     Content="Four of a Kind" FontWeight="Bold" FontSize="23"
                     Command="{Binding ScoreButtonFourOfAKindCommand}"/>
-            <Button x:Name="ScoreButtonFullHouse" Margin="5 10 5 0" Background="ForestGreen" Foreground="White" Opacity="0.8"
+            <Button x:Name="ScoreButtonFullHouse" Margin="5 10 5 0" Background="MediumSeaGreen" Foreground="White" Opacity="0.8"
                     Content="Full House" FontWeight="Bold" FontSize="23"
                     Command="{Binding ScoreButtonFullHouseCommand}"/>
-            <Button x:Name="ScoreButtonSmallStraight" Margin="5 10 5 0" Background="ForestGreen" Foreground="White" Opacity="0.8"
+            <Button x:Name="ScoreButtonSmallStraight" Margin="5 10 5 0" Background="MediumSeaGreen" Foreground="White" Opacity="0.8"
                     Content="Small Straight" FontWeight="Bold" FontSize="23"
                     Command="{Binding ScoreButtonSmallStraightCommand}"/>
-            <Button x:Name="ScoreButtonLargeStraight" Margin="5 10 5 0" Background="ForestGreen" Foreground="White" Opacity="0.8"
+            <Button x:Name="ScoreButtonLargeStraight" Margin="5 10 5 0" Background="MediumSeaGreen" Foreground="White" Opacity="0.8"
                     Content="Large Straight" FontWeight="Bold" FontSize="23"
                     Command="{Binding ScoreButtonLargeStraightCommand}"/>
-            <Button x:Name="ScoreButtonKnuffel" Margin="5 10 5 0" Background="ForestGreen" Foreground="White" Opacity="0.8"
+            <Button x:Name="ScoreButtonKnuffel" Margin="5 10 5 0" Background="DarkOrange" Foreground="White" Opacity="0.8"
                     Content="Knuffel" FontWeight="Bold" FontSize="23"
                     Command="{Binding ScoreButtonKnuffelCommand}"/>
-            <Button x:Name="ScoreButtonChance" Margin="5 10 5 0" Background="ForestGreen" Foreground="White" Opacity="0.8"
+            <Button x:Name="ScoreButtonChance" Margin="5 10 5 0" Background="DarkOrange" Foreground="White" Opacity="0.8"
                     Content="Chance" FontWeight="Bold" FontSize="23"
                     Command="{Binding ScoreButtonChanceCommand}"/>
+            <Button x:Name="ScoreButtonExtraKnuffels" Margin="5 10 5 0" Background="DarkRed" Foreground="White" Opacity="0.8"
+                    Content="Extra Knuffels" FontWeight="Bold" FontSize="23"
+                    Command="{Binding ScoreButtonExtraKnuffelsCommand}"/>
         </UniformGrid>
 
 
@@ -506,238 +509,250 @@
         <!--Player 1-->
         <Label x:Name="Player1OnesLabel" Grid.Column="2" Grid.Row="3"  
                HorizontalContentAlignment="Center"
-               Content="{Binding PlayerOneOnes}" FontWeight="Bold" FontSize="25"/>
+               Content="{Binding PlayerOneOnes}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player1TwosLabel" Grid.Column="2" Grid.Row="4"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerOneTwos}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerOneTwos}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player1ThreesLabel" Grid.Column="2" Grid.Row="5"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerOneThrees}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerOneThrees}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player1FoursLabel" Grid.Column="2" Grid.Row="6"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerOneFours}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerOneFours}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player1FivesLabel" Grid.Column="2" Grid.Row="7"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerOneFives}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerOneFives}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player1SixesLabel" Grid.Column="2" Grid.Row="8"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerOneSixes}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerOneSixes}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player1SumUpper" Grid.Column="2" Grid.Row="9"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerOneSumUpper}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerOneSumUpper}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player1Bonus" Grid.Column="2" Grid.Row="10"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerOneBonus}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerOneBonus}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player1TotalUpper" Grid.Column="2" Grid.Row="11"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerOneTotalUpper}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerOneTotalUpper}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player1ThreeOfAKindLabel" Grid.Column="2" Grid.Row="13"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerOneThreeOfAKind}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerOneThreeOfAKind}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player1FourOfAKindLabel" Grid.Column="2" Grid.Row="14"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerOneFourOfAKind}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerOneFourOfAKind}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player1FullHouseLabel" Grid.Column="2" Grid.Row="15"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerOneFullHouse}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerOneFullHouse}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player1SmallStraightLabel" Grid.Column="2" Grid.Row="16"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerOneSmallStraight}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerOneSmallStraight}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player1LargeStraightLabel" Grid.Column="2" Grid.Row="17"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerOneLargeStraight}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerOneLargeStraight}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player1KnuffelLabel" Grid.Column="2" Grid.Row="18"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerOneKnuffel}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerOneKnuffel}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player1ChanceLabel" Grid.Column="2" Grid.Row="19"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerOneChance}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerOneChance}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player1SumLower" Grid.Column="2" Grid.Row="20"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerOneSumLower}" FontWeight="Bold" FontSize="25"/>
-        <Label x:Name="Player1ExtraKnuffels" Grid.Column="2" Grid.Row="21"
+                Content="{Binding PlayerOneSumLower}" FontWeight="Bold" FontSize="18"/>
+        <Label x:Name="Player1TotalUpper2" Grid.Column="2" Grid.Row="21"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerOneExtraKnuffels}" FontWeight="Bold" FontSize="25"/>
-        <Label x:Name="Player1FinalScore" Grid.Column="2" Grid.Row="22"
+                Content="{Binding PlayerOneTotalUpper}" FontWeight="Bold" FontSize="18"/>
+        <Label x:Name="Player1ExtraKnuffels" Grid.Column="2" Grid.Row="22"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerOneFinalScore}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerOneExtraKnuffels}" FontWeight="Bold" FontSize="18"/>
+        <Label x:Name="Player1FinalScore" Grid.Column="2" Grid.Row="23"
+                HorizontalContentAlignment="Center"
+                Content="{Binding PlayerOneFinalScore}" FontWeight="Bold" FontSize="18"/>
 
         <!--Player 2-->
         <Label x:Name="Player2OnesLabel" Grid.Column="3" Grid.Row="3"  
                HorizontalContentAlignment="Center"
-               Content="{Binding PlayerTwoOnes}" FontWeight="Bold" FontSize="25"/>
+               Content="{Binding PlayerTwoOnes}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player2TwosLabel" Grid.Column="3" Grid.Row="4"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerTwoTwos}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerTwoTwos}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player2ThreesLabel" Grid.Column="3" Grid.Row="5"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerTwoThrees}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerTwoThrees}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player2FoursLabel" Grid.Column="3" Grid.Row="6"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerTwoFours}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerTwoFours}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player2FivesLabel" Grid.Column="3" Grid.Row="7"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerTwoFives}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerTwoFives}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player2SixesLabel" Grid.Column="3" Grid.Row="8"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerTwoSixes}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerTwoSixes}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player2SumUpper" Grid.Column="3" Grid.Row="9"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerTwoSumUpper}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerTwoSumUpper}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player2Bonus" Grid.Column="3" Grid.Row="10"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerTwoBonus}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerTwoBonus}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player2TotalUpper" Grid.Column="3" Grid.Row="11"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerTwoTotalUpper}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerTwoTotalUpper}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player2ThreeOfAKindLabel" Grid.Column="3" Grid.Row="13"
                  HorizontalContentAlignment="Center"
-                 Content="{Binding PlayerTwoThreeOfAKind}" FontWeight="Bold" FontSize="25"/>
+                 Content="{Binding PlayerTwoThreeOfAKind}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player2FourOfAKindLabel" Grid.Column="3" Grid.Row="14"
                  HorizontalContentAlignment="Center"
-                 Content="{Binding PlayerTwoFourOfAKind}" FontWeight="Bold" FontSize="25"/>
+                 Content="{Binding PlayerTwoFourOfAKind}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player2FullHouseLabel" Grid.Column="3" Grid.Row="15"
                  HorizontalContentAlignment="Center"
-                 Content="{Binding PlayerTwoFullHouse}" FontWeight="Bold" FontSize="25"/>
+                 Content="{Binding PlayerTwoFullHouse}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player2SmallStraightLabel" Grid.Column="3" Grid.Row="16"
                  HorizontalContentAlignment="Center"
-                 Content="{Binding PlayerTwoSmallStraight}" FontWeight="Bold" FontSize="25"/>
+                 Content="{Binding PlayerTwoSmallStraight}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player2LargeStraightLabel" Grid.Column="3" Grid.Row="17"
                  HorizontalContentAlignment="Center"
-                 Content="{Binding PlayerTwoLargeStraight}" FontWeight="Bold" FontSize="25"/>
+                 Content="{Binding PlayerTwoLargeStraight}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player2KnuffelLabel" Grid.Column="3" Grid.Row="18"
                  HorizontalContentAlignment="Center"
-                 Content="{Binding PlayerTwoKnuffel}" FontWeight="Bold" FontSize="25"/>
+                 Content="{Binding PlayerTwoKnuffel}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player2ChanceLabel" Grid.Column="3" Grid.Row="19"
                  HorizontalContentAlignment="Center"
-                 Content="{Binding PlayerTwoChance}" FontWeight="Bold" FontSize="25"/>
+                 Content="{Binding PlayerTwoChance}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player2SumLower" Grid.Column="3" Grid.Row="20"
                     HorizontalContentAlignment="Center"
-                    Content="{Binding PlayerTwoSumLower}" FontWeight="Bold" FontSize="25"/>
-        <Label x:Name="Player2ExtraKnuffels" Grid.Column="3" Grid.Row="21"
+                    Content="{Binding PlayerTwoSumLower}" FontWeight="Bold" FontSize="18"/>
+        <Label x:Name="Player2TotalUpper2" Grid.Column="3" Grid.Row="21"
                     HorizontalContentAlignment="Center"
-                    Content="{Binding PlayerTwoExtraKnuffels}" FontWeight="Bold" FontSize="25"/>
-        <Label x:Name="Player2FinalScore" Grid.Column="3" Grid.Row="22"
+                    Content="{Binding PlayerTwoTotalUpper}" FontWeight="Bold" FontSize="18"/>
+        <Label x:Name="Player2ExtraKnuffels" Grid.Column="3" Grid.Row="22"
                     HorizontalContentAlignment="Center"
-                    Content="{Binding PlayerTwoFinalScore}" FontWeight="Bold" FontSize="25"/>
+                    Content="{Binding PlayerTwoExtraKnuffels}" FontWeight="Bold" FontSize="18"/>
+        <Label x:Name="Player2FinalScore" Grid.Column="3" Grid.Row="23"
+                    HorizontalContentAlignment="Center"
+                    Content="{Binding PlayerTwoFinalScore}" FontWeight="Bold" FontSize="18"/>
 
         <!--Player 3-->
         <Label x:Name="Player3OnesLabel" Grid.Column="4" Grid.Row="3"  
                HorizontalContentAlignment="Center"
-               Content="{Binding PlayerThreeOnes}" FontWeight="Bold" FontSize="25"/>
+               Content="{Binding PlayerThreeOnes}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player3TwosLabel" Grid.Column="4" Grid.Row="4"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerThreeTwos}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerThreeTwos}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player3ThreesLabel" Grid.Column="4" Grid.Row="5"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerThreeThrees}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerThreeThrees}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player3FoursLabel" Grid.Column="4" Grid.Row="6"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerThreeFours}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerThreeFours}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player3FivesLabel" Grid.Column="4" Grid.Row="7"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerThreeFives}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerThreeFives}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player3SixesLabel" Grid.Column="4" Grid.Row="8"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerThreeSixes}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerThreeSixes}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player3SumUpper" Grid.Column="4" Grid.Row="9"
                    HorizontalContentAlignment="Center"
-                    Content="{Binding PlayerThreeSumUpper}" FontWeight="Bold" FontSize="25"/>
+                    Content="{Binding PlayerThreeSumUpper}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player3Bonus" Grid.Column="4" Grid.Row="10"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerThreeBonus}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerThreeBonus}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player3TotalUpper" Grid.Column="4" Grid.Row="11"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerThreeTotalUpper}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerThreeTotalUpper}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player3ThreeOfAKindLabel" Grid.Column="4" Grid.Row="13"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerThreeThreeOfAKind}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerThreeThreeOfAKind}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player3FourOfAKindLabel" Grid.Column="4" Grid.Row="14"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerThreeFourOfAKind}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerThreeFourOfAKind}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player3FullHouseLabel" Grid.Column="4" Grid.Row="15"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerThreeFullHouse}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerThreeFullHouse}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player3SmallStraightLabel" Grid.Column="4" Grid.Row="16"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerThreeSmallStraight}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerThreeSmallStraight}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player3LargeStraightLabel" Grid.Column="4" Grid.Row="17"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerThreeLargeStraight}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerThreeLargeStraight}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player3KnuffelLabel" Grid.Column="4" Grid.Row="18"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerThreeKnuffel}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerThreeKnuffel}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player3ChanceLabel" Grid.Column="4" Grid.Row="19"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerThreeChance}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerThreeChance}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player3SumLower" Grid.Column="4" Grid.Row="20"
                     HorizontalContentAlignment="Center"
-                    Content="{Binding PlayerThreeSumLower}" FontWeight="Bold" FontSize="25"/>
-        <Label x:Name="Player3ExtraKnuffels" Grid.Column="4" Grid.Row="21"
+                    Content="{Binding PlayerThreeSumLower}" FontWeight="Bold" FontSize="18"/>
+        <Label x:Name="Player3TotalUpper2" Grid.Column="4" Grid.Row="21"
+                    HorizontalContentAlignment="Center"
+                    Content="{Binding PlayerThreeTotalUpper}" FontWeight="Bold" FontSize="18"/>
+        <Label x:Name="Player3ExtraKnuffels" Grid.Column="4" Grid.Row="22"
                        HorizontalContentAlignment="Center"
-                        Content="{Binding PlayerThreeExtraKnuffels}" FontWeight="Bold" FontSize="25"/>
-        <Label x:Name="Player3FinalScore" Grid.Column="4" Grid.Row="22"
+                        Content="{Binding PlayerThreeExtraKnuffels}" FontWeight="Bold" FontSize="18"/>
+        <Label x:Name="Player3FinalScore" Grid.Column="4" Grid.Row="23"
                         HorizontalContentAlignment="Center"
-                        Content="{Binding PlayerThreeFinalScore}" FontWeight="Bold" FontSize="25"/>
+                        Content="{Binding PlayerThreeFinalScore}" FontWeight="Bold" FontSize="18"/>
 
         <!--Player 4-->
         <Label x:Name="Player4OnesLabel" Grid.Column="5" Grid.Row="3"  
                HorizontalContentAlignment="Center"
-               Content="{Binding PlayerFourOnes}" FontWeight="Bold" FontSize="25"/>
+               Content="{Binding PlayerFourOnes}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player4TwosLabel" Grid.Column="5" Grid.Row="4"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerFourTwos}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerFourTwos}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player4ThreesLabel" Grid.Column="5" Grid.Row="5"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerFourThrees}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerFourThrees}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player4FoursLabel" Grid.Column="5" Grid.Row="6"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerFourFours}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerFourFours}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player4FivesLabel" Grid.Column="5" Grid.Row="7"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerFourFives}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerFourFives}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player4SixesLabel" Grid.Column="5" Grid.Row="8"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerFourSixes}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerFourSixes}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player4SumUpper" Grid.Column="5" Grid.Row="9"
                    HorizontalContentAlignment="Center"
-                    Content="{Binding PlayerFourSumUpper}" FontWeight="Bold" FontSize="25"/>
+                    Content="{Binding PlayerFourSumUpper}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player4Bonus" Grid.Column="5" Grid.Row="10"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerFourBonus}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerFourBonus}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player4TotalUpper" Grid.Column="5" Grid.Row="11"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerFourTotalUpper}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerFourTotalUpper}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player4ThreeOfAKindLabel" Grid.Column="5" Grid.Row="13"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerFourThreeOfAKind}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerFourThreeOfAKind}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player4FourOfAKindLabel" Grid.Column="5" Grid.Row="14"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerFourFourOfAKind}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerFourFourOfAKind}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player4FullHouseLabel" Grid.Column="5" Grid.Row="15"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerFourFullHouse}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerFourFullHouse}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player4SmallStraightLabel" Grid.Column="5" Grid.Row="16"
                 HorizontalContentAlignment="Center"
-                Content="{Binding PlayerFourSmallStraight}" FontWeight="Bold" FontSize="25"/>
+                Content="{Binding PlayerFourSmallStraight}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player4LargeStraightLabel" Grid.Column="5" Grid.Row="17"
                  HorizontalContentAlignment="Center"
-                 Content="{Binding PlayerFourLargeStraight}" FontWeight="Bold" FontSize="25"/>
+                 Content="{Binding PlayerFourLargeStraight}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player4KnuffelLabel" Grid.Column="5" Grid.Row="18"
                  HorizontalContentAlignment="Center"
-                 Content="{Binding PlayerFourKnuffel}" FontWeight="Bold" FontSize="25"/>
+                 Content="{Binding PlayerFourKnuffel}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player4ChanceLabel" Grid.Column="5" Grid.Row="19"
                  HorizontalContentAlignment="Center"
-                 Content="{Binding PlayerFourChance}" FontWeight="Bold" FontSize="25"/>
+                 Content="{Binding PlayerFourChance}" FontWeight="Bold" FontSize="18"/>
         <Label x:Name="Player4SumLower" Grid.Column="5" Grid.Row="20"
-                    HorizontalContentAlignment="Center"
-                    Content="{Binding PlayerFourSumLower}" FontWeight="Bold" FontSize="25"/>
-        <Label x:Name="Player4ExtraKnuffels" Grid.Column="5" Grid.Row="21"
-                       HorizontalContentAlignment="Center"
-                        Content="{Binding PlayerFourExtraKnuffels}" FontWeight="Bold" FontSize="25"/>
-        <Label x:Name="Player4FinalScore" Grid.Column="5" Grid.Row="22"
-                        HorizontalContentAlignment="Center"
-                        Content="{Binding PlayerFourFinalScore}" FontWeight="Bold" FontSize="25"/>
+                 HorizontalContentAlignment="Center"
+                 Content="{Binding PlayerFourSumLower}" FontWeight="Bold" FontSize="18"/>
+        <Label x:Name="Player4TotalUpper2" Grid.Column="5" Grid.Row="21"
+                 HorizontalContentAlignment="Center"
+                 Content="{Binding PlayerFourTotalUpper}" FontWeight="Bold" FontSize="18"/>
+        <Label x:Name="Player4ExtraKnuffels" Grid.Column="5" Grid.Row="22"
+                 HorizontalContentAlignment="Center"
+                 Content="{Binding PlayerFourExtraKnuffels}" FontWeight="Bold" FontSize="18"/>
+        <Label x:Name="Player4FinalScore" Grid.Column="5" Grid.Row="23"
+                 HorizontalContentAlignment="Center"
+                 Content="{Binding PlayerFourFinalScore}" FontWeight="Bold" FontSize="18"/>
 
     </Grid>
 </Window>
