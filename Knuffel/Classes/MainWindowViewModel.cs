@@ -277,6 +277,7 @@ namespace Knuffel.Classes
                     IsScoreButtonsGridVisible = true;
                 });
 
+            
             // initializing the command for the New Game Button
             NewGameCommand = new DelegateCommand(
                 (o) => true,
@@ -315,7 +316,10 @@ namespace Knuffel.Classes
                     SetSumScoreValues();
 
                     // resetting the visibility of the StartGameButton
-                    IsStartGameButtonVisible = true;                   
+                    IsStartGameButtonVisible = true;
+                                                  
+                    // checking if the RollDiceButton should be enabled
+                    RollDiceCommand.RaiseCanExecuteChanged();
 
                 });
 
