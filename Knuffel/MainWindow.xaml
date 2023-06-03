@@ -444,6 +444,35 @@
                     Command="{Binding EnterPlayerNamesCommand}"/>
 
         </StackPanel>
+        
+        <!--This is where the WinnerOfRoundLabel is-->
+        <Label x:Name="WinnerOfRoundLabel" Grid.Column="6" Grid.Row="11" Grid.RowSpan="2" Grid.ColumnSpan="1" 
+               Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8" VerticalContentAlignment="Center" 
+               HorizontalContentAlignment="Center"
+               Content="Winner of Round:" FontWeight="Bold" FontSize="25"
+               Visibility="{Binding IsWinnerOfRoundLabelVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        
+        <!--This is where the NameOfWinnerOfRoundLabel is-->
+        <Label x:Name="NameOfWinnerOfRoundLabel" Grid.Column="6" Grid.Row="13" Grid.RowSpan="2" Grid.ColumnSpan="1" 
+               Margin="5 10 5 0" Background="RoyalBlue" Foreground="White" Opacity="0.8" VerticalContentAlignment="Center" 
+               HorizontalContentAlignment="Center"
+               Content="{Binding WinnerOfRound}" FontWeight="Bold" FontSize="25"
+               Visibility="{Binding IsNameOfWinnerOfRoundLabelVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        
+        <!--This is where the ButtonMenu for an eventuel new Game are-->
+        <StackPanel Grid.Column="6" Grid.Row="19" Grid.RowSpan="5" Grid.ColumnSpan="1" 
+                    Visibility="{Binding IsNewGameButtonsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Button x:Name="NewRoundButton" Margin="5 10 5 0" Background="ForestGreen" Foreground="White" Opacity="0.8"
+                    Content="New Round" FontWeight="Bold" FontSize="25"
+                    Command="{Binding NewRoundCommand}"/>
+            <Button x:Name="NewGameButton" Margin="5 10 5 0" Background="ForestGreen" Foreground="White" Opacity="0.8"
+                Content="New Game" FontWeight="Bold" FontSize="25"
+                    Command="{Binding NewGameCommand}"/>
+            <Button x:Name="ExitGameButton" Margin="5 10 5 0" Background="Red" Foreground="White" Opacity="0.8"
+                Content="Exit Game" FontWeight="Bold" FontSize="25"
+                    Command="{Binding ExitGameCommand}"/>
+        </StackPanel>
+
 
         <!--This is where the ScoreButtonsLabel is-->
         <Label x:Name="ScoreButtonsLabel" Grid.Column="6" Grid.Row="13" Grid.RowSpan="2" Grid.ColumnSpan="1" 
@@ -474,19 +503,19 @@
             <Button x:Name="ScoreButtonSixes" Margin="5 10 5 0" Background="ForestGreen" Foreground="White" Opacity="0.8"
                     Content="Sixes" FontWeight="Bold" FontSize="23"
                     Command="{Binding ScoreButtonSixesCommand}"/>
-            <Button x:Name="ScoreButtonThreeOfAKind" Margin="5 10 5 0" Background="MediumSeaGreen" Foreground="White" Opacity="0.8"
+            <Button x:Name="ScoreButtonThreeOfAKind" Margin="5 10 5 0" Background="MediumSpringGreen" Foreground="White" Opacity="0.8"
                     Content="Three of a Kind" FontWeight="Bold" FontSize="23"
                     Command="{Binding ScoreButtonThreeOfAKindCommand}"/>
-            <Button x:Name="ScoreButtonFourOfAKind" Margin="5 10 5 0" Background="MediumSeaGreen" Foreground="White" Opacity="0.8"
+            <Button x:Name="ScoreButtonFourOfAKind" Margin="5 10 5 0" Background="MediumSpringGreen" Foreground="White" Opacity="0.8"
                     Content="Four of a Kind" FontWeight="Bold" FontSize="23"
                     Command="{Binding ScoreButtonFourOfAKindCommand}"/>
-            <Button x:Name="ScoreButtonFullHouse" Margin="5 10 5 0" Background="MediumSeaGreen" Foreground="White" Opacity="0.8"
+            <Button x:Name="ScoreButtonFullHouse" Margin="5 10 5 0" Background="GreenYellow" Foreground="White" Opacity="0.8"
                     Content="Full House" FontWeight="Bold" FontSize="23"
                     Command="{Binding ScoreButtonFullHouseCommand}"/>
-            <Button x:Name="ScoreButtonSmallStraight" Margin="5 10 5 0" Background="MediumSeaGreen" Foreground="White" Opacity="0.8"
+            <Button x:Name="ScoreButtonSmallStraight" Margin="5 10 5 0" Background="LimeGreen" Foreground="White" Opacity="0.8"
                     Content="Small Straight" FontWeight="Bold" FontSize="23"
                     Command="{Binding ScoreButtonSmallStraightCommand}"/>
-            <Button x:Name="ScoreButtonLargeStraight" Margin="5 10 5 0" Background="MediumSeaGreen" Foreground="White" Opacity="0.8"
+            <Button x:Name="ScoreButtonLargeStraight" Margin="5 10 5 0" Background="LimeGreen" Foreground="White" Opacity="0.8"
                     Content="Large Straight" FontWeight="Bold" FontSize="23"
                     Command="{Binding ScoreButtonLargeStraightCommand}"/>
             <Button x:Name="ScoreButtonKnuffel" Margin="5 10 5 0" Background="DarkOrange" Foreground="White" Opacity="0.8"

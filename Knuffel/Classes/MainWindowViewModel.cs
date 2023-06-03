@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows;
+using System.Threading;
 
 namespace Knuffel.Classes
 {
@@ -87,7 +88,7 @@ namespace Knuffel.Classes
             RollsLeft = 3;
 
             // declaring the default value for the RoundsLeft
-            RoundsLeft = 13;            
+            RoundsLeft = 13;
 
             // declaring the default value for the visibility of the StartGame Button
             IsStartGameButtonVisible = true;
@@ -116,6 +117,13 @@ namespace Knuffel.Classes
             IsScoreButtonsLabelVisible = false;
             IsScoreButtonsGridVisible = false;
 
+            // declaring the default values for the visibility of WinnerOfRoundLabels
+            IsWinnerOfRoundLabelVisible = false;
+            IsNameOfWinnerOfRoundLabelVisible = false;
+
+            // declaring the default values for the visibility of the NewGameButtons
+            IsNewGameButtonsVisible = false;
+
 
             // initializing the command for the start game button
             StartGameCommand = new DelegateCommand(
@@ -143,7 +151,7 @@ namespace Knuffel.Classes
                 (o) => RollsLeft > 0 && (!Die1Locked || !Die2Locked || !Die3Locked || !Die4Locked || !Die5Locked),
                 (o) =>
                 {
-                    RollingTheDice(dieList);              
+                    RollingTheDice(dieList);
 
                     Die1Image = GetDieImage(dieList[0].Value, dieList[0].Locked);
                     Die2Image = GetDieImage(dieList[1].Value, dieList[1].Locked);
@@ -217,6 +225,107 @@ namespace Knuffel.Classes
                     // Checking if the Roll Dice Button should be enabled
                     RollDiceCommand.RaiseCanExecuteChanged();
                     LockDieCommand.RaiseCanExecuteChanged();
+                });
+
+            // initializing the command for the New Round Button
+            NewRoundCommand = new DelegateCommand(
+                (o) => true,
+                (o) =>
+                {
+                    // hiding the WinnerOfRoundLabels
+                    IsWinnerOfRoundLabelVisible = false;
+                    IsNameOfWinnerOfRoundLabelVisible = false;
+
+                    // hiding the NewGameButtons
+                    IsNewGameButtonsVisible = false;
+
+                    // resetting the RollsLeft
+                    RollsLeft = 3;
+
+                    // resetting the RoundsLeft
+                    RoundsLeft = 13;
+
+                    // resetting the ActivePlayer
+                    ActivePlayer = 1;
+                    ActivePlayerName = playerOne.Name;
+                    OnPropertyChanged(nameof(ActivePlayerName));
+
+                    // resetting the DieLocked values
+                    Die1Locked = false;
+                    Die2Locked = false;
+                    Die3Locked = false;
+                    Die4Locked = false;
+                    Die5Locked = false;
+
+                    // set the die values to 0
+                    NullDieValues(dieList);
+
+                    // calling the methods to reset the scores
+                    SetAllScoresToNull();
+                    SetSumScoreValues();
+
+                    // resetting the visibility of the active player label
+                    IsYourTurnLabelVisible = true;
+                    IsActivePlayerLabelVisible = true;
+
+                    // resetting the visibility of the Roll Button
+                    IsRollButtonVisible = true;
+                    IsRollsLeftLabelVisible = true;
+
+                    // resetting the visibility of the Score Buttons
+                    IsScoreButtonsLabelVisible = true;
+                    IsScoreButtonsGridVisible = true;
+                });
+
+            // initializing the command for the New Game Button
+            NewGameCommand = new DelegateCommand(
+                (o) => true,
+                (o) =>
+                                              {
+                    // hiding the WinnerOfRoundLabels
+                    IsWinnerOfRoundLabelVisible = false;
+                    IsNameOfWinnerOfRoundLabelVisible = false;
+
+                    // hiding the NewGameButtons
+                    IsNewGameButtonsVisible = false;
+
+                    // resetting the RollsLeft
+                    RollsLeft = 3;
+
+                    // resetting the RoundsLeft
+                    RoundsLeft = 13;
+
+                    // resetting the ActivePlayer
+                    ActivePlayer = 1;
+                    ActivePlayerName = playerOne.Name;
+                    OnPropertyChanged(nameof(ActivePlayerName));
+
+                    // resetting the DieLocked values
+                    Die1Locked = false;
+                    Die2Locked = false;
+                    Die3Locked = false;
+                    Die4Locked = false;
+                    Die5Locked = false;
+
+                    // set the die values to 0
+                    NullDieValues(dieList);
+
+                    // calling the methods to reset the scores
+                    SetAllScoresToNull();
+                    SetSumScoreValues();
+
+                    // resetting the visibility of the StartGameButton
+                    IsStartGameButtonVisible = true;                   
+
+                });
+
+            // initializing the command for the ExitGameButton
+            ExitGameCommand = new DelegateCommand(
+                               (o) => true,
+                                              (o) =>
+                                              {
+                    // closing the application
+                    Application.Current.Shutdown();
                 });
 
             // initializing the command for the ScoreButtonOnes
@@ -303,7 +412,7 @@ namespace Knuffel.Classes
                               PlayerFourSumUpper += score;
                               break;
                       }
-                     
+
 
                       // calling the method SetAutoFillScores();
                       SetAutoFillScores();
@@ -349,7 +458,7 @@ namespace Knuffel.Classes
                               PlayerFourThrees = score;
                               PlayerFourSumUpper += score;
                               break;
-                      }                      
+                      }
 
                       // calling the method SetAutoFillScores();
                       SetAutoFillScores();
@@ -397,7 +506,7 @@ namespace Knuffel.Classes
                               PlayerFourFours = score;
                               PlayerFourSumUpper += score;
                               break;
-                      }                     
+                      }
 
                       // calling the method SetAutoFillScores();
                       SetAutoFillScores();
@@ -445,7 +554,7 @@ namespace Knuffel.Classes
                               PlayerFourFives = score;
                               PlayerFourSumUpper += score;
                               break;
-                      }                     
+                      }
 
                       // calling the method SetAutoFillScores();
                       SetAutoFillScores();
@@ -494,7 +603,7 @@ namespace Knuffel.Classes
                               PlayerFourSumUpper += score;
                               break;
                       }
-                     
+
                       // calling the method SetAutoFillScores();
                       SetAutoFillScores();
 
@@ -545,7 +654,7 @@ namespace Knuffel.Classes
                                   PlayerFourSumLower += score;
                                   break;
                           }
-                      }                     
+                      }
 
                       // calling the method SetAutoFillScores();
                       SetAutoFillScores();
@@ -597,7 +706,7 @@ namespace Knuffel.Classes
                                   PlayerFourSumLower += score;
                                   break;
                           }
-                      }                      
+                      }
 
                       // calling the method SetAutoFillScores();
                       SetAutoFillScores();
@@ -646,7 +755,7 @@ namespace Knuffel.Classes
                                   PlayerFourSumLower += score;
                                   break;
                           }
-                      }                     
+                      }
 
                       // calling the method SetAutoFillScores();
                       SetAutoFillScores();
@@ -697,7 +806,7 @@ namespace Knuffel.Classes
                                   PlayerFourSumLower += score;
                                   break;
                           }
-                      }                      
+                      }
 
                       // calling the method SetAutoFillScores();
                       SetAutoFillScores();
@@ -749,7 +858,7 @@ namespace Knuffel.Classes
                                  PlayerFourSumLower += score;
                                  break;
                          }
-                     }                    
+                     }
 
                      // calling the method SetAutoFillScores();
                      SetAutoFillScores();
@@ -798,7 +907,7 @@ namespace Knuffel.Classes
                                  PlayerFourSumLower += score;
                                  break;
                          }
-                     }                    
+                     }
 
                      // calling the method SetAutoFillScores();
                      SetAutoFillScores();
@@ -844,7 +953,7 @@ namespace Knuffel.Classes
                                 PlayerFourSumLower += score;
                                 break;
                         }
-                    }                   
+                    }
 
                     // calling the method SetAutoFillScores();
                     SetAutoFillScores();
@@ -857,7 +966,7 @@ namespace Knuffel.Classes
 
             // initializing the command for the ScoreButtonExtraKnuffels
             ScoreButtonExtraKnuffelsCommand = new DelegateCommand(
-                (o) => ActivePlayer == 1 && PlayerOneKnuffel == 50 
+                (o) => ActivePlayer == 1 && PlayerOneKnuffel == 50
                         && RollsLeft < 3
                        //&& !dieList.Any(die => die.Value == null || die.Value == 0) 
                        && (dieList.Any(die => dieList.Count(d => d.Value == die.Value) >= 5)) ||
@@ -868,8 +977,8 @@ namespace Knuffel.Classes
                        ActivePlayer == 3 && PlayerThreeKnuffel == 50
                        && RollsLeft < 3
                        //&& !dieList.Any(die => die.Value == null || die.Value == 0) 
-                       && (dieList.Any(die => dieList.Count(d => d.Value == die.Value) >= 5)) || 
-                       ActivePlayer == 4 && PlayerFourKnuffel == 50 
+                       && (dieList.Any(die => dieList.Count(d => d.Value == die.Value) >= 5)) ||
+                       ActivePlayer == 4 && PlayerFourKnuffel == 50
                        && RollsLeft < 3
                        //&& !dieList.Any(die => die.Value == null || die.Value == 0) 
                        && (dieList.Any(die => dieList.Count(d => d.Value == die.Value) >= 5)),
@@ -899,7 +1008,7 @@ namespace Knuffel.Classes
                                 PlayerFourSumLower += score;
                                 break;
                         }
-                    }                   
+                    }
 
                     // calling the method SetAutoFillScores();
                     SetAutoFillScores();
@@ -935,6 +1044,15 @@ namespace Knuffel.Classes
         // declaring the command for the Lock Die Buttons
         public DelegateCommand LockDieCommand { get; set; }
 
+        // declaring the command for the New Round Button
+        public DelegateCommand NewRoundCommand { get; set; }
+
+        // declaring the command for the New Game Button
+        public DelegateCommand NewGameCommand { get; set; }
+
+        // declaring the command for the Exit Game Button
+        public DelegateCommand ExitGameCommand { get; set; }
+
         // declaring the commands for the Score Buttons
         public DelegateCommand ScoreButtonOnesCommand { get; set; }
         public DelegateCommand ScoreButtonTwosCommand { get; set; }
@@ -950,6 +1068,7 @@ namespace Knuffel.Classes
         public DelegateCommand ScoreButtonKnuffelCommand { get; set; }
         public DelegateCommand ScoreButtonChanceCommand { get; set; }
         public DelegateCommand ScoreButtonExtraKnuffelsCommand { get; set; }
+
 
         private void StartGame()
         {
@@ -1015,7 +1134,7 @@ namespace Knuffel.Classes
             // calling the method where Menu to enter the player names is shown, depending on the amount of players
             ShowEnterPlayerNamesMenu();
             SetSumScoreValues();
-        }     
+        }
 
 
 
@@ -1025,19 +1144,19 @@ namespace Knuffel.Classes
             switch (AmountOfPlayers)
             {
 
-                case 1:                    
+                case 1:
                     IsEnterPlayer1NameLabelVisible = true;
                     IsPlayer1NameTextBoxVisible = true;
                     IsEnterPlayerNamesButtonVisible = true;
                     break;
-                case 2:                    
+                case 2:
                     IsEnterPlayer1NameLabelVisible = true;
                     IsPlayer1NameTextBoxVisible = true;
                     IsEnterPlayer2NameLabelVisible = true;
                     IsPlayer2NameTextBoxVisible = true;
                     IsEnterPlayerNamesButtonVisible = true;
                     break;
-                case 3:                    
+                case 3:
                     IsEnterPlayer1NameLabelVisible = true;
                     IsPlayer1NameTextBoxVisible = true;
                     IsEnterPlayer2NameLabelVisible = true;
@@ -1046,7 +1165,7 @@ namespace Knuffel.Classes
                     IsPlayer3NameTextBoxVisible = true;
                     IsEnterPlayerNamesButtonVisible = true;
                     break;
-                case 4:                   
+                case 4:
                     IsEnterPlayer1NameLabelVisible = true;
                     IsPlayer1NameTextBoxVisible = true;
                     IsEnterPlayer2NameLabelVisible = true;
@@ -1091,68 +1210,179 @@ namespace Knuffel.Classes
                     // setting all the Sum-Score values for player 1 to 0
                     PlayerOneSumUpper = 0;
                     PlayerOneSumLower = 0;
+                    PlayerOneBonus = 0;
                     PlayerOneTotalUpper = 0;
                     PlayerOneExtraKnuffels = 0;
                     PlayerOneFinalScore = 0;
+                    PlayerTwoSumUpper = null;
+                    PlayerTwoSumLower = null;
+                    PlayerTwoBonus = null;
+                    PlayerTwoTotalUpper = null;
+                    PlayerTwoExtraKnuffels = null;
+                    PlayerTwoFinalScore = null;
+                    PlayerThreeSumUpper = null;
+                    PlayerThreeSumLower = null;
+                    PlayerThreeBonus = null;
+                    PlayerThreeTotalUpper = null;
+                    PlayerThreeExtraKnuffels = null;
+                    PlayerThreeFinalScore = null;
+                    PlayerFourSumUpper = null;
+                    PlayerFourSumLower = null;
+                    PlayerFourBonus = null;
+                    PlayerFourTotalUpper = null;
+                    PlayerFourExtraKnuffels = null;
+                    PlayerFourFinalScore = null;
                     break;
 
                 case 2:
                     // setting all the Sum-Score values for player 1 and 2 to 0
                     PlayerOneSumUpper = 0;
                     PlayerOneSumLower = 0;
+                    PlayerOneBonus = 0;
                     PlayerOneTotalUpper = 0;
                     PlayerOneExtraKnuffels = 0;
                     PlayerOneFinalScore = 0;
                     PlayerTwoSumUpper = 0;
                     PlayerTwoSumLower = 0;
+                    PlayerTwoBonus = 0;
                     PlayerTwoTotalUpper = 0;
                     PlayerTwoExtraKnuffels = 0;
                     PlayerTwoFinalScore = 0;
+                    PlayerThreeSumUpper = null;
+                    PlayerThreeSumLower = null;
+                    PlayerThreeBonus = null;
+                    PlayerThreeTotalUpper = null;
+                    PlayerThreeExtraKnuffels = null;
+                    PlayerThreeFinalScore = null;
+                    PlayerFourSumUpper = null;
+                    PlayerFourSumLower = null;
+                    PlayerFourBonus = null;
+                    PlayerFourTotalUpper = null;
+                    PlayerFourExtraKnuffels = null;
+                    PlayerFourFinalScore = null;
                     break;
 
                 case 3:
                     // setting all the Sum-Score values for player 1 to 3 to 0
                     PlayerOneSumUpper = 0;
                     PlayerOneSumLower = 0;
+                    PlayerOneBonus = 0;
                     PlayerOneTotalUpper = 0;
                     PlayerOneExtraKnuffels = 0;
                     PlayerOneFinalScore = 0;
                     PlayerTwoSumUpper = 0;
                     PlayerTwoSumLower = 0;
+                    PlayerTwoBonus = 0;
                     PlayerTwoTotalUpper = 0;
                     PlayerTwoExtraKnuffels = 0;
                     PlayerTwoFinalScore = 0;
                     PlayerThreeSumUpper = 0;
                     PlayerThreeSumLower = 0;
+                    PlayerThreeBonus = 0;
                     PlayerThreeTotalUpper = 0;
                     PlayerThreeExtraKnuffels = 0;
                     PlayerThreeFinalScore = 0;
+                    PlayerFourSumUpper = null;
+                    PlayerFourSumLower = null;
+                    PlayerFourBonus = null;
+                    PlayerFourTotalUpper = null;
+                    PlayerFourExtraKnuffels = null;
+                    PlayerFourFinalScore = null;
                     break;
 
                 case 4:
                     // setting all the Sum-Score values for player 1 to 4 to 0
                     PlayerOneSumUpper = 0;
                     PlayerOneSumLower = 0;
+                    PlayerOneBonus = 0;
                     PlayerOneTotalUpper = 0;
                     PlayerOneExtraKnuffels = 0;
                     PlayerOneFinalScore = 0;
                     PlayerTwoSumUpper = 0;
                     PlayerTwoSumLower = 0;
+                    PlayerTwoBonus = 0;
                     PlayerTwoTotalUpper = 0;
                     PlayerTwoExtraKnuffels = 0;
                     PlayerTwoFinalScore = 0;
                     PlayerThreeSumUpper = 0;
                     PlayerThreeSumLower = 0;
+                    PlayerThreeBonus = 0;
                     PlayerThreeTotalUpper = 0;
                     PlayerThreeExtraKnuffels = 0;
                     PlayerThreeFinalScore = 0;
                     PlayerFourSumUpper = 0;
                     PlayerFourSumLower = 0;
+                    PlayerFourBonus = 0;
                     PlayerFourTotalUpper = 0;
                     PlayerFourExtraKnuffels = 0;
                     PlayerFourFinalScore = 0;
                     break;
             }
+        }
+
+        // in this method we are setting all the Score values for the players to null
+        private void SetAllScoresToNull()
+        {
+            // setting the Score values for player 1 to null
+            PlayerOneOnes = null;
+            PlayerOneTwos = null;
+            PlayerOneThrees = null;
+            PlayerOneFours = null;
+            PlayerOneFives = null;
+            PlayerOneSixes = null;
+            PlayerOneThreeOfAKind = null;
+            PlayerOneFourOfAKind = null;
+            PlayerOneFullHouse = null;
+            PlayerOneSmallStraight = null;
+            PlayerOneLargeStraight = null;
+            PlayerOneKnuffel = null;
+            PlayerOneChance = null;
+
+            // setting the Score values for player 2 to null
+            PlayerTwoOnes = null;
+            PlayerTwoTwos = null;
+            PlayerTwoThrees = null;
+            PlayerTwoFours = null;
+            PlayerTwoFives = null;
+            PlayerTwoSixes = null;
+            PlayerTwoThreeOfAKind = null;
+            PlayerTwoFourOfAKind = null;
+            PlayerTwoFullHouse = null;
+            PlayerTwoSmallStraight = null;
+            PlayerTwoLargeStraight = null;
+            PlayerTwoKnuffel = null;
+            PlayerTwoChance = null;
+
+            // setting the Score values for player 3 to null
+            PlayerThreeOnes = null;
+            PlayerThreeTwos = null;
+            PlayerThreeThrees = null;
+            PlayerThreeFours = null;
+            PlayerThreeFives = null;
+            PlayerThreeSixes = null;
+            PlayerThreeThreeOfAKind = null;
+            PlayerThreeFourOfAKind = null;
+            PlayerThreeFullHouse = null;
+            PlayerThreeSmallStraight = null;
+            PlayerThreeLargeStraight = null;
+            PlayerThreeKnuffel = null;
+            PlayerThreeChance = null;
+
+            // setting the Score values for player 4 to null
+            PlayerFourOnes = null;
+            PlayerFourTwos = null;
+            PlayerFourThrees = null;
+            PlayerFourFours = null;
+            PlayerFourFives = null;
+            PlayerFourSixes = null;
+            PlayerFourThreeOfAKind = null;
+            PlayerFourFourOfAKind = null;
+            PlayerFourFullHouse = null;
+            PlayerFourSmallStraight = null;
+            PlayerFourLargeStraight = null;
+            PlayerFourKnuffel = null;
+            PlayerFourChance = null;
+
         }
 
         // in this method we are setting the visibility for the RollButton and the RollsLeftLabel to visible
@@ -1340,22 +1570,22 @@ namespace Knuffel.Classes
         {
             switch (ActivePlayer)
             {
-                case 1:                    
+                case 1:
                     PlayerOneBonus = PlayerOneSumUpper >= 63 ? 35 : 0;
                     PlayerOneTotalUpper = PlayerOneSumUpper + PlayerOneBonus;
                     PlayerOneFinalScore = PlayerOneTotalUpper + PlayerOneSumLower;
                     break;
-                case 2:                    
+                case 2:
                     PlayerTwoBonus = PlayerTwoSumUpper >= 63 ? 35 : 0;
                     PlayerTwoTotalUpper = PlayerTwoSumUpper + PlayerTwoBonus;
                     PlayerTwoFinalScore = PlayerTwoTotalUpper + PlayerTwoSumLower;
                     break;
-                case 3:                    
+                case 3:
                     PlayerThreeBonus = PlayerThreeSumUpper >= 63 ? 35 : 0;
                     PlayerThreeTotalUpper = PlayerThreeSumUpper + PlayerThreeBonus;
                     PlayerThreeFinalScore = PlayerThreeTotalUpper + PlayerThreeSumLower;
                     break;
-                case 4:                   
+                case 4:
                     PlayerFourBonus = PlayerFourSumUpper >= 63 ? 35 : 0;
                     PlayerFourTotalUpper = PlayerFourSumUpper + PlayerFourBonus;
                     PlayerFourFinalScore = PlayerFourTotalUpper + PlayerFourSumLower;
@@ -1450,11 +1680,110 @@ namespace Knuffel.Classes
 
         private void GameFinished()
         {
-            // we are setting the visibility of the YourTurnLabel and the ActivePlayerLabel to hidden
+
+
+            // here we are calling the method SetFinalScore
+            SetFinalScore();
+
+
+            // here we are setting a varity of UI elements to hidden
+            HideRollButtonAndRollsLeftLabel();
             HideYourTurnLabelAndActivePlayerLabel();
-            // Showing a MessageBox with the text "Game Finished"
-            MessageBox.Show("Game Finished! Edit this Method further, until it´s doing what it´s supposed to do");
-            // we need to check if there shall be a new round, otherwise we check for the overall winner and entering the highscore
+            IsScoreButtonsLabelVisible = false;
+            IsScoreButtonsGridVisible = false;
+
+            // here we are calling the method CheckForWinner
+            CheckForWinner();
+        }
+
+
+
+        // in this method we are setting the FinalScore of each player depending on the amount of players
+        private void SetFinalScore()
+        {
+            switch (AmountOfPlayers)
+            {
+                case 1:
+                    playerOne.FinalScore = PlayerOneFinalScore;
+                    break;
+                case 2:
+                    playerOne.FinalScore = PlayerOneFinalScore;
+                    playerTwo.FinalScore = PlayerTwoFinalScore;
+                    break;
+                case 3:
+                    playerOne.FinalScore = PlayerOneFinalScore;
+                    playerTwo.FinalScore = PlayerTwoFinalScore;
+                    playerThree.FinalScore = PlayerThreeFinalScore;
+                    break;
+                case 4:
+                    playerOne.FinalScore = PlayerOneFinalScore;
+                    playerTwo.FinalScore = PlayerTwoFinalScore;
+                    playerThree.FinalScore = PlayerThreeFinalScore;
+                    playerFour.FinalScore = PlayerFourFinalScore;
+                    break;
+            }
+        }
+
+        // in this method we are checking the name of the player whose FinalScore is the highest
+        private void CheckForWinner()
+        {
+            // here we are creating a list of players
+            List<Player> listOfPlayers = new List<Player>();
+
+            // here we are adding the players to the list depending on the amount of players
+            switch (AmountOfPlayers)
+            {
+                case 1:
+                    listOfPlayers.Add(playerOne);
+                    break;
+                case 2:
+                    listOfPlayers.Add(playerOne);
+                    listOfPlayers.Add(playerTwo);
+                    break;
+                case 3:
+                    listOfPlayers.Add(playerOne);
+                    listOfPlayers.Add(playerTwo);
+                    listOfPlayers.Add(playerThree);
+                    break;
+                case 4:
+                    listOfPlayers.Add(playerOne);
+                    listOfPlayers.Add(playerTwo);
+                    listOfPlayers.Add(playerThree);
+                    listOfPlayers.Add(playerFour);
+                    break;
+            }
+
+            // here we are creating a variable for the highest score
+            int? highestScore = 0;
+            // here we are creating a variable for the winner
+            string winnerOfRound = "";
+            WinnerOfRound = winnerOfRound;
+
+            // here we are looping through the list of players
+            foreach (Player player in listOfPlayers)
+            {
+                // here we are checking if the FinalScore of the player is equal or higher than the highestScore
+                if (player.FinalScore == highestScore)
+                {
+                    // if the FinalScore of the player is equal to the highestScore, we are setting the winner to "Draw"
+                    WinnerOfRound = "It´s a Draw!";
+
+                }
+                else if (player.FinalScore > highestScore)
+                {
+                    // if the above is true, we are setting the highestScore to the FinalScore of the player
+                    highestScore = player.FinalScore;
+                    // and we are setting the winner to the name of the player
+                    WinnerOfRound = player.Name.ToUpper();
+                }
+            }
+
+            // here we are showing the winner of the round
+            IsWinnerOfRoundLabelVisible = true;
+            IsNameOfWinnerOfRoundLabelVisible = true;
+
+            // here we are showing the NewGameButtonsMenu
+            IsNewGameButtonsVisible = true;
         }
 
 
@@ -1477,6 +1806,9 @@ namespace Knuffel.Classes
 
         // declaring the private variable for the amount of rounds left
         private int _roundsLeft;
+
+        // declaring the private variables for the winner of the round
+        private string _winnerOfRound;
 
         // declaring the private variables for the player names
         private string _player1Name;
@@ -1530,6 +1862,13 @@ namespace Knuffel.Classes
         // declaring the private variables for the visibility of the ScoreButtons
         private bool _isScoreButtonsLabelVisible;
         private bool _isScoreButtonsGridVisible;
+
+        // declaring the private variables for the visibility of the WinnerOfRoundLabels
+        private bool _isWinnerOfRoundLabelVisible;
+        private bool _isNameOfWinnerOfRoundLabelVisible;
+
+        // declaring the private variable for the visibility of the NewGameButtonsMenu
+        private bool _isNewGameButtonsVisible;
 
         // declaring the private nullable int variables for the Scoreboard Entries of Player 1
         private int? _playerOneOnes = null;
@@ -1614,6 +1953,8 @@ namespace Knuffel.Classes
         private int? _playerFourSumLower = null;
         private int? _playerFourExtraKnuffels = null;
         private int? _playerFourFinalScore = null;
+       
+
 
 
 
@@ -1771,6 +2112,20 @@ namespace Knuffel.Classes
                 {
                     _roundsLeft = value;
                     OnPropertyChanged(nameof(RoundsLeft));
+                }
+            }
+        }
+
+        // declaring the public property for the winnerOfRound
+        public string WinnerOfRound
+        {
+            get { return _winnerOfRound; }
+            set
+            {
+                if (_winnerOfRound != value)
+                {
+                    _winnerOfRound = value;
+                    OnPropertyChanged(nameof(WinnerOfRound));
                 }
             }
         }
@@ -3275,6 +3630,46 @@ namespace Knuffel.Classes
                 {
                     _isScoreButtonsGridVisible = value;
                     OnPropertyChanged(nameof(IsScoreButtonsGridVisible));
+                }
+            }
+        }
+
+        // declaring the public properties for the visibility of WinnerOfRoundLabels
+        public bool IsWinnerOfRoundLabelVisible
+        {
+            get { return _isWinnerOfRoundLabelVisible; }
+            set
+            {
+                if (_isWinnerOfRoundLabelVisible != value)
+                {
+                    _isWinnerOfRoundLabelVisible = value;
+                    OnPropertyChanged(nameof(IsWinnerOfRoundLabelVisible));
+                }
+            }
+        }
+        public bool IsNameOfWinnerOfRoundLabelVisible
+        {
+            get { return _isNameOfWinnerOfRoundLabelVisible; }
+            set
+            {
+                if (_isNameOfWinnerOfRoundLabelVisible != value)
+                {
+                    _isNameOfWinnerOfRoundLabelVisible = value;
+                    OnPropertyChanged(nameof(IsNameOfWinnerOfRoundLabelVisible));
+                }
+            }
+        }
+
+        // declaring the public properties for the visibility of the NewGameButtonsMenu
+        public bool IsNewGameButtonsVisible
+        {
+            get { return _isNewGameButtonsVisible; }
+            set
+            {
+                if (_isNewGameButtonsVisible != value)
+                {
+                    _isNewGameButtonsVisible = value;
+                    OnPropertyChanged(nameof(IsNewGameButtonsVisible));
                 }
             }
         }
