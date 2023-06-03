@@ -88,7 +88,7 @@ namespace Knuffel.Classes
             RollsLeft = 3;
 
             // declaring the default value for the RoundsLeft
-            RoundsLeft = 13;
+            RoundsLeft = 1;
 
             // declaring the default value for the visibility of the StartGame Button
             IsStartGameButtonVisible = true;
@@ -275,6 +275,10 @@ namespace Knuffel.Classes
                     // resetting the visibility of the Score Buttons
                     IsScoreButtonsLabelVisible = true;
                     IsScoreButtonsGridVisible = true;
+                    IsScoreButtonCommandAvailable();
+
+                    // checking if the Roll Dice Button should be enabled
+                    RollDiceCommand.RaiseCanExecuteChanged();
                 });
 
             
@@ -325,9 +329,9 @@ namespace Knuffel.Classes
 
             // initializing the command for the ExitGameButton
             ExitGameCommand = new DelegateCommand(
-                               (o) => true,
-                                              (o) =>
-                                              {
+                (o) => true,
+                (o) =>
+                {
                     // closing the application
                     Application.Current.Shutdown();
                 });
