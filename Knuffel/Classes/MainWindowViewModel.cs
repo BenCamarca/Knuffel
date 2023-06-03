@@ -88,7 +88,7 @@ namespace Knuffel.Classes
             RollsLeft = 3;
 
             // declaring the default value for the RoundsLeft
-            RoundsLeft = 1;
+            RoundsLeft = 13;
 
             // declaring the default value for the visibility of the StartGame Button
             IsStartGameButtonVisible = true;
@@ -632,7 +632,7 @@ namespace Knuffel.Classes
                       // declaring the variable for the score
                       int? score = 0;
                       // checking if the dieList contains at least three die with the same value
-                      if (dieList.Any(die => dieList.Count(d => d.Value == die.Value) >= 3))
+                      if (dieList.Any(die => dieList.Count(d => d.Value != null && d.Value == die.Value) >= 3))
                       {
                           // adding the value of each die to the score
                           foreach (Die die in dieList)
@@ -684,7 +684,7 @@ namespace Knuffel.Classes
                       // declaring the variable for the score
                       int? score = 0;
                       // checking if the dieList contains at least four die with the same value
-                      if (dieList.Any(die => dieList.Count(d => d.Value == die.Value) >= 4))
+                      if (dieList.Any(die => dieList.Count(d => d.Value != null && d.Value == die.Value) >= 4))
                       {
                           // adding the value of each die to the score
                           foreach (Die die in dieList)
@@ -784,15 +784,15 @@ namespace Knuffel.Classes
                   {
                       // declaring the variable for the score
                       int? score = 0;
-                      // checking if the dieList contains at least four die with consecutive values
-                      if (dieList.Any(die => dieList.Count(d => d.Value == die.Value) >= 1) &&
-                          dieList.Any(die => dieList.Count(d => d.Value == die.Value + 1) >= 1) &&
-                          dieList.Any(die => dieList.Count(d => d.Value == die.Value + 2) >= 1) &&
-                          dieList.Any(die => dieList.Count(d => d.Value == die.Value + 3) >= 1))
-                      {
+                  // checking if the dieList contains at least four die with consecutive values
+                  if (dieList.All(die => die.Value != 0 && die.Value != null) 
+                      && dieList.Select(d => d.Value).Distinct().Count() >= 4 
+                      && dieList.Select(d => d.Value).Distinct().OrderBy(v => v).Select((v, i) => v - i).Distinct().Count() <= 1)
+                      { 
                           // setting the score to 30
-                          score = 30;
+                            score = 30; 
                       }
+
 
                       {
                           switch (ActivePlayer)
@@ -836,11 +836,9 @@ namespace Knuffel.Classes
                      // declaring the variable for the score
                      int? score = 0;
                      // checking if the dieList contains five die with consecutive values
-                     if (dieList.Any(die => dieList.Count(d => d.Value == die.Value) >= 1) &&
-                         dieList.Any(die => dieList.Count(d => d.Value == die.Value + 1) >= 1) &&
-                         dieList.Any(die => dieList.Count(d => d.Value == die.Value + 2) >= 1) &&
-                         dieList.Any(die => dieList.Count(d => d.Value == die.Value + 3) >= 1) &&
-                                                                                                                                                         dieList.Any(die => dieList.Count(d => d.Value == die.Value + 4) >= 1))
+                     if (dieList.All(die => die.Value != 0 && die.Value != null) 
+                     && dieList.Select(d => d.Value).Distinct().Count() >= 5 
+                     && dieList.Select(d => d.Value).Distinct().OrderBy(v => v).Select((v, i) => v - i).Distinct().Count() <= 1)
                      {
                          // setting the score to 40
                          score = 40;
@@ -888,7 +886,8 @@ namespace Knuffel.Classes
                      // declaring the variable for the score
                      int? score = 0;
                      // checking if the dieList contains five die with the same value
-                     if (dieList.Any(die => dieList.Count(d => d.Value == die.Value) >= 5))
+                     if (dieList.All(die => die.Value != 0 && die.Value != null) 
+                     && dieList.Select(d => d.Value).Distinct().Count() == 1 && dieList.Count == 5)
                      {
                          // setting the score to 50
                          score = 50;
