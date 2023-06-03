@@ -128,7 +128,10 @@ namespace Knuffel.Classes
             // initializing the command for the start game button
             StartGameCommand = new DelegateCommand(
                 (o) => true,
-                (o) => StartGame()
+                (o) =>
+                {
+                    StartGame();
+                }
                 );
             // initializing the command for the 1-4 Player buttons
             PlayersButtonsCommand = new DelegateCommand((value) =>
@@ -273,9 +276,9 @@ namespace Knuffel.Classes
                     IsRollsLeftLabelVisible = true;
 
                     // resetting the visibility of the Score Buttons
+                    IsScoreButtonCommandAvailable();
                     IsScoreButtonsLabelVisible = true;
                     IsScoreButtonsGridVisible = true;
-                    IsScoreButtonCommandAvailable();
 
                     // checking if the Roll Dice Button should be enabled
                     RollDiceCommand.RaiseCanExecuteChanged();
@@ -324,6 +327,9 @@ namespace Knuffel.Classes
                                                   
                     // checking if the RollDiceButton should be enabled
                     RollDiceCommand.RaiseCanExecuteChanged();
+
+                    // enabling the ScoreButtons
+                    IsScoreButtonCommandAvailable();
 
                 });
 
@@ -937,7 +943,10 @@ namespace Knuffel.Classes
                     // adding the value of each die to the score
                     foreach (Die die in dieList)
                     {
-                        score += die.Value;
+                        if (die.Value.HasValue && die.Value.Value !=0)
+                        {
+                            score += die.Value;
+                        }
                     }
 
                     {
@@ -1079,6 +1088,7 @@ namespace Knuffel.Classes
 
         private void StartGame()
         {
+            
             // in this method we set the HowManyPlayersLabel and the buttons for the amount of players to visible
             ShowChooseAmountOfPlayerUI();
         }
@@ -1119,14 +1129,20 @@ namespace Knuffel.Classes
             {
                 case 1:
                     // setting the visibility of the scoreboard for player 2 to 4 to hidden
+                    CoverGridPlayer3To4 = false;
+                    CoverGridPlayer4 = false;
                     CoverGridPlayer2To4 = true;
                     break;
                 case 2:
                     // setting the visibility of the scoreboard for player 3 to 4 to hidden
+                    CoverGridPlayer2To4 = false;
+                    CoverGridPlayer4 = false;
                     CoverGridPlayer3To4 = true;
                     break;
                 case 3:
                     // setting the visibility of the scoreboard for player 4 to hidden
+                    CoverGridPlayer2To4 = false;
+                    CoverGridPlayer3To4 = false;
                     CoverGridPlayer4 = true;
                     break;
                 case 4:
